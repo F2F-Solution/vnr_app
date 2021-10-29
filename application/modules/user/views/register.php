@@ -126,113 +126,113 @@
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
 		<script>
-   $(document).ready(function () {
-$("#submit1").on('click',function (event) {
-event.preventDefault();
-var error = 0;
-$('#form').find('.required').each(function(){
-var _val = $(this).val();
-var type = $(this).attr('type');
-if(type == 'radio'){
-    var gender = $('input[name="gender"]:checked').length;
+//    $(document).ready(function () {
+// $("#submit1").on('click',function (event) {
+// event.preventDefault();
+// var error = 0;
+// $('#form').find('.required').each(function(){
+// var _val = $(this).val();
+// var type = $(this).attr('type');
+// if(type == 'radio'){
+//     var gender = $('input[name="gender"]:checked').length;
     
-    if(gender == 0){
-        $(this).closest('div.form-group').find('span.val').text("Required Field");
-    }else{
-        $(this).closest('div.form-group').find('span.val').text("");
-        $('input[name="gender"]').removeClass('required');
-    }
-}else{
-    if(_val == ''){
-        error++;  
-        $(this).closest('div').find('span.val').text("Required Field");
-    }else{
-        $(this).closest('div').find('span.val').text("");
-    }    
-}
+//     if(gender == 0){
+//         $(this).closest('div.form-group').find('span.val').text("Required Field");
+//     }else{
+//         $(this).closest('div.form-group').find('span.val').text("");
+//         $('input[name="gender"]').removeClass('required');
+//     }
+// }else{
+//     if(_val == ''){
+//         error++;  
+//         $(this).closest('div').find('span.val').text("Required Field");
+//     }else{
+//         $(this).closest('div').find('span.val').text("");
+//     }    
+// }
 
-});
-if(error > 0){
-return false;
-}else{
-$("form").submit();
-}
-});
-var form_validation = false;
-$("#name").on('blur', function() {
-var name = $("#name").val();
-var filter = /^[a-zA-Z.\s]+[\S]{3,30}$/;
-if (name == "" || name == null || name.trim().length == 0) {
-    form_validation = false;
-    $("#input1").html("Required Field");
+// });
+// if(error > 0){
+// return false;
+// }else{
+// $("form").submit();
+// }
+// });
+// var form_validation = false;
+// $("#name").on('blur', function() {
+// var name = $("#name").val();
+// var filter = /^[a-zA-Z.\s]+[\S]{3,30}$/;
+// if (name == "" || name == null || name.trim().length == 0) {
+//     form_validation = false;
+//     $("#input1").html("Required Field");
  
-} else if (!filter.test(name)) {
-    form_validation = false;
-    $("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+// } else if (!filter.test(name)) {
+//     form_validation = false;
+//     $("#input1").html("Alphabets and Min 3 to Max 30 without space ");
     
-} else {
-    $("#input1").html("");
-    form_validation = true;
+// } else {
+//     $("#input1").html("");
+//     form_validation = true;
     
-}
-});
-$("#email").on('blur', function() {
-var mail = $("#email").val();
-var efilter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-if (mail == "") {
-    form_validation = false;
-    $("#input2").html("Required Field");
-} else if (!efilter.test(mail) && mail != "") {
-    form_validation = false;
-    $("#input2").html("Enter Valid Email");
-    } else {
-    form_validation = true;
-    $("#input2").html("");
-}
-});
-$("#number").on('blur', function() {
-var number = $("#number").val();
-var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
-if (number =="") {
-    form_validation = false;
-    $("#input3").html("Required Field");
-    } else if (!nfilter.test(number) && number != "") {
-    form_validation = false;
-    $("#input3").html("Enter Valid number");
-    } else {
-    form_validation = true;
-    $("#input3").html("");
-    }
-});
-$("#password").on('blur', function() {
-var password = $("#password").val();
-var efilter = /^[A-Za-z0-9\s]+[\S]$/;       //allows only number and alpha
-    if (password =="") {
-    form_validation = false;
-    $("#input5").html("Required Field");
-    } else if (!efilter.test(password) && password != "") {
-    form_validation = false;
-    $("#input5").html("Avoid space");
-    }
-    else {
-    form_validation = true;
-    $("#input5").html("");
-    }
-});
-$("#image").on('blur', function() {
-var profile = $("#image").val();
-var sfilter = /^\S+$/;  
-    if (profile =="") {
-    form_validation = false;
-    $("#input5").html("Required Field");
-    } 
-    else {
-    form_validation = true;
-    $("#input5").html("");
-    }
-});
-    });
-</script>
+// }
+// });
+// $("#email").on('blur', function() {
+// var mail = $("#email").val();
+// var efilter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+// if (mail == "") {
+//     form_validation = false;
+//     $("#input2").html("Required Field");
+// } else if (!efilter.test(mail) && mail != "") {
+//     form_validation = false;
+//     $("#input2").html("Enter Valid Email");
+//     } else {
+//     form_validation = true;
+//     $("#input2").html("");
+// }
+// });
+// $("#number").on('blur', function() {
+// var number = $("#number").val();
+// var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+// if (number =="") {
+//     form_validation = false;
+//     $("#input3").html("Required Field");
+//     } else if (!nfilter.test(number) && number != "") {
+//     form_validation = false;
+//     $("#input3").html("Enter Valid number");
+//     } else {
+//     form_validation = true;
+//     $("#input3").html("");
+//     }
+// });
+// $("#password").on('blur', function() {
+// var password = $("#password").val();
+// var efilter = /^[A-Za-z0-9\s]+[\S]$/;       //allows only number and alpha
+//     if (password =="") {
+//     form_validation = false;
+//     $("#input5").html("Required Field");
+//     } else if (!efilter.test(password) && password != "") {
+//     form_validation = false;
+//     $("#input5").html("Avoid space");
+//     }
+//     else {
+//     form_validation = true;
+//     $("#input5").html("");
+//     }
+// });
+// $("#image").on('blur', function() {
+// var profile = $("#image").val();
+// var sfilter = /^\S+$/;  
+//     if (profile =="") {
+//     form_validation = false;
+//     $("#input5").html("Required Field");
+//     } 
+//     else {
+//     form_validation = true;
+//     $("#input5").html("");
+//     }
+// });
+//     });
+// </script>
 		
 
 		
