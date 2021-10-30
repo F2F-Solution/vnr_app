@@ -2,10 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class REST_Controller extends CI_Controller {
+class REST_Controller extends MY_Controller {
 
    
     private $ci = NULL;
+    private $_get_args = array();
     protected $request = NULL;
     private $_supported_formats = array(
         'xml' => 'application/xml',
@@ -92,14 +93,14 @@ class REST_Controller extends CI_Controller {
         // Otherwise (if no data but 200 provided) or some data, carry on camping!
         else {
             is_numeric($http_code) OR $http_code = 200;
-            $this->request->format = $this->_detect_format();
+            $this->request = $this->_detect_format();
             
             // If the format method exists, call and return the output in that format
-            if (method_exists($this, '_format_' . $this->request->format)) {
+            if (method_exists($this, '_format_' . $this->request)) {
                 // Set the correct format header
-                header('Content-type: ' . $this->_supported_formats[$this->request->format]);
+                header('Content-type: ' . $this->_supported_formats[$this->request]);
 
-                $formatted_data = $this->{'_format_' . $this->request->format}($data);
+                $formatted_data = $this->{'_format_' . $this->request}($data);
                 $output = $formatted_data;
             }
            
@@ -119,11 +120,11 @@ class REST_Controller extends CI_Controller {
     public function _get_customer_post_values() {
         $json_input = json_decode(file_get_contents('php://input'), TRUE);
         // if (empty($json_input)) {
-        //     $get_arr = is_array($this->input->get(null)) ? $this->ci->input->get(null) : array();
-        //     $post_arr = is_array($this->input->post(null)) ? $this->ci->input->post(null) : array();
-        //     $json_input = array_merge($get_arr, $post_arr);
+            // $get_arr = is_array($this->input->get(null)) ? $this->ci->input->get(null) : array();
+            // $post_arr = is_array($this->input->post(null)) ? $this->ci->input->post(null) : array();
+            // $json_input = array_merge($get_arr, $post_arr);
         // }
 
-        // return $json_input;
+        return $json_input;
     }
 }
