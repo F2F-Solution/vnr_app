@@ -61,7 +61,7 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_add_user_form" method="post" class="form" action="<?php echo base_url();?>master/designation/save_data/">
+                        <form id="contact_form" method="post" class="form" action="<?php echo base_url();?>master/designation/save_data/">
                             <!--begin::Scroll-->
                             <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                                 <!--begin::Input group-->
@@ -148,7 +148,7 @@
         <thead>
             <!--begin::Table row-->
             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                <th     >S.No</th>
+                <th>S.No</th>
                 <th class="min-w-125px">Designation</th>
                 <th class="min-w-125px">Status</th>
                 <th class="min-w-125px">Actions</th>
@@ -205,7 +205,7 @@
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                             <!--begin::Form-->
-                            <form id="kt_modal_edit_user_form" method="post" class="form" action="<?php echo base_url('master/designation/update/'.$row->iDesignationId)?>">
+                            <form id="contact_form" method="post" class="form" action="<?php echo base_url('master/designation/update/'.$row->iDesignationId)?>">
                                 <!--begin::Scroll-->
                                 <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                                     <!--begin::Input group-->
@@ -306,3 +306,67 @@
 </div>
 <!--end::Container-->
 </div>
+<!-- Form validation -->
+<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+<script>
+$(document).ready(function () {
+$("#submit1").on('click',function () {
+var error = 0;
+$('#form').find('.required').each(function(){
+var _val = $(this).val();
+var type = $(this).attr('type');
+if(type == 'radio'){
+    var gender = $('input[name="status"]:checked').length;
+    
+    if(gender == 0){
+        $(this).closest('div.form-group').find('span.val').text("Required Field");
+    }else{
+        $(this).closest('div.form-group').find('span.val').text("");
+        $('input[name="gender"]').removeClass('required');
+    }
+}else{
+    if(_val == ''){
+        error++;  
+        $(this).closest('div').find('span.val').text("Required Field");
+    }else{
+        $(this).closest('div').find('span.val').text("");
+    }    
+}
+
+});//alert(error);
+if(error > 0){
+    return false;
+}else{
+$("form").submit();
+}
+});
+var form_validation = false;
+$(".group_name").on('blur', function() {
+    var name = $(".group_name").val();
+    var filter = /^[a-zA-Z.\s]+[\S]{3,30}$/;
+    if (name == "" || name == null || name.trim().length == 0) {
+        form_validation = false;
+        $("#input1").html("Required Field");
+        // return false;
+    } else if (!filter.test(name)) {
+        form_validation = false;
+        $("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+        // return false;
+    } else {
+        $("#input1").html("");
+        form_validation = true;
+        // return true;
+    }
+});
+$(".status").on('blur', function() {
+var status = $("#status").val();
+if (status == "") {
+    form_validation = false;
+    $("#input2").html("Required Field");
+}else {
+    form_validation = true;
+    $("#input2").html("");
+}
+});
+});
+</script>
