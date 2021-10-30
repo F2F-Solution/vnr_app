@@ -110,12 +110,12 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 											</a>
 										</div>
                                         <div class="menu-item">
-											<a class="menu-link" href="">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Police Officer</span>
-											</a>
+													<a class="menu-link" href="<?php echo base_url();?>master/police_officer">
+														<span class="menu-bullet">
+															<span class="bullet bullet-dot"></span>
+														</span>
+														<span class="menu-title">Police Officer</span>
+													</a>
 										</div>
 										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 										</div>
