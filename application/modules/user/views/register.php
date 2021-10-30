@@ -1,7 +1,7 @@
 <?php $theme_path = $this->config->item('theme_locations') . 'vnrpolice';?>
 <div class="d-flex flex-column flex-root">
 			<!--begin::Authentication - Sign-up -->
-			<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url(<?php echo $theme_path ?>/assets/media/illustrations/sketchy-1/14.png">
+			<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed">
 				<!--begin::Content-->
 				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
 					<!--begin::Wrapper-->
@@ -48,9 +48,9 @@
                                 <label class="form-label fw-bolder text-dark fs-6 required">Gender</label>
                                     <div class="form-check form-check-custom form-check-solid me-10">
                                         <input class="form-check-input" type="radio" name="gender" value="female" id="flexRadioLg"/>
-                                        <label class="form-check-label" for="flexRadioLg"> female </label>
+                                        <label class="form-check-label" for="flexRadioLg"> Female </label>
                                     </div><br>
-                                    <div class="form-check form-check-custom form-check-solid me-10 required">
+                                    <div class="form-check form-check-custom form-check-solid me-10">
                                         <input class="form-check-input" type="radio" name="gender" value="male" id="flexRadioLg"/>
                                         <label class="form-check-label" for="flexRadioLg">Male </label>
                                    </div>
