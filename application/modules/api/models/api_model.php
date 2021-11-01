@@ -131,6 +131,19 @@ class Api_model extends CI_Model {
         return false;
     }
 
+    public function forgot_password($data){
+        $this->db->select('*');
+        $this->db->where('iMobileNumber',$data['mobile_number']);
+        $this->db->where('iAadharNo',$data['aadhar_number']);
+        $this->db->from('vnr_customer');
+        $query = $this->db->get();
+        if($query->num_rows() >0){
+            return $query->row_array();
+        }else
+        return false;
+
+    }
+
     public function get_customer_details($data){
         $this->db->select('*');
         $this->db->where('iCustomerId',$data['customer_id']);
