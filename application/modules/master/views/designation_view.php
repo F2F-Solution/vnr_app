@@ -239,7 +239,7 @@
     </div>
 </div>
 <!-- Form validation -->
-<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
 <script>
 $(document).ready(function () {
 $("#submit1").on('click',function () {
@@ -301,4 +301,4 @@ if (status == "") {
 }
 });
 });
-</script>
+</script> -->

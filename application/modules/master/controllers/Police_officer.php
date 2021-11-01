@@ -40,6 +40,31 @@ class Police_officer extends MY_Controller {
         $this->Policeofficer_model->store($user);  
         redirect($this->config->item('base_url') . 'master/police_officer');
       }
+      public function list_data(){
+          $list=$this->Policeofficer_model->listtable_data();
+          $data = array();
+        foreach ($list as $post) {
+            $row = array();
+            $row[] = $post->vOfficerName;   
+            $row[] = $post->iMobileNumber;
+            $row[] = $post->iEmail;
+            $row[] = $post->vGender;
+            $row[] = $post->tImage;
+            $row[] = $post->iPoliceStationId;
+            $row[] = $post->iDesignationId;
+            $row[] = $post->iDepartmentId;
+            $row[] = $post->iGroupid;
+            $data[] = $row; 
+            }
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->Policeofficer_model->count_all(),
+                "recordsFiltered" => $this->Policeofficer_model->count_filtered_gen_posts(),
+                "data" => $data,
+            );
+            //output to json format
+            echo json_encode($output);
+    }
     //   //edit data
     //   public function edit($iPoliceOfficerId){
     //     $row = $this->group_model->find_data($iPoliceOfficerId);
