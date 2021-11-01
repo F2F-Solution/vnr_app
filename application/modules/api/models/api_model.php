@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class api_model extends CI_Model {
+class Api_model extends CI_Model {
 
 
     function __construct() {
@@ -22,6 +22,17 @@ class api_model extends CI_Model {
 
     function is_mobile_number_exists($mobile_number) {
         $this->db->where('tab_1.iMobileNumber', $mobile_number);
+        $this->db->where('tab_1.tStatus', 1);
+        $query = $this->db->get('vnr_customer' . ' AS tab_1');
+        if ($query->num_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    function is_aadhar_exists($aadhar) {
+        $this->db->where('tab_1.iAadharNo', $aadhar);
         $this->db->where('tab_1.tStatus', 1);
         $query = $this->db->get('vnr_customer' . ' AS tab_1');
         if ($query->num_rows() > 0) {
@@ -83,7 +94,7 @@ class api_model extends CI_Model {
 
     public function check_customer_otp($data){
         $this->db->select('*');
-        $this->db->where('id',$id);
+        $this->db->where('iCustomerId',$data['customer_id']);
         $query = $this->db->get('vnr_customer')->row_array();
         if(!empty($query)){
             //$result['customer_id']=$query['id'];
@@ -97,7 +108,7 @@ class api_model extends CI_Model {
     public function update_fields($id,$data){
         $data['iUpdatedAt']=date('Y-m-d h:i:s');
         $this->db->where('iCustomerId',$id);
-        $this->db->update($this->customers,$data);
+        $this->db->update('vnr_customer',$data);
         return true;
     }
 
@@ -155,7 +166,7 @@ class api_model extends CI_Model {
     public function get_customer_profile_details($data){
         $this->db->select('*');
         $this->db->where('iMobileNumber',$data['mobile_number']);
-        $data =  $this->db->get(vnr_customer)->row_array();
+        $data =  $this->db->get('vnr_customer')->row_array();
 
         return $data;
     }

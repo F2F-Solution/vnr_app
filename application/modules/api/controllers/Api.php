@@ -12,7 +12,7 @@ class Api extends REST_Controller {
 		$data_input = $this->_get_customer_post_values();
 		if (!empty($data_input)) {
 			$customer = array();
-			$customer['vName'] = $data_input['consumer_name'];
+			$customer['vCustomerName'] = $data_input['consumer_name'];
 			$customer['vEmail'] = $data_input['email_id'];
 			$customer['dDob'] = $data_input['dob'];
 			$customer['iMobileNumber'] = $data_input['mobile_number'];
@@ -26,7 +26,7 @@ class Api extends REST_Controller {
 			$customer['tStatus'] = 1;
 			$otp = $this->api_model->generateNumericOTP('4');
 			$customer['iOtpCode'] = $otp;
-			if($customer['vName'] == ""){
+			if($customer['vCustomerName'] == ""){
 				$output = array(
 					'status' => 'false',
 					'code' => '422',
@@ -51,6 +51,14 @@ class Api extends REST_Controller {
 					$this->response($output);
 				exit;
 			}
+			if($customer['iAadharNo'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Aadhar number is required");
+					$this->response($output);
+				exit;
+			}
 			if($customer['vPassword'] == ""){
 				$output = array(
 					'status' => 'false',
@@ -59,27 +67,36 @@ class Api extends REST_Controller {
 					$this->response($output);
 				exit;
 			}
-			// if($customer['vEmergencyName'] == ""){
-			//     $output = array(
-			//         'status' => 'false',
-			//         'code' => '422',
-			//         'message' => "Emergency name is required");
-			// 		$this->response($output);
-			//     exit;
-			// }
-			// if($customer['iEmergencyNumber'] == ""){
-			//     $output = array(
-			//         'status' => 'false',
-			//         'code' => '422',
-			//         'message' => "Emergency number is required");
-			// 		$this->response($output);
-			//     exit;
-			// }
+			if($customer['vAddress'] == ""){
+			    $output = array(
+			        'status' => 'false',
+			        'code' => '422',
+			        'message' => "Address is required");
+					$this->response($output);
+			    exit;
+			}
+			if($customer['iPincode'] == ""){
+			    $output = array(
+			        'status' => 'false',
+			        'code' => '422',
+			        'message' => "Pincode number is required");
+					$this->response($output);
+			    exit;
+			}
 			$is_mobile_number_exists = $this->api_model->is_mobile_number_exists($customer['iMobileNumber']);
 			if ($is_mobile_number_exists) {
 				$output = array(
 					'status' => 'false',
 					'message' => "The given mobile number already exists.");
+					$this->response($output);
+				exit;
+			}
+
+			$is_aadhar_exists = $this->api_model->is_aadhar_exists($customer['iAadharNo']);
+			if ($is_aadhar_exists) {
+				$output = array(
+					'status' => 'false',
+					'message' => "The given Aadhar number already exists.");
 					$this->response($output);
 				exit;
 			}
@@ -140,7 +157,7 @@ class Api extends REST_Controller {
 		$json_input = $this->_get_customer_post_values();
         if (!empty($json_input)) {
                 $otp_result = $this->api_model->check_customer_otp($json_input);
-                if ($otp_result) {
+                if (!empty($otp_result) && $otp_result['iOtpCode'] == $json_input['otp_code']) {
                     $update_data['tOtpVerify']=1;
                     $this->api_model->update_fields($otp_result['iCustomerId'],$update_data);
                     $output = array ('status' => 'Success', 'message' => 'Otp Verified successfully','data'=>$otp_result);
@@ -150,7 +167,7 @@ class Api extends REST_Controller {
                     echo json_encode($output);
                 }
         } else {
-            $output = array ('status' => 'error', 'message' => 'Please mobile number and password');
+            $output = array ('status' => 'error', 'message' => 'Please enter valid details');
             echo json_encode($output);
         }
     }
