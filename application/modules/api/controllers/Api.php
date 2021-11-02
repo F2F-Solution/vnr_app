@@ -20,6 +20,7 @@ class Api extends REST_Controller {
 			$customer['vAddress'] = $data_input['address'];
 			$customer['iAadharNo'] = $data_input['aadhar_number'];
 			$customer['iPincode'] = $data_input['pincode'];
+			$customer['vProfession'] = $data_input['profession'];
 			// $customer['vEmergencyName'] = $data_input['emergency_name'];
 			// $customer['iEmergencyNumber'] = $data_input['emergency_number'];
 			$customer['tCreatedAt'] = date('Y-m-d h:i:s');
@@ -161,16 +162,34 @@ class Api extends REST_Controller {
                     $update_data['tOtpVerify']=1;
                     $this->api_model->update_fields($otp_result['iCustomerId'],$update_data);
                     $output = array ('status' => 'Success', 'message' => 'Otp Verified successfully','data'=>$otp_result);
-                    echo json_encode($output);
+                    $this->response($output);
                 } else {
                     $output = array ('status' => 'Error', 'message' => 'Invalid OTP');
-                    echo json_encode($output);
+                    $this->response($output);
                 }
         } else {
             $output = array ('status' => 'error', 'message' => 'Please enter valid details');
-            echo json_encode($output);
+			$this->response($output);
         }
     }
+
+	public function customer_resend_otp(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			$otp = $this->api_model->generateNumericOTP('4');
+			$update_data['iOtpCode'] = $otp;
+			$update = $this->api_model->update_fields($json_input['customer_id'],$update_data);
+			$output = array('status' => 'Success', 'message' => 'Otp send successfully');
+			$this->response($output);
+
+		}else
+		{
+			$output = array ('status' => 'Error', 'message' => 'User not found');
+            $this->response($output);
+		}
+
+		
+	}
 
 	public function get_locked_home_details(){
 		$data_input = $this->_get_customer_post_values();
@@ -324,107 +343,24 @@ class Api extends REST_Controller {
 
 	}
 
-	public function api_generate_otp(){
+	public function generate_otp(){
 		$json_input = $this->_get_customer_post_values();
 		if (!empty($json_input)) {
-            // $data = json_decode($json_input, TRUE);
-            //     $field_data = $data['data'];
-            //     $id=$data['id'];
-                if($id != ''){
-                    $cutsomer_details= $this->api_model->get_customer_profile_details($data['mobile_number']);
-                    $data['mobile_number']=$cutsomer_details['mobile_number'];
-                }
-                $otp_code=$data['otp_code'];
-                $is_exists = '';
-                $txt = '';
-                if($data['type']=="forget password"){
-                    $field_name='password';
-                    $msg='Password has been changed Successfully...!';
-                    $update_profile['password']=md5($data['data']);
-                    $update_profile['plain_password']=($data['data']);
-                    if(!$otp_code)
-                        $is_exists = $this->api_model->check_field_exists('mobile_number',$data['mobile_number'],'','','');
-
-                    $txt='Forget Password';
-                }
-                if(!$otp_code){
-                    if ($is_exists) {
-                        //Generate OTP
-                       $otp = $this->api_model->generateNumericOTP('4');
-                       $htmlContent = "One Time OTP : ".$otp." ";
-                       $this->api_model->sendSMS($data['mobile_number'],$htmlContent);
-
-                       $update_data['otp_code']=$otp;
-                       $id = ($data['id']) ? $data['id'] : $is_exists['id'];
-                       $customer_data = $this->api_model->check_customer_otp('',$id);
-                       
-                        //Email
-                        $this->email->from($this->config->item('default_from_email'), $this->config->item('default_email_name'));
-                        $this->email->to($customer_data['email']);
-                        $this->email->subject($txt);
-                        $this->email->message($htmlContent);
-                        $email_send =  $this->email->send();
-
-                       $this->api_model->update_fields($id,$update_data);
-                       $output = array ('status' => 'Success', 'message' => 'Otp Send successfully','OTP'=>$otp,'id'=>$id);
-                       echo json_encode($output);
-                       exit;
-                   }else{
-                       $message = 'Invalid Details';
-                        if($data['type'] =="forget password"){
-                            $message = 'The mobile number which is enter is wrong (OR) not registered with us, please check the entered number and try again';
-                        }
-                       $output = array ('status' => 'Error', 'message' => $message);
-                       echo json_encode($output);
-                       exit;
-                   }
-                }else{
-                    $is_exists = $this->api_model->check_field_exists('otp_code',$data['otp_code'],'','',$id);
-                    if($is_exists){
-                        $update_data = true;
-                        if($data['type']!="forget password"){
-                            $update_data = $this->api_model->update_profile_fields($id,$field_name,$field_data,$update_profile,'otp');
-                        }
-                        if ($update_data) {
-                            if($data['type']=="forget password"){
-                                $customer_data = $this->api_model->check_customer_otp('',$id);
-                               
-                                //Generate OTP
-                               $otp = $this->api_model->generateNumericOTP('4');
-                               $code = base64_encode($id.'-'.$data['mobile_number'].'-'.date('H:i:s'));
-
-                               $this->api_model->update_profile_fields($id,'confirmation_code',$code,'','');
-
-                               $url = base_url().'users/users/forget_password/'.$code;
-                               $htmlContent = "<a href='".$url."' >Click here to reset password</a> ";
-                               $this->api_model->sendSMS($data['mobile_number'],$htmlContent);
-                               $this->load->library('mail');
-                               $mail = $this->email;
-                               $config['charset'] = 'utf-8';
-                               $config['wordwrap'] = TRUE;
-                               $config['mailtype'] = 'html';
-                               $mail->initialize($config);
-                                //Email
-                                $this->email->from($this->config->item('default_from_email'), $this->config->item('default_email_name'));
-                                $this->email->to($customer_data['email']);
-                                $this->email->subject('Forget Password Recovery');
-                                $this->email->message($htmlContent);
-                                $data =  $this->email->send();
-                                $output = array ('status' => 'Success', 'message' => 'We have sent you a message with password reset link to your mobile and email, please click on the url and reset your password');
-                            }else{
-                                $output = array ('status' => 'Success', 'message' => ''.$msg.'');
-                            }
-                            echo json_encode($output);
-                        } else {
-                            $output = array ('status' => 'Error', 'message' => 'Somthing went wrong');
-                            echo json_encode($output);
-                        }
-                    }else{
-                        $output = array ('status' => 'Error', 'message' => 'Invalid OTP');
-                        echo json_encode($output);
-                    }
-                    
-                } 
+			$customer = $this->api_model->forgot_password($json_input);
+			if($customer){
+				$otp = $this->api_model->generateNumericOTP('4');
+				$update_data['iOtpCode'] = $otp;
+				$this->api_model->update_fields($customer['iCustomerId'],$update_data);
+				$details = $this->api_model->get_customer_details($customer['iCustomerId']	);
+				$output = array(
+					'status' => 'success', 'code' =>200 ,'message' => 'OTP sent successfully','data'=> $details
+				);
+				$this->response($output);
+			}else{
+				$output = array(
+					'status' => 'error', 'code'=>415 , 'message' => 'Invalid credentials'
+				);
+			}
         } else {
             $output = array ('status' => 'error', 'message' => 'Please enter input data');
             echo json_encode($output);
