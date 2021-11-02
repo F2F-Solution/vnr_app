@@ -26,7 +26,7 @@
         <div class="card">
             <div class="card-body pt-0">
                 <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-4" id="user_data">
+                <table class="table align-middle table-row-dashed fs-6 gy-4 dataTables" id="user_data">
                     <!--begin::Table head-->
                     <thead>
                         <!--begin::Table row-->
@@ -199,20 +199,18 @@
                 </form>
            </div>
      </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
-<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
-<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>   
-
+</div>  
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" >  
 
  $(document).ready(function(){  
-      var dataTable = $('#user_data').DataTable({  
-           "processing":true,  
+	$('#user_data').DataTable();
+    "processing":true,  
            "serverSide":true,  
            "order":[],  
            "ajax":{  
-			url:"<?php echo base_url() . 'police_officer/list_data'; ?>",  
+            url:"<?php echo base_url() . 'police_officer/list_data'; ?>",  
                 type:"POST"  
            },  
            "columnDefs":[  
@@ -222,6 +220,7 @@
                 },  
            ],  
       });  
+      
  });   
  </script>  
 

@@ -29,7 +29,7 @@
                     <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                            <th     >S.No</th>
+                            <th>S.No</th>
                             <th class="min-w-125px">Designation</th>
                             <th class="min-w-125px">Status</th>
                             <th class="min-w-125px">Actions</th>
