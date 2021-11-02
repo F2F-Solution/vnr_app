@@ -63,6 +63,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content">
@@ -209,7 +210,7 @@
            </div>
      </div>
 </div>  
-
+</div>
 <!-- EDIT PAGE -->
 <div class="modal fade" id="kt_modal_edit_user" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -226,7 +227,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y">
-                <form id="kt_modal_edit_user_form" method="post" class="form"  action="<?php  echo base_url('master/group/update/'.$row->iPoliceOfficerId)?>"  enctype="multipart/form-data">
+                <form id="kt_modal_edit_user_form" method="post" class="form"  action="<?php  echo base_url('master/police_officer/update/'.$post->iPoliceOfficerId)?>"  enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
                                 <div class="current" data-kt-stepper-element="content">
@@ -236,21 +237,21 @@
                                                 <span class="required">Officer Name </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" value="<?php echo $row->vOfficerName ?>" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" value="<?php echo $police_officer[0]['vOfficerName'] ?>" />
                                     </div>
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
 										<span class="required"> Email </span>
 										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 									</label>
-									<input type="text" class="form-control form-control-lg form-control-solid" name="email" value="<?php echo $row->iEmail ?>" />
+									<input type="text" class="form-control form-control-lg form-control-solid" name="email" value="<?php echo $post->iEmail ?>" />
 									</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Contact NO </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" value="<?php echo $row->iMobileNumber ?>" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" value="<?php echo $post->iMobileNumber ?>" />
                                     </div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
@@ -275,7 +276,7 @@
 											<option>SELECT</option>
 											<?php
 											foreach($groups['designation_name'] as $row){
-										       echo  '<option value="'.$row->iDesignationId.'">'.$row->vDesignationName.'</option>';
+										       echo '<option value="'.$row->iDesignationId.'">'.$row->vDesignationName.'</option>';
 											}
 											?>
 										</select>								

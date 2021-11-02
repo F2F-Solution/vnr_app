@@ -92,4 +92,4 @@ class Policeofficer_model extends CI_model{
         $this->db->where('iPoliceOfficerId', $iPoliceOfficerId);
         $this-> db->delete('vnr_police_officer');
     }
- }
+ }  
