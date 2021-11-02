@@ -64,7 +64,7 @@
                         <!--begin::Modal content-->
                         <div class="modal-content">
                             <!--begin::Modal header-->
-                            <div class="modal-header" id="kt_modal_add_user_header">
+                            <div class="modal-header" id="kt_modal_edit_user_header">
                                 <!--begin::Modal title-->
                                 <h2 class="fw-bolder">Edit User</h2>
                                 <!--end::Modal title-->
