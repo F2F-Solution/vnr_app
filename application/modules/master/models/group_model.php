@@ -31,4 +31,5 @@ class group_model extends CI_model{
         $this->db->where('iGroupid', $iGroupid);
         $this-> db->delete('vnr_police_group');
     }
+    
 }

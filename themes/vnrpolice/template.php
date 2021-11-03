@@ -21,8 +21,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
-		<!--begin::Page Vendor Stylesheets(used by this page)-->
-		<link href="<?php echo $theme_path ?>/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+	
 		<!--end::Page Vendor Stylesheets-->
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="<?php echo $theme_path ?>/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -69,8 +68,9 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
 									</div>
 								</div>
+								<?php $uriMethod_name=$this->router->fetch_method(); ?>
 								<div class="menu-item">
-									<a class="menu-link active" href="<?php echo base_url();?>user/dashboard">
+									<a 	<?php if($uriMethod_name=="dashboard"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?>  href="<?php echo base_url();?>user/dashboard">
 										<span class="menu-icon">
 											<i class="bi bi-grid fs-3"></i>
 										</span>
@@ -86,7 +86,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 									</span>
                                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                                       <div class="menu-item">
-											<a class="menu-link" href="<?php echo base_url();?>master/designation">
+											<a 	<?php if($uriMethod_name=="designation"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/designation">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -94,7 +94,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 											</a>
 										</div>
                                         <div class="menu-item">
-											<a class="menu-link" href="<?php echo base_url();?>master/department">
+											<a 	<?php if($title=="Department Pages"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/department">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -102,7 +102,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 											</a>
 										</div>
                                         <div class="menu-item">
-											<a class="menu-link" href="<?php echo base_url();?>master/group">
+											<a 	<?php if($uriMethod_name=="group"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/group">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -110,7 +110,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 											</a>
 										</div>
                                         <div class="menu-item">
-													<a class="menu-link" href="<?php echo base_url();?>master/police_officer">
+													<a	<?php if($uriMethod_name=="police_officer"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/police_officer">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
@@ -122,18 +122,23 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 									</div>
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+							    	<a	<?php// if($uriMethod_name=="police_station"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php //echo base_url();?>master/police_station">
 									<span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-shield-check fs-3"></i></span>
 										<span class="menu-title">Police Station</span>
 									</span>
+                                    </a>
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+								<a	<?php// if($uriMethod_name=="locked_home"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php //echo base_url();?>master/police_station">
 									<span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-hr fs-3"></i></span>
 										<span class="menu-title">Locked Home</span>
 									</span>
+                                </a>
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+								<a	<?php// if($uriMethod_name=="manage_ads"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php //echo base_url();?>master/police_station">
 									<span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-calendar3-event fs-3"></i></span>
 										<span class="menu-title">Manage Ads</span>
@@ -310,10 +315,9 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 		<script src="<?php echo $theme_path ?>/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="<?php echo $theme_path ?>/assets/js/scripts.bundle.js"></script>
 		<!--end::Global Javascript Bundle-->
-		<!--begin::Page Vendors Javascript(used by this page)-->
-		<script src="<?php echo $theme_path ?>/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 		<!--end::Page Vendors Javascript-->
-		<!--begin::Page Custom Javascript(used by this page)-->
+		<!--begin::Page Custom Javascript(used by this 	page)-->
+		<script src="<?php echo $theme_path ?>/assets/js/custom/modals/offer-a-deal.bundle.js"></script>
 		<script src="<?php echo $theme_path ?>/assets/js/custom/widgets.js"></script>
 		<script src="<?php echo $theme_path ?>/assets/js/custom/apps/chat/chat.js"></script>
 		<script src="<?php echo $theme_path ?>/assets/js/custom/modals/create-app.js"></script>

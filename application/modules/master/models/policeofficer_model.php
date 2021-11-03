@@ -55,7 +55,11 @@ class Policeofficer_model extends CI_model{
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
+        $this->db->select('vnr_police_officer.*,designation.vDesignationName,department.vDepartmentName,group.vGroupName');
         $this->db->from('vnr_police_officer');
+        $this->db->join('vnr_police_designation as designation', 'vnr_police_officer.iDesignationId = designation.iDesignationId', 'left');
+        $this->db->join('vnr_police_department as department', 'vnr_police_officer.iDepartmentId = department.iDepartmentId', 'left');
+        $this->db->join('vnr_police_group as group', 'vnr_police_officer.iGroupid = group.iGroupid', 'left');
         // $this->db->where(array('category' => $category, 'display' => 'true'));       
         $query = $this->db->get();
         return $query->result();
@@ -66,9 +70,26 @@ class Policeofficer_model extends CI_model{
         return $this->db->count_all_results();
     }
 
-    function count_filtered_gen_posts($category) {
+    function count_filtered_gen_posts() {
         $this->list_data();
             $query = $this->db->get('vnr_police_officer');
         return $query->num_rows();
     }
- }
+   // edit data
+    public function find_data($iPoliceOfficerId){
+        $this->db->where('iPoliceOfficerId', $iPoliceOfficerId);
+        $query = $this->db->get('vnr_police_officer');
+        return $query->row_array();
+    }
+     //update data
+     public function update_data($data,$iPoliceOfficerId){
+        $this->db->where('iPoliceOfficerId', $iPoliceOfficerId);
+        $this->db->update('vnr_police_officer',$data);
+    }
+    //Delete data
+    public function delete_data($iPoliceOfficerId){
+        // print_r($iPoliceOfficerId);exit;
+        $this->db->where('iPoliceOfficerId', $iPoliceOfficerId);
+        $this-> db->delete('vnr_police_officer');
+    }
+ }  
