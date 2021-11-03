@@ -83,9 +83,16 @@ class Api_model extends CI_Model {
         $result=array();
         if(!empty($query)){
             if($query['tOtpVerify'] == 1){
-                $result['customer_details']=$query;
+                $update['tLoginStatus'] = 1;
+                $this->db->update('vnr_customer',$update,array('iCustomerId'=>$query['iCustomerId']));
+                $this->db->select('*');
+                $this->db->where('iCustomerId',$query['iCustomerId']);
+                $this->db->from('vnr_customer');
+                $result = $this->db->get()->result_array();
                 return $result;
             }else{
+                $this->db->where('iCustomerId',$query['iCustomerId']);
+                $this->db->delete('vnr_customer');
                 return 1;
             }
         }
@@ -94,7 +101,7 @@ class Api_model extends CI_Model {
 
     public function check_customer_otp($data){
         $this->db->select('*');
-        $this->db->where('iCustomerId',$data['customer_id']);
+        $this->db->where('iCustomerId',$data);
         $query = $this->db->get('vnr_customer')->row_array();
         if(!empty($query)){
             //$result['customer_id']=$query['id'];
@@ -117,12 +124,12 @@ class Api_model extends CI_Model {
         $this->db->where($column,$email);
         $this->db->where('tStatus',1);
         if($id != '')
-            $this->db->where('id !=',$id);
-        $result = $this->db->get($this->customers)->row_array();
+            $this->db->where('iCustomerId !=',$id);
+        $result = $this->db->get('vnr_customer')->row_array();
         if(!empty($result)){
             if($result['otp_verify'] == 0){
-                $this->db->where('id',$result['id']);
-                $this->db->delete($this->customers);
+                // $this->db->where('id',$result['id']);
+                // $this->db->delete($this->customers);
                 return false;
             }else{
                 return $result;
@@ -188,8 +195,8 @@ class Api_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('vnr_police_station');
         $query = $this->db->get();
-        if($query-num_rows() >0){
-        return $query->row_array();
+        if($query->num_rows() >0){
+        return $query->result_array();
         }else{
             return false;
         }
@@ -199,8 +206,8 @@ class Api_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('vnr_police_officer');
         $query = $this->db->get();
-        if($query-num_rows() >0){
-        return $query->row_array();
+        if($query->num_rows() >0){
+        return $query->result_array();
         }else{
             return false;
         }
@@ -211,7 +218,18 @@ class Api_model extends CI_Model {
         $this->db->from('vnr_manage_ads');
         $query = $this->db->get();
         if($query->num_rows() >0){
-            return $query->row_array();
+            return $query->result_array();
+        }else{
+            return false;
+        }
+    }
+
+    public function get_news(){
+        $this->db->select('*');
+        $this->db->from('vnr_news');
+        $query = $this->db->get();
+        if($query->num_rows() >0){
+            return $query->result_array();
         }else{
             return false;
         }

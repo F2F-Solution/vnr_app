@@ -138,19 +138,19 @@ class Api extends REST_Controller {
                 if ($login_result) {
                     if($login_result == 1){
                         $output = array ('status' => 'Error', 'message' => 'OTP not verified');
-                        echo json_encode($output);
+						$this->response($output);
                     }else{
                         $output = array ('status' => 'Success', 'message' => 'Login successfully','data'=>$login_result);
-                        echo json_encode($output);
+						$this->response($output);
                     }
                    
                 } else {
                     $output = array ('status' => 'Error', 'message' => 'Invalid login credentials');
-                    echo json_encode($output);
+					$this->response($output);
                 }
         } else {
             $output = array ('status' => 'error', 'message' => 'Please mobile number and password');
-            echo json_encode($output);
+			$this->response($output);
         }
     }
 
@@ -161,7 +161,7 @@ class Api extends REST_Controller {
                 if (!empty($otp_result) && $otp_result['iOtpCode'] == $json_input['otp_code']) {
                     $update_data['tOtpVerify']=1;
                     $this->api_model->update_fields($otp_result['iCustomerId'],$update_data);
-                    $output = array ('status' => 'Success', 'message' => 'Otp Verified successfully','data'=>$otp_result);
+                    $output = array ('status' => 'Success','code' => 200 , 'message' => 'Otp Verified successfully','data'=>$otp_result);
                     $this->response($output);
                 } else {
                     $output = array ('status' => 'Error', 'message' => 'Invalid OTP');
@@ -297,27 +297,46 @@ class Api extends REST_Controller {
 		}
 	}
 
-	// public function update_profile_details(){
-	// 	$json_input = $this->_get_customer_post_values();
-	// 	if(!empty($json_input)){
-	// 		$customer['vName'] = $data_input['consumer_name'];
-	// 		$customer['vEmail'] = $data_input['email_id'];
-	// 		$customer['dDob'] = $data_input['dob'];
-	// 		$customer['iMobileNumber'] = $data_input['mobile_number'];
-	// 		$customer['vPassword'] = $data_input['password'];
-	// 		$customer['vAddress'] = $data_input['address'];
-	// 		$customer['iPincode'] = $data_input['pincode'];
-	// 		$check_duplicate_email = $this->api_model->check_field_exists('vEmail',$data_input['email_id'],$data_input['customer_id']);
-			
+	public function update_profile_details(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			$customer['vCustomerName'] = $json_input['consumer_name'];
+			$customer['vEmail'] = $json_input['email_id'];
+			$customer['dDob'] = $json_input['dob'];
+			$customer['iMobileNumber'] = $json_input['mobile_number'];
+			$customer['vPassword'] = $json_input['password'];
+			$customer['vAddress'] = $json_input['address'];
+			$customer['iPincode'] = $json_input['pincode'];
+			$check_duplicate_email = $this->api_model->check_field_exists('vEmail',$json_input['email_id'],$json_input['customer_id']);
+			if($check_duplicate_email){
+				$output = array ('status' => 'Error', 'message' => 'Email Address Already Exists');
+				$this->response($output);
+				exit;
+			}
+			$profile = $this->api_model->update_fields($json_input['customer_id'],$customer);
+                if ($profile) {
+                    $update_data = $this->api_model->check_customer_otp($json_input['customer_id']);
+                    $output = array ('status' => 'Success', 'message' => 'Profile details updated','data'=>$update_data);
+					$this->response($output);
+                } else {
+                    $output = array ('status' => 'Error', 'message' => 'Profile details not updated');
+					$this->response($output);
+                }
 
-	// 	}
-	// }
+		} else {
+			$output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
+	}
 
 	public function customer_logout(){
 		$json_input = $this->_get_customer_post_values();
 		if(!empty($json_input)){
 			$logout = $this->api_model->get_customer_details($json_input['customer_id']);
 			if($logout){
+				$update = array();
+				$update['tLoginStatus'] = 0;
+				$this->api_model->update_fields($logout['iCustomerId'],$update);
 				$output = array(
 					'code'=> '200',
 					'type'=> 'Success',
@@ -351,7 +370,7 @@ class Api extends REST_Controller {
 				$otp = $this->api_model->generateNumericOTP('4');
 				$update_data['iOtpCode'] = $otp;
 				$this->api_model->update_fields($customer['iCustomerId'],$update_data);
-				$details = $this->api_model->get_customer_details($customer['iCustomerId']	);
+				$details = $this->api_model->get_customer_details($customer['iCustomerId']);
 				$output = array(
 					'status' => 'success', 'code' =>200 ,'message' => 'OTP sent successfully','data'=> $details
 				);
@@ -418,6 +437,24 @@ class Api extends REST_Controller {
 			$output = array (
 				'status' => 'Error', 
 				'message' => 'Ads not found'
+			);
+			$this->response($output);
+		}
+	}
+
+	public function get_covid_updates(){
+		$ads = $this->api_model->get_news();
+		if($ads){
+			$output = array(
+				'status'=> 'Success',
+				'message'=>'News list',
+				'data' => $ads
+			);
+			$this->response($output);
+		}else{
+			$output = array (
+				'status' => 'Error', 
+				'message' => 'News not found'
 			);
 			$this->response($output);
 		}
