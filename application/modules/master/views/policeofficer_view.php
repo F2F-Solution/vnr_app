@@ -179,7 +179,7 @@
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7"></i>
 												<!--begin::Inputs-->
-												<input type="file" name="image" accept=".png, .jpg, .jpeg" />
+												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
 												<!-- <input type="hidden"  name="avatar_remove" /> -->
 												<!--end::Inputs-->
 											</label>
@@ -237,21 +237,21 @@
                                                 <span class="required">Officer Name </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" value="<?php echo $police_officer[0]['vOfficerName'] ?>" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" id="officer_name"  />
                                     </div>
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
 										<span class="required"> Email </span>
 										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 									</label>
-									<input type="text" class="form-control form-control-lg form-control-solid" name="email" value="<?php echo $post->iEmail ?>" />
+									<input type="text" class="form-control form-control-lg form-control-solid" name="email" id="officer_email" />
 									</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Contact NO </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" value="<?php echo $post->iMobileNumber ?>" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" id="officer_number"  />
                                     </div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
@@ -259,12 +259,21 @@
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
 										<div class="form-check form-check-custom form-check-solid me-10">
-											<input class="form-check-input" type="radio" name="gender" value="female" id="flexRadioLg"/>
-											<label class="form-check-label" for="flexRadioLg"> Female </label>
+											<input class="form-check-input" type="radio" name="gender" value="female" id="flexRadioLg"
+											<?php
+												if($post->vGender=='female')
+													{
+													echo "checked";
+													}
+													?>><label class="form-check-label" for="flexRadioLg"> Female </label>
                                    		</div><br>
                                    		<div class="form-check form-check-custom form-check-solid me-10">
-											<input class="form-check-input" type="radio" name="gender" value="male" id="flexRadioLg"/>
-											<label class="form-check-label" for="flexRadioLg">Male </label>
+											<input class="form-check-input" type="radio" name="gender" value="male" id="flexRadioLg" <?php
+												if($post->vGender=='female')
+													{
+													echo "checked";
+													}
+													?>>	<label class="form-check-label" for="flexRadioLg">Male </label>
                                  		</div>
                                     </div>
 									<div class="fv-row mb-10">
@@ -272,7 +281,7 @@
 											<span class="required"> Designation </span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
-										<select class="form-select form-select-solid " name="designation" aria-label="Select example">
+										<select class="form-select form-select-solid " name="designation" id="designation" aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['designation_name'] as $row){
@@ -286,7 +295,7 @@
 											<span class="required">Department </span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
-										<select class="form-select form-select-solid "  name="department"  aria-label="Select example">
+										<select class="form-select form-select-solid "  name="department" id="department" aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['department_name'] as $row){
@@ -300,7 +309,7 @@
 											<span class="required">Group</span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
 										</label>
-										<select class="form-select form-select-solid "  name="group"  aria-label="Select example">
+										<select class="form-select form-select-solid "  name="group" id="group" aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['group_name'] as $row){
@@ -314,7 +323,7 @@
 												<span class="required">Police station</span>
 												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify police station"></i>
 											</label>
-											<input type="text" class="form-control form-control-lg form-control-solid" name="station" placeholder="" value="<?php echo $row->iPoliceStationId ?>" />
+											<input type="text" class="form-control form-control-lg form-control-solid" name="station" id="station" placeholder="" value="<?php echo $row->iPoliceStationId ?>" />
 									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
@@ -377,4 +386,28 @@
                 type:"POST"
             }
         });
+	$(document)	.on('click','.addAttr',function(){
+		var id = $(this).attr('data-id');
+		$.ajax({
+			type : "POST",
+			url  : "<?php echo base_url() . 'master/police_officer/get';?>",
+			dataType : "JSON",
+			data : {id:id},
+			success: function(data){
+				console.log(data);	
+				$("#officer_name").val(data.vOfficerName);
+				$("#officer_email").val(data.iEmail);
+				$('#officer_number').val(data.iMobileNumber);
+				// $("#flexRadioLg").val(data.vGender);
+				$("input[name=gender] :checked").val(data.vGender);
+				$('#designation').val(data.iDesignationId);
+				$("#group").val(data.iGroupid);
+				$("#department").val(data.iDepartmentId);
+				$("#station").val(data.iPoliceStationId);
+                $("#image").val(data.tImage);
+			}
+		});	
+		return false;
+	});
+
 </script>  
