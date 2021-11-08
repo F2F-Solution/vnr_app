@@ -157,7 +157,7 @@ class Api extends REST_Controller {
 	public function check_customer_otp(){
 		$json_input = $this->_get_customer_post_values();
         if (!empty($json_input)) {
-                $otp_result = $this->api_model->check_customer_otp($json_input);
+                $otp_result = $this->api_model->check_customer_otp($json_input['customer_id']);
                 if (!empty($otp_result) && $otp_result['iOtpCode'] == $json_input['otp_code']) {
                     $update_data['tOtpVerify']=1;
                     $this->api_model->update_fields($otp_result['iCustomerId'],$update_data);
@@ -199,14 +199,14 @@ class Api extends REST_Controller {
 			$customer['iCustomerId'] = $data_input['customer_id'];
 			$customer['dFromDate'] = $data_input['startdate'];
 			$customer['dToDate'] = $data_input['Enddate'];
+			$customer['vCustomerName'] = $data_input['customer_name'];
+			$customer['iPhoneNumber'] = $json_input['mobile_number'];
 			$customer['iPincode'] = $data_input['pincode'];
 			$customer['iIdProofNumber'] = $data_input['identification_number'];
 			$customer['vIdProoftype'] = $data_input['identification_number_type'];
 			$customer['vAttachment'] = $data_input['attachments'];
 			$customer['tStatus'] = 1;
 
-			$otp = $this->api_model->generateNumericOTP('4');
-			// $customer['iOtpCode'] = $otp;
 			if($customer['dFromDate'] == ""){
 				$output = array(
 					'status' => 'false',
@@ -456,6 +456,37 @@ class Api extends REST_Controller {
 				'status' => 'Error', 
 				'message' => 'News not found'
 			);
+			$this->response($output);
+		}
+	}
+
+	public function update_locked_home_details(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			$home['iLockedHomeId'] = $json_input['customer_id'];
+			$home['dFromDate'] = $json_input['startdate'];
+			$home['dToDate'] = $json_input['Enddate'];
+			$home['vCustomerName'] = $json_input['customer_name'];
+			$home['iPhoneNumber'] = $json_input['mobile_number'];
+			$home['vAddress'] = $json_input['password'];
+			$home['iIdProofNumber'] = $json_input['address'];
+			$home['iPincode'] = $json_input['pincode'];
+			$home['vAttachment'] = $json_input['attachments'];
+			$home['vIdProoftype'] = $json_input['identification_number_type'];
+			$home['iIdProofNumber'] = $json_input['identification_number'];
+			
+			$update = $this->api_model->update_locked_home($json_input['customer_id'],$home);
+                if ($update) {
+					$home_details = $this->api_model->get_lockedhome_details_by_insert_id($json_input['customer_id']);
+                    $output = array ('status' => 'Success', 'code'=>200, 'message' => 'Details updated','data'=>$home_details);
+					$this->response($output);
+                } else {
+                    $output = array ('status' => 'Error', 'message' => 'Details not updated');
+					$this->response($output);
+                }
+
+		} else {
+			$output = array ('status' => 'error', 'message' => 'Please enter input data');
 			$this->response($output);
 		}
 	}

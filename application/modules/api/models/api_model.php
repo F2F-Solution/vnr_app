@@ -175,10 +175,10 @@ class Api_model extends CI_Model {
 
     public function get_lockedhome_details_by_insert_id($data){
         $this->db->select('tab_1.*');
-        $this->db->where('tab_1.id', $data);
+        $this->db->where('tab_1.iLockedHomeId', $data);
         $query = $this->db->get('vnr_locked_home'. ' AS tab_1');
         if ($query->num_rows() > 0) {
-            return $query->result_array();
+            return $query->row_array();
         }
         return NULL;
     }
@@ -203,8 +203,12 @@ class Api_model extends CI_Model {
     }
 
     public function police_officers_details(){
-        $this->db->select('*');
-        $this->db->from('vnr_police_officer');
+        $this->db->select('officer.vOfficerName,officer.iMobileNumber,officer.iEmail,officer.vGender,station.vStationName,station.vPrimaryAttender,station.iEmergencyNO,station.iPoliceStationNumber,station.iStationLandNo,station.vEmail,station.vAddress,station.iPincode,station.iLocation,department.vDepartmentName,group.vGroupName,designation.vDesignationName');
+        $this->db->from('vnr_police_officer as officer');
+        $this->db->join('vnr_police_station as station','officer.iPoliceStationId=station.iPoliceStationId','left');
+        $this->db->join('vnr_police_designation as designation','officer.iDesignationId=designation.iDesignationId','left');
+        $this->db->join('vnr_police_department as department','officer.iDepartmentId=department.iDepartmentId','left');
+        $this->db->join('vnr_police_group as group','group.iGroupid=officer.iGroupid','left');
         $query = $this->db->get();
         if($query->num_rows() >0){
         return $query->result_array();
@@ -233,6 +237,13 @@ class Api_model extends CI_Model {
         }else{
             return false;
         }
+    }
+
+    public function update_locked_home($id,$data){
+        $data['tUpdatedAt']=date('Y-m-d h:i:s');
+        $this->db->where('iLockedHomeId',$id);
+        $this->db->update('vnr_locked_home',$data);
+        return true;
     }
 
     // public function get_customer_by_login($mobile_number, $password) {
@@ -266,21 +277,5 @@ class Api_model extends CI_Model {
     //     return NULL;
     // }
     
-    // function get_locked_home_details($data){
-    //     if($this->db->insert('locked_home', $data)){
-    //     $locked_home_id=$this->db->insert_id();
-    //     return $locked_home_id;
-    //     }
-    //     return FALSE; 
-    // }
-    
-    // function get_locked_home_details_by_insert_id($locked_home_id){
-    //     $this->db->select('tab_1.*');
-    //     $this->db->where('tab_1.iLockedHomeId',$locked_home_id);
-    //     $query = $this->db->get('locked_home' . 'AS tab_1');
-    //     if($query->num_rows() > 0){
-    //         return result_array();
-    //     }
-    //     return NULL;
-    // }
+
 }
