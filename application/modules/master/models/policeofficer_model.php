@@ -85,6 +85,7 @@ class Policeofficer_model extends CI_model{
      public function update_data($data,$iPoliceOfficerId){
         $this->db->where('iPoliceOfficerId', $iPoliceOfficerId);
         $this->db->update('vnr_police_officer',$data);
+        // print_r($this->db->last_query());exit;
     }
     //Delete data
     public function delete_data($iPoliceOfficerId){

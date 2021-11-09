@@ -80,7 +80,8 @@ class Police_officer extends MY_Controller {
         echo json_encode($row);
       }
       //update data
-      public function update($iPoliceOfficerId){
+      public function update(){
+        $iPoliceOfficerId = $_POST['policeofficerid'];
         $fileNames = "";
         if (!empty($_FILES['image']['name'])) {
             $config['upload_path']   = './uploads/';
@@ -103,7 +104,8 @@ class Police_officer extends MY_Controller {
             // 'iPoliceStationId' => $this->input->post('station'),
             'tImage'=> $fileName,
         );
-        $this->Policeofficer_model->update_data($data,$iPoliceOfficerId);
+        //  print_r($user);exit;
+        $this->Policeofficer_model->update_data($user,$iPoliceOfficerId);
         redirect($this->config->item('base_url') . 'master/police_officer');
     }
     public function delete($iPoliceOfficerId){

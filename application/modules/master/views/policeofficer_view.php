@@ -1,14 +1,6 @@
 <?php $theme_path = $this->config->item('theme_locations') . 'vnrpolice';?>
 
 <link href="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
-<!--begin::Wrapper-->
-<!-- <div class="d-flex flex-stack mb-5"> -->
-    <!--begin::Search-->
-    <!-- <div class="d-flex align-items-center position-relative my-1">
-        <span class="svg-icon svg-icon-2">...</span>
-        <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Customers"/>
-    </div>
-    -->
 <div class="toolbar" id="kt_toolbar">
     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
         <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
@@ -33,11 +25,8 @@
     <div id="kt_content_container" class="container-xxl">
         <div class="card">
             <div class="card-body pt-0">
-                <!--begin::Table-->
                 <table class="table align-middle table-row-dashed fs-6 gy-4 dataTables" id="user_data">
-                    <!--begin::Table head-->
                     <thead>
-                        <!--begin::Table row-->
                         <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                             <th>S.No</th>
                             <th >Officer Name</th>
@@ -51,14 +40,9 @@
 							<th>Police station</th>
                             <th >Actions</th>
                         </tr>
-                        <!--end::Table row-->
                     </thead>
-                    <tbody  class="text-gray-600 fw-bold">
-                        
-                     </tbody>
-                    <!--end::Table body-->
+                    <tbody></tbody>
                 </table>
-                <!--end::Table-->
             </div>
         </div>
     </div>
@@ -170,35 +154,20 @@
 									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
-										<!--begin::Image input-->
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<!--begin::Preview existing avatar-->
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
-											<!--end::Preview existing avatar-->
-											<!--begin::Label-->
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7"></i>
-												<!--begin::Inputs-->
 												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
-												<!-- <input type="hidden"  name="avatar_remove" /> -->
-												<!--end::Inputs-->
 											</label>
-											<!--end::Label-->
-											<!--begin::Cancel-->
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 												<i class="bi bi-x fs-2"></i>
 											</span>
-											<!--end::Cancel-->
-											<!--begin::Remove-->
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
 												<i class="bi bi-x fs-2"></i>
 											</span>
-											<!--end::Remove-->
 										</div>
-										<!--end::Image input-->
-										<!--begin::Hint-->
 										<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-										<!--end::Hint-->
 									</div>
                                 </div><br>
                             </div>
@@ -227,7 +196,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y">
-                <form id="kt_modal_edit_user_form" method="post" class="form"  action="<?php  echo base_url('master/police_officer/update/'.$post->iPoliceOfficerId)?>"  enctype="multipart/form-data">
+                <form id="editform" method="post" class="form"  action="<?php  echo base_url('master/police_officer/update/'.$post->iPoliceOfficerId)?>"  enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
                                 <div class="current" data-kt-stepper-element="content">
@@ -238,6 +207,7 @@
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid" name="name" id="officer_name"  />
+                                            <input type="hidden" name="policeofficerid" id="policeofficer_id"  />
                                     </div>
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
@@ -259,21 +229,12 @@
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
 										<div class="form-check form-check-custom form-check-solid me-10">
-											<input class="form-check-input" type="radio" name="gender" value="female" id="flexRadioLg"
-											<?php
-												if($post->vGender=='female')
-													{
-													echo "checked";
-													}
-													?>><label class="form-check-label" for="flexRadioLg"> Female </label>
+											<input class="form-check-input gender" type="radio" name="gender" value="female" id="gender_female">
+											<label class="form-check-label " for="gender_female"> Female </label>
                                    		</div><br>
                                    		<div class="form-check form-check-custom form-check-solid me-10">
-											<input class="form-check-input" type="radio" name="gender" value="male" id="flexRadioLg" <?php
-												if($post->vGender=='female')
-													{
-													echo "checked";
-													}
-													?>>	<label class="form-check-label" for="flexRadioLg">Male </label>
+											<input class="form-check-input gender" type="radio" name="gender" value="male" id="gender_male">
+										    <label class="form-check-label " for="gender_male">Male </label>
                                  		</div>
                                     </div>
 									<div class="fv-row mb-10">
@@ -327,35 +288,21 @@
 									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
-										<!--begin::Image input-->
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<!--begin::Preview existing avatar-->
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
-											<!--end::Preview existing avatar-->
-											<!--begin::Label-->
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7"></i>
-												<!--begin::Inputs-->
-												<input type="file" name="image" accept=".png, .jpg, .jpeg" />
-												<!-- <input type="hidden"  name="avatar_remove" /> -->
-												<!--end::Inputs-->
+												<input type="file" name="image" accept=".png, .jpg, .jpeg" id="image">
+												<!-- <img src="<?php echo base_url()?>uploads/Hydrangeas.jpg" alt="profile" id="image" width="50" height="60"> -->
 											</label>
-											<!--end::Label-->
-											<!--begin::Cancel-->
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 												<i class="bi bi-x fs-2"></i>
 											</span>
-											<!--end::Cancel-->
-											<!--begin::Remove-->
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
 												<i class="bi bi-x fs-2"></i>
 											</span>
-											<!--end::Remove-->
 										</div>
-										<!--end::Image input-->
-										<!--begin::Hint-->
 										<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-										<!--end::Hint-->
 									</div>
                                 </div><br>
                             </div>
@@ -367,11 +314,7 @@
            </div>
      </div>
 </div> 
-
-
-
-
-
+<!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <script>
@@ -386,25 +329,29 @@
                 type:"POST"
             }
         });
+		//EDIT FORM DATA
 	$(document)	.on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');
+		var baseurl = "<?php print base_url(); ?>";
 		$.ajax({
 			type : "POST",
 			url  : "<?php echo base_url() . 'master/police_officer/get';?>",
 			dataType : "JSON",
 			data : {id:id},
 			success: function(data){
-				console.log(data);	
 				$("#officer_name").val(data.vOfficerName);
 				$("#officer_email").val(data.iEmail);
 				$('#officer_number').val(data.iMobileNumber);
-				// $("#flexRadioLg").val(data.vGender);
-				$("input[name=gender] :checked").val(data.vGender);
+				if(data.vGender == 'female')
+				$("#gender_female").prop("checked", true);
+				else 
+				$("#gender_male").prop("checked", true);
 				$('#designation').val(data.iDesignationId);
 				$("#group").val(data.iGroupid);
 				$("#department").val(data.iDepartmentId);
 				$("#station").val(data.iPoliceStationId);
-                $("#image").val(data.tImage);
+				$('#image').attr('src',baseurl+'/uploads/'+data.tImage);    
+                $("#policeofficer_id").val(data.iPoliceOfficerId);
 			}
 		});	
 		return false;
