@@ -21,6 +21,7 @@ class Department extends MY_Controller {
             'tStatus' => $this->input->post('status'),
         );
         $this->department_model->store($user);  
+        $this->session->set_flashdata('status', 'Data inserted successfully');
         redirect($this->config->item('base_url') . 'master/department');
       }
       //list data
@@ -66,6 +67,7 @@ class Department extends MY_Controller {
             'tStatus'         => $this->input->post('status'),
         );
         $this->department_model->update_data($data,$iDepartmentId);
+        $this->session->set_flashdata('status', 'Data updated successfully');
         redirect($this->config->item('base_url') . 'master/department');
   }
     public function delete($iDepartmentId){

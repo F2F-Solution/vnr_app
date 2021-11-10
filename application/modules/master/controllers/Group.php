@@ -21,6 +21,7 @@ class Group extends MY_Controller {
             'tStatus' => $this->input->post('status'),
         );
         $this->group_model->store($user);  
+        $this->session->set_flashdata('status', 'Data inserted successfully');
         redirect($this->config->item('base_url') . 'master/group');
       }
       public function list_data(){
@@ -65,6 +66,7 @@ class Group extends MY_Controller {
             'tStatus'         => $this->input->post('status'),
         );
         $this->group_model->update_data($data,$iGroupid);
+        $this->session->set_flashdata('status', 'Data updated successfully');
         redirect($this->config->item('base_url') . 'master/group');
     }
     public function delete($iGroupid){

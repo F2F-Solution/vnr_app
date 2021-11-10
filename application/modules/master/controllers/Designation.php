@@ -21,6 +21,7 @@ class Designation extends MY_Controller {
             'tStatus' => $this->input->post('status'),
         );
         $this->designation_model->store($user);  
+        $this->session->set_flashdata('status', 'Data inserted successfully');
         redirect($this->config->item('base_url') . 'master/designation');
       }
      public function list_data(){
@@ -63,6 +64,7 @@ class Designation extends MY_Controller {
             'tStatus'         => $this->input->post('status'),
         );
         $this->designation_model->update_data($data,$iDesignationId);
+        $this->session->set_flashdata('status', 'Data updated successfully');
         redirect($this->config->item('base_url') . 'master/designation');
     }
     public function delete($iDesignationId){

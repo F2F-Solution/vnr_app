@@ -45,7 +45,7 @@ class User extends MY_Controller {
       'tStatus' => 1,
        );
       $this->User_model->register_user($user);  
-      redirect($this->config->item('base_url') . 'User');
+      redirect($this->config->item('base_url'));
    }
    //Validate user
    public function verify_user(){
@@ -58,7 +58,7 @@ class User extends MY_Controller {
       if($login){
       redirect($this->config->item('base_url') . 'user/dashboard');
       }else{
-         redirect($this->config->item('base_url') . 'user/');
+         redirect($this->config->item('base_url'));
       }
    }
    //dashboard

@@ -39,6 +39,7 @@ class Police_officer extends MY_Controller {
             'tImage'=> $fileNames,
         );
         $this->Policeofficer_model->store($user);  
+        $this->session->set_flashdata('status', 'Data inserted successfully');
         redirect($this->config->item('base_url') . 'master/police_officer');
       }
       public function list_data(){
@@ -74,9 +75,6 @@ class Police_officer extends MY_Controller {
       public function get(){
           $iPoliceOfficerId = $_POST['id'];
         $row = $this->Policeofficer_model->find_data($iPoliceOfficerId);
-        // $data['police_officer'] = $row;
-        // $this->template->write_view('content', 'master/policeofficer_view', $data);
-        // $this->template->render();
         echo json_encode($row);
       }
       //update data
@@ -106,6 +104,7 @@ class Police_officer extends MY_Controller {
         );
         //  print_r($user);exit;
         $this->Policeofficer_model->update_data($user,$iPoliceOfficerId);
+        $this->session->set_flashdata('status', 'Data updated successfully');
         redirect($this->config->item('base_url') . 'master/police_officer');
     }
     public function delete($iPoliceOfficerId){

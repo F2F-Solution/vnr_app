@@ -21,6 +21,11 @@
         </div>
     </div>
 </div>
+<?php if($this->session->flashdata('status')): ?>
+                <div id="fadeout" class="alert alert-success" role="alert">
+                    <?= $this->session->flashdata('status'); ?>
+                </div>
+<?php endif; ?>
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
         <div class="card">
@@ -48,6 +53,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content">
@@ -63,7 +69,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y">
-                <form id="kt_modal_add_user_form" method="post" class="form" action="<?php echo base_url();?>master/police_officer/save_data/" enctype="multipart/form-data">
+                <form id="form" method="post" class="form" action="<?php echo base_url();?>master/police_officer/save_data/" enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
                                 <div class="current" data-kt-stepper-element="content">
@@ -73,21 +79,24 @@
                                                 <span class="required">Officer Name </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" />
-                                    </div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" id="name" />
+											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
+										</div>
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
 										<span class="required"> Email </span>
 										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 									</label>
-									<input type="text" class="form-control form-control-lg form-control-solid" name="email" />
-									</div>
+									<input type="text" class="form-control form-control-lg form-control-solid" name="email"  id="email"/>
+									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
+								</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Contact NO </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" id="number" />
+											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
@@ -102,6 +111,8 @@
 											<input class="form-check-input" type="radio" name="gender" value="male" id="flexRadioLg"/>
 											<label class="form-check-label" for="flexRadioLg">Male </label>
                                  		</div>
+										 <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
+
                                     </div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
@@ -115,7 +126,8 @@
 										       echo  '<option value="'.$row->iDesignationId.'">'.$row->vDesignationName.'</option>';
 											}
 											?>
-										</select>								
+										</select>	
+										<!-- <span id="input5" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
@@ -129,7 +141,8 @@
 										       echo  '<option value="'.$row->iDepartmentId.'">'.$row->vDepartmentName.'</option>';
 											}
 											?>
-										</select>									
+										</select>	
+										<!-- <span id="input6" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
@@ -143,7 +156,8 @@
 										       echo  '<option value="'.$row->iGroupid.'">'.$row->vGroupName.'</option>';
 											}
 											?>
-										</select>									
+										</select>
+										<!-- <span id="input7" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
 									<div class="fv-row mb-10">
 											<label class="d-flex align-items-center fs-5 fw-bold ">
@@ -151,7 +165,8 @@
 												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify police station"></i>
 											</label>
 											<input type="text" class="form-control form-control-lg form-control-solid" name="station" placeholder="" value="" />
-									</div>
+											<!-- <span id="input8" class="val" style="color:#F00; font-style:oblique;"></span> -->
+										</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
@@ -169,10 +184,11 @@
 										</div>
 										<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
 									</div>
+									<span id="input9" class="val" style="color:#F00; font-style:oblique;"></span>
                                 </div><br>
                             </div>
                           </div>
-                        	<button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+                        	<button type="submit" class="btn btn-lg btn-primary" id="submit1" >Submit</button>
                         </div>
                     </div>
                 </form>
@@ -358,3 +374,106 @@
 	});
 
 </script>  
+
+<!-- FLASH DATA FADEOUT -->
+<script> 
+    setTimeout(function() {
+        $('#fadeout').hide('fast');
+    }, 2000);
+</script>
+
+<!-- validation -->
+<!-- <script>
+$(document).ready(function () {
+$("#submit1").on('click',function (event) {
+event.preventDefault();
+var error = 0;
+$('#form').find('.required').each(function(){
+var _val = $(this).val();
+var type = $(this).attr('type');
+if(type == 'radio'){
+    var gender = $('input[name="gender"]:checked').length;
+    
+    if(gender == 0){
+        $(this).closest('div.form-group').find('span.val').text("Required Field");
+    }else{
+        $(this).closest('div.form-group').find('span.val').text("");
+        $('input[name="gender"]').removeClass('required');
+    }
+}else{
+    if(_val == ''){
+        error++;  
+        $(this).closest('div').find('span.val').text("Required Field");
+    }else{
+        $(this).closest('div').find('span.val').text("");
+    }    
+}
+
+});
+// alert(error);
+if(error > 8){
+    return false;
+}else{
+$("form").submit();
+}
+});
+var form_validation = false;
+$("#name").on('blur', function() {
+    var name = $("#name").val();
+    var filter = /^[a-zA-Z.\s]+[\S]{3,30}$/;
+    if (name == "" || name == null || name.trim().length == 0) {
+        form_validation = false;
+        $("#input1").html("Required Field");
+        // return false;
+    } else if (!filter.test(name)) {
+        form_validation = false;
+        $("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+        // return false;
+    } else {
+        $("#input1").html("");
+        form_validation = true;
+        // return true;
+    }
+});
+$("#email").on('blur', function() {
+var mail = $("#email").val();
+var efilter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+if (mail == "") {
+    form_validation = false;
+    $("#input2").html("Required Field");
+} else if (!efilter.test(mail) && mail != "") {
+    form_validation = false;
+    $("#input2").html("Enter Valid Email");
+} else {
+    form_validation = true;
+    $("#input2").html("");
+}
+});
+$("#number").on('blur', function() {
+var number = $("#number").val();
+var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+if (number =="") {
+    form_validation = false;
+    $("#input3").html("Required Field");
+} else if (!nfilter.test(number) && number != "") {
+    form_validation = false;
+    $("#input3").html("Enter Valid number");
+} else {
+    form_validation = true;
+    $("#input3").html("");
+}
+});
+$("#image").on('blur', function() {
+var resume = $("#image").val();
+if (resume =="") {
+    form_validation = false;
+    $("#input9").html("Required Field");
+} 
+else {
+    form_validation = true;
+    $("#input9").html("");
+}
+});
+});
+</script> -->
+
