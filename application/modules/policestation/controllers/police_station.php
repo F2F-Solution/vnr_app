@@ -23,6 +23,7 @@ class Police_station extends MY_Controller {
             'iLocation' => $this->input->post('map'),
             'iPincode'=> $this->input->post('pincode'),
         );
+        // print_r($user);exit;
         $this->Policestation_model->store($user);  
         redirect($this->config->item('base_url') . 'policestation/police_station');
       }
@@ -39,7 +40,7 @@ class Police_station extends MY_Controller {
           $row[] = $post->iPoliceStationNumber;
           $row[] = $post->iEmergencyNO;
           $row[] = $post->iStationLandNo;
-          $row[] = $post->vPrimaryAttender;
+          $row[] = $post->vOfficerName;
           $row[] = $post->vAddress;
           $row[] = $post->iLocation;
           $row[] = $post->iPincode;

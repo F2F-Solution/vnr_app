@@ -1,5 +1,5 @@
+<!DOCTYPE html>
 <?php $theme_path = $this->config->item('theme_locations') . 'vnrpolice';?>
-
 <link href="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
 <div class="toolbar" id="kt_toolbar">
     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
@@ -17,7 +17,7 @@
             </ul>
         </div>
         <div class="d-flex align-items-center py-1">
-            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add Police Station</button>
+            <button type="button" class="btn btn-sm btn-primary add_station" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add Police Station</button>
         </div>
     </div>
 </div>
@@ -46,7 +46,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -128,7 +127,10 @@
                                             <span class="required"> Map </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="map"  id="map"/>
+                                        <!-- <input type="text" class="form-control form-control-lg form-control-solid" name="map"  id="map"/> -->
+                                        <div id="map" style="width: 300px; height: 300px;"></div>
+                                        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+                                        
                                         <span id="input6" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                    <div class="fv-row mb-10">
@@ -234,7 +236,7 @@
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <!-- <input type="text" class="form-control form-control-lg form-control-solid" name="map"  id="map1"/> -->
-                                        <div id="map"></div>
+                                        <!-- <div id="map"></div> -->
                                         <span id="input13" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                    <div class="fv-row mb-10">
@@ -256,22 +258,6 @@
            </div>
      </div>
 </div> 
-
-<script
-      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&v=weekly"
-      async
-    ></script>
-<script>
-    let map;
-
-    function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8,
-    });
-}
-
- </script>
 <!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
@@ -312,3 +298,28 @@
 	});
 
 </script>  
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwpXSYswuXaJyfDoBxXTxYeAYRwzZIjGE"async></script>
+<script>
+$(document).ready(function() {
+    $(document).on("click", ".add_station", function(e) {
+        e.preventDefault();
+        
+    });
+    var map;
+    var elevator;
+    var latlng=new google.maps.LatLng('11.016844', '76.955833');
+    var myOptions = {
+        zoom: 6,
+        center: latlng
+    };
+    map = new google.maps.Map($('#map')[0], myOptions);
+
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        icon: 'http://google-maps-icons.googlecode.com/files/walking-tour.png',
+        draggable: true
+    });
+  
+});	
+</script>

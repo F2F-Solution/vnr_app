@@ -68,9 +68,9 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
 									</div>
 								</div>
-								<?php $uriMethod_name=$this->router->fetch_method(); ?>
+								<?php //$uriMethod_name=$this->router->fetch_method(); ?>
 								<div class="menu-item">
-									<a 	<?php if($uriMethod_name=="dashboard"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?>  href="<?php echo base_url();?>user/dashboard">
+									<a class='menu-link active' href="<?php echo base_url();?>user/dashboard">
 										<span class="menu-icon">
 											<i class="bi bi-grid fs-3"></i>
 										</span>
@@ -130,7 +130,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
                                     </a>
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-								<a	<?php// if($uriMethod_name=="locked_home"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php //echo base_url();?>master/police_station">
+								<a href="<?php echo base_url();?>lockedhome/Lockedhome">
 									<span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-hr fs-3"></i></span>
 										<span class="menu-title">Locked Home</span>
