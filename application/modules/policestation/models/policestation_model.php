@@ -2,7 +2,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class policestation_model extends CI_model{
+class Policestation_model extends CI_model{
     public function __construct(){
          $table = 'vnr_police_station';
          $column_order = array(null, 'S.No','Station Name','Contact No','Emergency contact','landline no','Primary attender','Address','Map','Pincode','Actions'); //set column field database for datatable orderable
@@ -46,13 +46,13 @@ class policestation_model extends CI_model{
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
-
     public function listtable_data() {
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('*');
+        $this->db->select('vnr_police_station.*,officer.vOfficerName');
         $this->db->from('vnr_police_station');
+        $this->db->join('vnr_police_officer as officer', 'vnr_police_station.vPrimaryAttender = officer.iPoliceOfficerId', 'left');
         $query = $this->db->get();
         return $query->result();
     }

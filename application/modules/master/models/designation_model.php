@@ -2,7 +2,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class designation_model extends CI_model{
+class Designation_model extends CI_model{
     public function __construct(){
         $table = 'vnr_police_designation';
         $column_order = array(null, 'S.No','Designaton','Status','Actions'); //set column field database for datatable orderable

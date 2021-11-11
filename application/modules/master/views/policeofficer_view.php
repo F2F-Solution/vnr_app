@@ -160,19 +160,26 @@
 										<!-- <span id="input7" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
 									<div class="fv-row mb-10">
-											<label class="d-flex align-items-center fs-5 fw-bold ">
-												<span class="required">Police station</span>
-												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify police station"></i>
-											</label>
-											<input type="text" class="form-control form-control-lg form-control-solid" name="station" placeholder="" value="" />
-											<!-- <span id="input8" class="val" style="color:#F00; font-style:oblique;"></span> -->
-										</div>
+										<label class="d-flex align-items-center fs-5 fw-bold ">
+											<span class="required">Police station</span>
+											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
+										</label>
+										<select class="form-select form-select-solid "  name="station"  aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											foreach($groups['station_name'] as $row){
+										       echo  '<option value="'.$row->iPoliceStationId.'">'.$row->vStationName.'</option>';
+											}
+											?>
+										</select>
+										<!-- <span id="inputs" class="val" style="color:#F00; font-style:oblique;"></span> -->
+									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-												<i class="bi bi-pencil-fill fs-7"></i>
+												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
 												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
 											</label>
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
@@ -296,11 +303,18 @@
 										</select>									
 									</div>
 									<div class="fv-row mb-10">
-											<label class="d-flex align-items-center fs-5 fw-bold ">
-												<span class="required">Police station</span>
-												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify police station"></i>
-											</label>
-											<input type="text" class="form-control form-control-lg form-control-solid" name="station" id="station" placeholder="" value="<?php echo $row->iPoliceStationId ?>" />
+										<label class="d-flex align-items-center fs-5 fw-bold ">
+											<span class="required">Police Station</span>
+											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
+										</label>
+										<select class="form-select form-select-solid "  name="station" id="station" aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											foreach($groups['station_name'] as $row){
+										       echo  '<option value="'.$row->iPoliceStationId.'">'.$row->vStationName.'</option>';
+											}
+											?>
+										</select>									
 									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
@@ -308,6 +322,7 @@
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7"></i>
+												<!-- <img src="" id="show_image" width="50px" height="50px" /> -->
 												<input type="file" name="image" accept=".png, .jpg, .jpeg" id="image">
 												<!-- <img src="<?php echo base_url()?>uploads/Hydrangeas.jpg" alt="profile" id="image" width="50" height="60"> -->
 											</label>
@@ -365,8 +380,10 @@
 				$('#designation').val(data.iDesignationId);
 				$("#group").val(data.iGroupid);
 				$("#department").val(data.iDepartmentId);
-				$("#station").val(data.iPoliceStationId);
-				$('#image').attr('src',baseurl+'/uploads/'+data.tImage);    
+				$("#station").val(data.iPoliceStationId);    
+				// console.log(baseurl+'/uploads/'+data.tImage);	
+				// $('#show_image').attr('src',baseurl+'uploads/'+data.tImage);
+				$('.image-input-outline').css('background-image', 'url(' + baseurl+'uploads/'+data.tImage + ')');
                 $("#policeofficer_id").val(data.iPoliceOfficerId);
 			}
 		});	
@@ -380,6 +397,11 @@
     setTimeout(function() {
         $('#fadeout').hide('fast');
     }, 2000);
+	$("#upload-img").click(function() {
+		alert("1");
+		$("#show_image").attr('src','');
+	});
+	$("#show_image").attr('src','');
 </script>
 
 <!-- validation -->

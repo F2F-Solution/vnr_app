@@ -17,6 +17,7 @@ class Policeofficer_model extends CI_model{
         $data['designation_name'] = $this->db->query("SELECT * FROM vnr_police_designation")->result();
         $data['department_name'] = $this->db->query("SELECT *  FROM vnr_police_department")->result();
         $data['group_name'] = $this->db->query("SELECT * FROM vnr_police_group")->result();
+        $data['station_name'] = $this->db->query("SELECT * FROM vnr_police_station")->result();
         return $data;
     }
     public function store($user){
@@ -55,11 +56,12 @@ class Policeofficer_model extends CI_model{
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('vnr_police_officer.*,designation.vDesignationName,department.vDepartmentName,group.vGroupName');
+        $this->db->select('vnr_police_officer.*,designation.vDesignationName,department.vDepartmentName,group.vGroupName,station.vStationName');
         $this->db->from('vnr_police_officer');
         $this->db->join('vnr_police_designation as designation', 'vnr_police_officer.iDesignationId = designation.iDesignationId', 'left');
         $this->db->join('vnr_police_department as department', 'vnr_police_officer.iDepartmentId = department.iDepartmentId', 'left');
         $this->db->join('vnr_police_group as group', 'vnr_police_officer.iGroupid = group.iGroupid', 'left');
+        $this->db->join('vnr_police_station as station', 'vnr_police_officer.iPoliceStationId = station.iPoliceStationId', 'left');
         $query = $this->db->get();
         return $query->result();
     }

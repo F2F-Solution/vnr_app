@@ -2,23 +2,15 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Group_model extends CI_model{
+class Lockedhome_model extends CI_model{
     public function __construct(){
-        $table = 'vnr_police_group';
-        $column_order = array(null, 'S.No','Group','Status','Actions'); //set column field database for datatable orderable
-        $column_search = array('Group'); //set column field database for datatable searchable 
-        $order = array('id' => 'desc'); // default descending order
-       $this->load->database();
-   }
-    //store data into DB
-    public function store($user){
-        $this->db->insert('vnr_police_group',$user);
+         $table = 'vnr_locked_home';
+         $column_order = array(null, 'S.No',' Customer Name','Phone number','From date','To date','Address','pincode','Identification Proof','Attachment','Actions'); //set column field database for datatable orderable
+         $column_search = array('Customer Name'); //set column field database for datatable searchable 
+         $order = array('id' => 'desc'); // default descending order
+         $this->load->database();   
     }
-    //list into table
-    public function select(){
-        $query = $this->db->get('vnr_police_group');  
-        return $query;  
-    }
+    //list data
     private function list_data() {        
         $this->db->from($this->table);
         $i = 0; 
@@ -45,37 +37,35 @@ class Group_model extends CI_model{
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
-
-    //list into table
     public function listtable_data() {
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
         $this->db->select('*');
-        $this->db->from('vnr_police_group');
+        $this->db->from('vnr_locked_home');
         $query = $this->db->get();
         return $query->result();
     }
     function count_filtered_gen_posts() {
         $this->list_data();
-            $query = $this->db->get('vnr_police_group');
+        $query = $this->db->get('vnr_locked_home');
         return $query->num_rows();
     }
-    //edit data
-    public function find_data($iGroupid){
-        $this->db->where('iGroupid', $iGroupid);
-        $query = $this->db->get('vnr_police_group');
+     // edit data
+     public function find_data($iLockedHomeId){
+        $this->db->where('iLockedHomeId', $iLockedHomeId);
+        $query = $this->db->get('vnr_locked_home');
         return $query->row_array();
     }
     //update data
-    public function update_data($data,$iGroupid){
-        $this->db->where('iGroupid', $iGroupid);
-        $this->db->update('vnr_police_group',$data);
+    public function update_data($data,$iLockedHomeId){
+        $this->db->where('iLockedHomeId', $iLockedHomeId);
+        $this->db->update('vnr_locked_home',$data);
+        // print_r($this->db->last_query());exit;
     }
-    //Delete data
-    public function delete_data($iGroupid){
-        $this->db->where('iGroupid', $iGroupid);
-        $this-> db->delete('vnr_police_group');
+     //Delete data  
+     public function delete_data($iLockedHomeId){
+        $this->db->where('iLockedHomeId', $iLockedHomeId);
+        $this-> db->delete('vnr_locked_home');
     }
-    
 }
