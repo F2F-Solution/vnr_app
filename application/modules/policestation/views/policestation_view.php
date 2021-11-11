@@ -233,7 +233,8 @@
                                             <span class="required"> Map </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="map"  id="map1"/>
+                                        <!-- <input type="text" class="form-control form-control-lg form-control-solid" name="map"  id="map1"/> -->
+                                        <div id="map"></div>
                                         <span id="input13" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                    <div class="fv-row mb-10">
@@ -256,8 +257,21 @@
      </div>
 </div> 
 
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&v=weekly"
+      async
+    ></script>
+<script>
+    let map;
 
+    function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+    });
+}
 
+ </script>
 <!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
@@ -289,7 +303,7 @@
 				$("#land_number1").val(data.iStationLandNo);
 				$("#attender1").val(data.vPrimaryAttender);
 				$("#address1").val(data.vAddress);
-				$('#map1').val(data.iLocation);    
+				// $('#map1').val(data.iLocation);    
                 $("#pincode1").val(data.iPincode);
                 $("#policestation_id").val(data.iPoliceStationId);
 			}

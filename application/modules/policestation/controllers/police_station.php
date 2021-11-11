@@ -2,13 +2,13 @@
 class Police_station extends MY_Controller {
    public function __construct(){
              parent::__construct();
-             $this->load->model('policestation_model'); 
+             $this->load->model('Policestation_model'); 
     }
     //station page
     public function index(){
         $data= array();                         
         $data['title'] = 'Policestation Pages';
-        $data['policestation'] = $this->policestation_model->getallattender();  
+        $data['policestation'] = $this->Policestation_model->getallattender();  
         $this->template->write_view('content', 'policestation/policestation_view', $data);
         $this->template->render();
     }
@@ -23,12 +23,12 @@ class Police_station extends MY_Controller {
             'iLocation' => $this->input->post('map'),
             'iPincode'=> $this->input->post('pincode'),
         );
-        $this->policestation_model->store($user);  
+        $this->Policestation_model->store($user);  
         redirect($this->config->item('base_url') . 'policestation/police_station');
       }
     //   listdata
       public function list_data(){
-        $list=$this->policestation_model->listtable_data();
+        $list=$this->Policestation_model->listtable_data();
         $data = array();
       foreach ($list as $key=>$post) {
         $delete = "<a href='".base_url('policestation/police_station/delete/'.$post->iPoliceStationId)."' class='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'><span class='svg-icon svg-icon-3'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'><path d='M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z' fill='black'></path><path opacity='0.5' d='M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z' fill='black'></path><path opacity='0.5' d='M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z' fill='black'></path></svg></span></a>";
@@ -48,8 +48,8 @@ class Police_station extends MY_Controller {
           }
           $output = array(    
               "draw" => $_POST['draw'],
-              "recordsTotal" => $this->policestation_model->count_filtered_gen_posts(),
-              "recordsFiltered" => $this->policestation_model->count_filtered_gen_posts(),
+              "recordsTotal" => $this->Policestation_model->count_filtered_gen_posts(),
+              "recordsFiltered" => $this->Policestation_model->count_filtered_gen_posts(),
               "data" => $data,
           );
           //output to json format
@@ -58,7 +58,7 @@ class Police_station extends MY_Controller {
      //edit data
      public function get(){
         $iPoliceOfficerId = $_POST['id'];
-       $row = $this->policestation_model->find_data($iPoliceOfficerId);
+       $row = $this->Policestation_model->find_data($iPoliceOfficerId);
        echo json_encode($row);
     }
     //update data
@@ -75,11 +75,11 @@ class Police_station extends MY_Controller {
         'iPincode'=> $this->input->post('pincode'),
       );
       //  print_r($user);exit;
-      $this->policestation_model->update_data($user,$iPoliceStationId);
+      $this->Policestation_model->update_data($user,$iPoliceStationId);
       redirect($this->config->item('base_url') . 'policestation/police_station');
   }
   public function delete($iPoliceStationId){
-    $this->policestation_model->delete_data($iPoliceStationId);
+    $this->Policestation_model->delete_data($iPoliceStationId);
     redirect($this->config->item('base_url') . 'policestation/police_station');
 }
 }
