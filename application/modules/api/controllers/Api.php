@@ -173,13 +173,21 @@ class Api extends REST_Controller {
         }
     }
 
-	public function customer_resend_otp(){
+	public function resend_otp(){
 		$json_input = $this->_get_customer_post_values();
 		if(!empty($json_input)){
 			$otp = $this->api_model->generateNumericOTP('4');
+			if($json_input['type'] == 'forget password'){
+				$update_data['iOtpCode'] = $otp;
+				$update = $this->api_model->update_fields($json_input['customer_id'],$update_data);
+				$details = $this->api_model->get_customer_details($customer['iCustomerId']);
+				$output = array('status' => 'Success', 'message' => 'Otp send successfully','data'=>$details);
+				$this->response($output);
+			}
 			$update_data['iOtpCode'] = $otp;
 			$update = $this->api_model->update_fields($json_input['customer_id'],$update_data);
-			$output = array('status' => 'Success', 'message' => 'Otp send successfully');
+			$details = $this->api_model->get_customer_details($customer['iCustomerId']);
+			$output = array('status' => 'Success', 'message' => 'Otp send successfully','data'=>$details);
 			$this->response($output);
 
 		}else
@@ -193,18 +201,60 @@ class Api extends REST_Controller {
 
 	public function get_locked_home_details(){
 		$data_input = $this->_get_customer_post_values();
-		// print_r($data_input);exit;
+		if(!empty($_POST)){
+			$data_input = $_POST;
+		}
+		// $files_data = $_FILES;
+		// $data_input = file_get_contents('php://input');
+		// print_r($data_input);
+		// print_r($files_data);exit;
+
+		// print_r($_FILES);
 		if (!empty($data_input)) {
+			foreach($_FILES as $image){
+				$gallaryimage = $image['name'];
+				$gallarytype = $image['type'];
+				$gallarysize = $image['size'];
+				$gallarytmp_name = $image['tmp_name'];
+
+				
+                for ($i = 0; $i < count($gallaryimage); $i++) {
+					$gallary1_ext =array();
+					$allowed = array();
+                    $gallary1image = $gallaryimage[$i];
+                    $gallary1_ext = pathinfo($gallary1image, PATHINFO_EXTENSION);
+
+					
+                    $gallary1_name = "LockedHome-" . rand(10000, 10000000) . "." . $gallary1_ext;
+                    $gallary1_type = $gallarytype[$i];
+                    $gallary1_size = $gallarysize[$i];
+                    $gallary1_tem_loc = $gallarytmp_name[$i];
+                    $gallary1_store = FCPATH . "uploads/" . $gallary1_name;
+					// print_r($gallary1_ext);exit;
+                    $allowed = array('gif', 'png', 'jpg', 'jpeg', 'GIF', 'PNG', 'JPG', 'JPEG');
+
+                    if (in_array($gallary1_ext, $allowed)) {
+                        if (move_uploaded_file($gallary1_tem_loc, $gallary1_store)) {
+
+                            $imagename = $gallary1_name;
+
+                        }
+                    }
+				// print_r($imagename);exit;
+
+                }
+			}
 			$customer = array();
 			$customer['iCustomerId'] = $data_input['customer_id'];
 			$customer['dFromDate'] = $data_input['startdate'];
 			$customer['dToDate'] = $data_input['Enddate'];
 			$customer['vCustomerName'] = $data_input['customer_name'];
-			$customer['iPhoneNumber'] = $json_input['mobile_number'];
+			$customer['vAddress'] = $data_input['address'];
+			$customer['iPhoneNumber'] = $data_input['mobile_number'];
 			$customer['iPincode'] = $data_input['pincode'];
 			$customer['iIdProofNumber'] = $data_input['identification_number'];
 			$customer['vIdProoftype'] = $data_input['identification_number_type'];
-			$customer['vAttachment'] = $data_input['attachments'];
+			$customer['vAttachment'] = $imagename;
 			$customer['tStatus'] = 1;
 
 			if($customer['dFromDate'] == ""){
@@ -249,15 +299,18 @@ class Api extends REST_Controller {
 			    exit;
 			}
 			
-			
 			$insert = $this->api_model->get_locked_home_details($customer);
 			if (!empty($insert) && $insert != 0) {
 				$home_details = $this->api_model->get_lockedhome_details_by_insert_id($insert);
+				$notification_data = array();
+				$notification_data['iCustomerId'] = $data_input['customer_id'];
+				$notification_data['vNotificationContent'] = ucfirst($data_input['customer_name'])." is out of station from ".$home_details['dFromDate']." to ".$home_details['dToDate'];
+				$notify = $this->api_model->get_notification($notification_data);
 				$this->response([
 					'status' => "Success",
 					'code'=>"200",
 					'message' => 'The details has been registered successfully.',
-					'customer_data' => $home_details
+					'customer_data' => $home_details,$notify
 				]);
 			}
 		} else {
@@ -272,7 +325,7 @@ class Api extends REST_Controller {
 	public function api_profile_details(){
 		$json_input = $this->_get_customer_post_values();
 		if(!empty($json_input)){
-			$user_details = $this->api_model->get_customer_details($json_input);
+			$user_details = $this->api_model->get_customer_details($json_input['customer_id']);
 			if($user_details){
 				$output = array(
 				"status" => "Success",
@@ -307,6 +360,7 @@ class Api extends REST_Controller {
 			$customer['vPassword'] = $json_input['password'];
 			$customer['vAddress'] = $json_input['address'];
 			$customer['iPincode'] = $json_input['pincode'];
+			$customer['vProfession'] = $json_input['profession'];
 			$check_duplicate_email = $this->api_model->check_field_exists('vEmail',$json_input['email_id'],$json_input['customer_id']);
 			if($check_duplicate_email){
 				$output = array ('status' => 'Error', 'message' => 'Email Address Already Exists');
@@ -382,9 +436,53 @@ class Api extends REST_Controller {
 			}
         } else {
             $output = array ('status' => 'error', 'message' => 'Please enter input data');
-            echo json_encode($output);
+			$this->response($output);
         }
     }
+
+	// public function resend_otp(){
+	// 	$json_input = $this->_get_customer_post_values();
+	// 	$this->customer_resend_otp($json_input);
+	// }
+
+	public function otp_verify(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			if($json_input['type'] == 'forget password'){
+				$otp_result = $this->api_model->check_customer_otp($json_input['customer_id']);
+                if (!empty($otp_result) && $otp_result['iOtpCode'] == $json_input['otp_code']) {
+                    $update_data['tForgotPwdOtpVerify']=1;
+                    $this->api_model->update_fields($otp_result['iCustomerId'],$update_data);
+                    $output = array ('status' => 'Success','code' => 200 , 'message' => 'Otp Verified successfully');
+                    $this->response($output);
+                } else {
+                    $output = array ('status' => 'Error', 'message' => 'Invalid OTP');
+                    $this->response($output);
+                }
+			}
+		}else {
+            $output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+        }
+	}
+
+	public function change_forgot_password(){
+		$json_input  = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			if($json_input['password'] == $json_input['conform_password']){
+				$customer['vPassword'] = md5($json_input['password']);
+				$this->api_model->update_fields($json_input['customer_id'],$customer);
+				$output = array ('status' => 'success','code'=>200, 'message' => 'Password changed successfully');
+				$this->response($output);
+			}else{
+				$output = array ('status' => 'Error', 'message' => 'Password doesnt match');
+				$this->response($output);
+			}
+		}else{
+            $output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
+	}
 		
 	public function get_police_station_details(){
 		$police_station = $this->api_model->police_station_details();
@@ -489,5 +587,57 @@ class Api extends REST_Controller {
 			$output = array ('status' => 'error', 'message' => 'Please enter input data');
 			$this->response($output);
 		}
+	}
+
+	public function change_password(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$customer = $this->api_model->get_customer_details($data_input['customer_id']);
+			if(md5($data_input['old_password']) == $customer['vPassword']){
+				$customer['vPassword'] = md5($data_input['new_password']);
+				$this->api_model->update_fields($data_input['customer_id'],$customer);
+				$output = array ('status' => 'Success', 'code'=>200, 'message' => 'Password updated successfully');
+				$this->response($output);
+			}else{
+				$output = array ('status' => 'Error', 'message' => 'Wrong password entered');
+				$this->response($output);
+			}
+		}else{
+			$output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function terms_and_conditions(){
+		$terms = $this->api_model->get_terms_and_conditions();
+		if($terms){
+			$output = array ('status' => 'success', 'message' => $terms);
+			$this->response($output);
+		}else {
+			$output = array ('status' => 'error', 'message' => 'No data found');
+			$this->response($output);
+		}
+	}
+
+	public function get_notifications(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$notifications = $this->api_model->user_notification($data_input['customer_id']);
+			if($notifications){
+				$output = array(
+					'status'=> 'Success',
+					'message'=>'Notification list',
+					'data' => $notifications
+				);
+				$this->response($output);
+			}else{
+				$output = array (
+					'status' => 'Error', 
+					'message' => 'Notification not found'
+				);
+				$this->response($output);
+			}
+		}
+
 	}
 }

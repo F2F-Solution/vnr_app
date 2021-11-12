@@ -153,7 +153,7 @@ class Api_model extends CI_Model {
 
     public function get_customer_details($data){
         $this->db->select('*');
-        $this->db->where('iCustomerId',$data['customer_id']);
+        $this->db->where('iCustomerId',$data);
         $this->db->from('vnr_customer');
         $query = $this->db->get();
         if($query->num_rows() >0){
@@ -165,7 +165,6 @@ class Api_model extends CI_Model {
 
     public function get_locked_home_details($data){
         if($this->db->insert('vnr_locked_home',$data)){
-        // print_r($this->db->last_query());exit;
             $id = $this->db->insert_id();
             return $id;
         }
@@ -192,8 +191,12 @@ class Api_model extends CI_Model {
     }
 
     public function police_station_details(){
-        $this->db->select('*');
-        $this->db->from('vnr_police_station');
+        $this->db->select('station.*,officer.vOfficerName,officer.iMobileNumber,officer.iEmail,officer.vGender,department.vDepartmentName,group.vGroupName,designation.vDesignationName');
+        $this->db->from('vnr_police_station as station');
+        $this->db->join('vnr_police_officer as officer','station.iPoliceStationId=officer.iPoliceOfficerId','left');
+        $this->db->join('vnr_police_designation as designation','officer.iDesignationId=designation.iDesignationId','left');
+        $this->db->join('vnr_police_department as department','officer.iDepartmentId=department.iDepartmentId','left');
+        $this->db->join('vnr_police_group as group','group.iGroupid=officer.iGroupid','left');
         $query = $this->db->get();
         if($query->num_rows() >0){
         return $query->result_array();
@@ -203,7 +206,7 @@ class Api_model extends CI_Model {
     }
 
     public function police_officers_details(){
-        $this->db->select('officer.vOfficerName,officer.iMobileNumber,officer.iEmail,officer.vGender,station.vStationName,station.vPrimaryAttender,station.iEmergencyNO,station.iPoliceStationNumber,station.iStationLandNo,station.vEmail,station.vAddress,station.iPincode,station.iLocation,department.vDepartmentName,group.vGroupName,designation.vDesignationName');
+        $this->db->select('officer.iPoliceOfficerId,officer.vOfficerName,officer.iMobileNumber,officer.iEmail,officer.vGender,station.vStationName,station.vPrimaryAttender,station.iEmergencyNO,station.iPoliceStationNumber,station.iStationLandNo,station.vEmail,station.vAddress,station.iPincode,station.iLocation,department.vDepartmentName,group.vGroupName,designation.vDesignationName');
         $this->db->from('vnr_police_officer as officer');
         $this->db->join('vnr_police_station as station','officer.iPoliceStationId=station.iPoliceStationId','left');
         $this->db->join('vnr_police_designation as designation','officer.iDesignationId=designation.iDesignationId','left');
@@ -218,7 +221,8 @@ class Api_model extends CI_Model {
     }
 
     public function get_ads(){
-        $this->db->select('*');
+        $base_url = base_url().'uploads/';
+        $this->db->select("iAdtype,vAdContent,CONCAT('".$base_url."',vAdImage) AS image,tAdStatus", FALSE);
         $this->db->from('vnr_manage_ads');
         $query = $this->db->get();
         if($query->num_rows() >0){
@@ -246,6 +250,38 @@ class Api_model extends CI_Model {
         return true;
     }
 
+    public function get_terms_and_conditions(){
+        $this->db->select('*');
+        $this->db->from('vnr_terms_and_conditions');
+        $query = $this->db->get();
+        if($query->num_rows() >0){
+            return $query->row_array();
+        }else
+        return false;
+    }
+
+    public function get_notification($data){
+        if($this->db->insert('vnr_notifications',$data)){
+            $insertid = $this->db->insert_id();
+            $this->db->select('*');
+            $this->db->where('iNotificationId',$insertid);
+            $this->db->from('vnr_notifications');
+            $query = $this->db->get()->row_array();
+            return $query;
+        }else
+        return false;
+    }
+
+    public function user_notification($data){
+        $this->db->select('*');
+        $this->db->where('iCustomerId',$data);
+        $this->db->from('vnr_notifications');
+        $query = $this->db->get();
+        if($query->num_rows() >0){
+            return $query->row_array();
+        }else
+        return false;
+    }
     // public function get_customer_by_login($mobile_number, $password) {
     //     $this->db->select('tab_1.*');
     //     $this->db->where('tab_1.iMobileNumber', $mobile_number);
