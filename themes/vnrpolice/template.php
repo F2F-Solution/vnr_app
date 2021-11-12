@@ -1,8 +1,9 @@
 <?php
 
 $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
-
-?>
+$this->db->select('*')->from('vnr_user');
+$query = $this->db->get()->result();
+// print_r($query);exit;?>
 <!DOCTYPE html>
 <html lang="en">
 	<!--begin::Head-->
@@ -138,7 +139,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
                                 </a>
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-								<a	<?php// if($uriMethod_name=="manage_ads"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php //echo base_url();?>master/police_station">
+								<a href="<?php echo base_url();?>manage_ads">
 									<span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-calendar3-event fs-3"></i></span>
 										<span class="menu-title">Manage Ads</span>
@@ -223,6 +224,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 											<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
 												<img src="<?php echo $theme_path ?>/assets/media/avatars/150-26.jpg" alt="user" />
 											</div>
+											
 											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
 												<!--begin::Menu item-->
@@ -230,7 +232,7 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 													<div class="menu-content d-flex align-items-center px-3">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-50px me-5">
-                                                        <!-- <img src="/uploads/<?php echo $user['vImage']; ?>" alt="Admin" /> -->
+                                                        <!-- <img src="<?php echo base_url();?>uploads/<?php echo $user['vImage']; ?>" alt="Admin" /> -->
 															<img alt="Logo" src="<?php echo $theme_path ?>/assets/media/avatars/150-26.jpg" />
 														</div>
 														<!--end::Avatar-->
