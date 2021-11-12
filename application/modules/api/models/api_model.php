@@ -104,9 +104,6 @@ class Api_model extends CI_Model {
         $this->db->where('iCustomerId',$data);
         $query = $this->db->get('vnr_customer')->row_array();
         if(!empty($query)){
-            //$result['customer_id']=$query['id'];
-            //$result['customer_details']=$query;
-            //$result['settings'] = $this->getSettings();
             return $query;
         } 
         return false;
@@ -173,9 +170,12 @@ class Api_model extends CI_Model {
     }
 
     public function get_lockedhome_details_by_insert_id($data){
-        $this->db->select('tab_1.*');
-        $this->db->where('tab_1.iLockedHomeId', $data);
-        $query = $this->db->get('vnr_locked_home'. ' AS tab_1');
+        $base_url = base_url().'uploads/';
+        $this->db->select('iLockedHomeId,iCustomerId,dFromDate,dToDate,vCustomerName,iPhoneNumber,vAddress,iPincode,vCustomerLocation,vLatitude,vLongitude,CONCAT("'.$base_url.'",vAttachment) AS vAttachment,iIdProofNumber,vIdProoftype,tStatus,tcreatedAt',FALSE);
+        // $this->db->select('tab_1.*');
+        $this->db->where('iLockedHomeId', $data);
+        $this->db->from('vnr_locked_home');
+        $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->row_array();
         }
@@ -190,19 +190,32 @@ class Api_model extends CI_Model {
         return $data;
     }
 
-    public function police_station_details(){
-        $this->db->select('station.*,officer.vOfficerName,officer.iMobileNumber,officer.iEmail,officer.vGender,department.vDepartmentName,group.vGroupName,designation.vDesignationName');
-        $this->db->from('vnr_police_station as station');
-        $this->db->join('vnr_police_officer as officer','station.iPoliceStationId=officer.iPoliceOfficerId','left');
-        $this->db->join('vnr_police_designation as designation','officer.iDesignationId=designation.iDesignationId','left');
-        $this->db->join('vnr_police_department as department','officer.iDepartmentId=department.iDepartmentId','left');
+    /*public function police_station_details(){
+        $this->db->select('station.*,officer.*,department.vDepartmentName,group.vGroupName,designation.vDesignationName');
+        $this->db->from('vnr_police_officer as officer');
+        $this->db->join('vnr_police_station as station','station.iPoliceStationId = officer.iPoliceOfficerId','left');
+        $this->db->join('vnr_police_designation as designation','designation.iDesignationId = officer.iDesignationId','left');
+        $this->db->join('vnr_police_department as department','department.iDepartmentId = officer.iDepartmentId','left');
         $this->db->join('vnr_police_group as group','group.iGroupid=officer.iGroupid','left');
         $query = $this->db->get();
+        return $this->db->last_query();
         if($query->num_rows() >0){
         return $query->result_array();
         }else{
             return false;
         }
+    }*/
+    public function police_station_details(){ 
+        $this->db->select('station.*,department.vDepartmentName,group.vGroupName,designation.vDesignationName,officer.*');
+        $this->db->join('vnr_police_officer as officer', 'officer.iPoliceStationId = station.iPoliceStationId','left');
+        $this->db->join('vnr_police_designation as designation','designation.iDesignationId = officer.iDesignationId','left');
+        $this->db->join('vnr_police_department as department','department.iDepartmentId = officer.iDepartmentId','left');
+        $this->db->join('vnr_police_group as group','group.iGroupid=officer.iGroupid','left');
+        $query = $this->db->get('vnr_police_station as station');
+        if($query->num_rows() >0){
+        return $query->result_array();
+        }else
+            return false;
     }
 
     public function police_officers_details(){
@@ -233,7 +246,8 @@ class Api_model extends CI_Model {
     }
 
     public function get_news(){
-        $this->db->select('*');
+        $base_url = base_url().'uploads/';
+        $this->db->select('inewsid,vNewsSubject,vNewsMessage,CONCAT("'.$base_url.'",vNewsImage) AS vNewsImage,tNewsStatus,tCreatedAt');
         $this->db->from('vnr_news');
         $query = $this->db->get();
         if($query->num_rows() >0){
@@ -243,12 +257,12 @@ class Api_model extends CI_Model {
         }
     }
 
-    public function update_locked_home($id,$data){
-        $data['tUpdatedAt']=date('Y-m-d h:i:s');
-        $this->db->where('iLockedHomeId',$id);
-        $this->db->update('vnr_locked_home',$data);
-        return true;
-    }
+    // public function update_locked_home($id,$data){
+    //     $data['tUpdatedAt']=date('Y-m-d h:i:s');
+    //     $this->db->where('iLockedHomeId',$id);
+    //     $this->db->update('vnr_locked_home',$data);
+    //     return true;
+    // }
 
     public function get_terms_and_conditions(){
         $this->db->select('*');
@@ -276,6 +290,61 @@ class Api_model extends CI_Model {
         $this->db->select('*');
         $this->db->where('iCustomerId',$data);
         $this->db->from('vnr_notifications');
+        $query = $this->db->get();
+        if($query->num_rows() >0){
+            return $query->row_array();
+        }else
+        return false;
+    }
+
+    public function check_employee_login($data){
+        $this->db->select('*');
+        $this->db->where('iMobileNumber',$data['mobile_number']);
+        $this->db->where('vPassword',(md5($data['password'])));
+        // $this->db->where('tStatus',1);
+        $this->db->from('vnr_police_officer');
+        $query = $this->db->get();
+        if($query->num_rows() >0){
+        return $query->row_array();            
+        }
+        return false;
+    }
+
+    public function update_lockedhome($column,$data,$update){
+        $this->db->where($column ,$data);
+        if($this->db->update('vnr_locked_home',$update)){
+            return true;
+        }else
+        return false;
+    }
+
+    public function check_employee_mail($email,$id){
+        $this->db->select('*');
+        $this->db->where('iEmail',$email);
+        if($id != '')
+        $this->db->where('iPoliceOfficerId !=',$id);
+        $result = $this->db->get('vnr_police_officer');
+        if($result->num_rows() >0){
+            return $result;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function update_employee($id,$data){
+        $this->db->where('iPoliceOfficerId',$id);
+        if($this->db->update('vnr_police_officer',$data)){
+        // echo $this->db->last_query();exit;
+            return true;
+        }else
+        return false;
+    }
+
+    public function get_employee_details($id){
+        $this->db->select('*');
+        $this->db->where('iPoliceOfficerId',$id);
+        $this->db->from('vnr_police_officer');
         $query = $this->db->get();
         if($query->num_rows() >0){
             return $query->row_array();

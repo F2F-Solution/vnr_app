@@ -134,7 +134,6 @@ class Api extends REST_Controller {
         $data = $this->_get_customer_post_values();
         if (!empty($data)) {
                 $login_result = $this->api_model->check_login_details($data);
-				// print($login_result);exit;
                 if ($login_result) {
                     if($login_result == 1){
                         $output = array ('status' => 'Error', 'message' => 'OTP not verified');
@@ -149,7 +148,7 @@ class Api extends REST_Controller {
 					$this->response($output);
                 }
         } else {
-            $output = array ('status' => 'error', 'message' => 'Please mobile number and password');
+            $output = array ('status' => 'error', 'message' => 'Please enter mobile number and password');
 			$this->response($output);
         }
     }
@@ -236,7 +235,7 @@ class Api extends REST_Controller {
                     if (in_array($gallary1_ext, $allowed)) {
                         if (move_uploaded_file($gallary1_tem_loc, $gallary1_store)) {
 
-                            $imagename = $gallary1_name;
+                            $filename = $gallary1_name;
 
                         }
                     }
@@ -254,7 +253,7 @@ class Api extends REST_Controller {
 			$customer['iPincode'] = $data_input['pincode'];
 			$customer['iIdProofNumber'] = $data_input['identification_number'];
 			$customer['vIdProoftype'] = $data_input['identification_number_type'];
-			$customer['vAttachment'] = $imagename;
+			$customer['vAttachment'] = $filename;
 			$customer['tStatus'] = 1;
 
 			if($customer['dFromDate'] == ""){
@@ -357,7 +356,7 @@ class Api extends REST_Controller {
 			$customer['vEmail'] = $json_input['email_id'];
 			$customer['dDob'] = $json_input['dob'];
 			$customer['iMobileNumber'] = $json_input['mobile_number'];
-			$customer['vPassword'] = $json_input['password'];
+			// $customer['vPassword'] = $json_input['password'];
 			$customer['vAddress'] = $json_input['address'];
 			$customer['iPincode'] = $json_input['pincode'];
 			$customer['vProfession'] = $json_input['profession'];
@@ -558,36 +557,36 @@ class Api extends REST_Controller {
 		}
 	}
 
-	public function update_locked_home_details(){
-		$json_input = $this->_get_customer_post_values();
-		if(!empty($json_input)){
-			$home['iLockedHomeId'] = $json_input['customer_id'];
-			$home['dFromDate'] = $json_input['startdate'];
-			$home['dToDate'] = $json_input['Enddate'];
-			$home['vCustomerName'] = $json_input['customer_name'];
-			$home['iPhoneNumber'] = $json_input['mobile_number'];
-			$home['vAddress'] = $json_input['password'];
-			$home['iIdProofNumber'] = $json_input['address'];
-			$home['iPincode'] = $json_input['pincode'];
-			$home['vAttachment'] = $json_input['attachments'];
-			$home['vIdProoftype'] = $json_input['identification_number_type'];
-			$home['iIdProofNumber'] = $json_input['identification_number'];
+	// public function update_locked_home_details(){
+	// 	$json_input = $this->_get_customer_post_values();
+	// 	if(!empty($json_input)){
+	// 		$home['iLockedHomeId'] = $json_input['customer_id'];
+	// 		$home['dFromDate'] = $json_input['startdate'];
+	// 		$home['dToDate'] = $json_input['Enddate'];
+	// 		$home['vCustomerName'] = $json_input['customer_name'];
+	// 		$home['iPhoneNumber'] = $json_input['mobile_number'];
+	// 		$home['vAddress'] = $json_input['password'];
+	// 		$home['iIdProofNumber'] = $json_input['address'];
+	// 		$home['iPincode'] = $json_input['pincode'];
+	// 		$home['vAttachment'] = $json_input['attachments'];
+	// 		$home['vIdProoftype'] = $json_input['identification_number_type'];
+	// 		$home['iIdProofNumber'] = $json_input['identification_number'];
 			
-			$update = $this->api_model->update_locked_home($json_input['customer_id'],$home);
-                if ($update) {
-					$home_details = $this->api_model->get_lockedhome_details_by_insert_id($json_input['customer_id']);
-                    $output = array ('status' => 'Success', 'code'=>200, 'message' => 'Details updated','data'=>$home_details);
-					$this->response($output);
-                } else {
-                    $output = array ('status' => 'Error', 'message' => 'Details not updated');
-					$this->response($output);
-                }
+	// 		$update = $this->api_model->update_locked_home($json_input['customer_id'],$home);
+    //             if ($update) {
+	// 				$home_details = $this->api_model->get_lockedhome_details_by_insert_id($json_input['customer_id']);
+    //                 $output = array ('status' => 'Success', 'code'=>200, 'message' => 'Details updated','data'=>$home_details);
+	// 				$this->response($output);
+    //             } else {
+    //                 $output = array ('status' => 'Error', 'message' => 'Details not updated');
+	// 				$this->response($output);
+    //             }
 
-		} else {
-			$output = array ('status' => 'error', 'message' => 'Please enter input data');
-			$this->response($output);
-		}
-	}
+	// 	} else {
+	// 		$output = array ('status' => 'error', 'message' => 'Please enter input data');
+	// 		$this->response($output);
+	// 	}
+	// }
 
 	public function change_password(){
 		$data_input = $this->_get_customer_post_values();
@@ -639,5 +638,75 @@ class Api extends REST_Controller {
 			}
 		}
 
+	}
+
+	public function employee_login(){
+		$data_input = $this->_get_customer_post_values();
+		if (!empty($data_input)) {
+			$login_result = $this->api_model->check_employee_login($data_input);
+			if ($login_result) {
+				$output = array ('status' => 'Success','code'=>200, 'message' => 'Login successfully','data'=>$login_result);
+				$this->response($output);
+			} else {
+				$output = array ('status' => 'Error', 'message' => 'Invalid login credentials');
+				$this->response($output);
+			}
+		} else {
+			$output = array ('status' => 'error', 'message' => 'Please enter mobile number and password');
+			$this->response($output);
+		}
+	}
+
+	public function locked_home_update_status(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$home = array();
+			$home['tStatus'] = $data_input['status'];
+			$update = $this->api_model->update_lockedhome('iLockedHomeId',$data_input['lockedhomeid'],$home);
+			if($update == true){
+				$details = $this->api_model->get_lockedhome_details_by_insert_id($data_input['lockedhomeid']);
+				$output = array('status' => 'success','code'=>200, 'message' => 'status updated successfully','data' => $details);
+				$this->response($output);
+			}else{
+				$output = array('status'=>'error','message' =>'status not updated');
+				$this->response($output);
+			}
+		}else{
+			$output = array('status'=>'error','message' =>'please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function update_employee(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			$employee = array();
+			$employee['vOfficerName'] = $json_input['employee_name'];
+			$employee['iEmail'] = $json_input['email_id'];
+			$employee['iMobileNumber'] = $json_input['mobile_number'];
+			$employee['vGender'] = $json_input['gender'];
+			$employee['iPoliceStationId'] = $json_input['stationid'];
+			$employee['iDesignationId'] = $json_input['designationid'];
+			$employee['iGroupid'] = $json_input['groupid'];
+			$check_duplicate_email = $this->api_model->check_employee_mail($json_input['email_id'],$json_input['employeeid']);
+			if($check_duplicate_email){
+				$output = array ('status' => 'Error', 'message' => 'Email Address Already Exists');
+				$this->response($output);
+				exit;
+			}
+			$profile = $this->api_model->update_employee($json_input['employeeid'],$employee);
+                if ($profile == true) {
+                    $update_data = $this->api_model->get_employee_details($json_input['employeeid']);
+                    $output = array ('status' => 'Success', 'message' => 'Profile details updated successfully','data'=>$update_data);
+					$this->response($output);
+                } else {
+                    $output = array ('status' => 'Error', 'message' => 'Profile details not updated');
+					$this->response($output);
+                }
+
+		} else {
+			$output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
 	}
 }
