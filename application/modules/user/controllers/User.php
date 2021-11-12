@@ -1,12 +1,19 @@
 <?php
 class User extends MY_Controller {
    public function __construct(){
+               
              parent::__construct();
+            //  if(empty($this->session->userdata('UserId'))){
+            // }
              $this->load->model('User_model'); 
              $this->load->library('session');  
     }
    //  SIGNIN PAGE
     public function index(){
+      // if(empty($this->session->userdata('UserId'))){
+      //    redirect($this->config->item('base_url'));
+      //  }
+         
       $data= array();                         
       $data['title'] = 'Signin Pages';
       $this->template->set_master_template('../../themes/vnrpolice/template_signin.php');
@@ -54,7 +61,8 @@ class User extends MY_Controller {
       'vPassword'=>$this->input->post('password'),
       );
       // print_r($user);exit;
-      $login = $this->User_model->verify($user);  
+      $login = $this->User_model->verify($user); 
+      $this -> session -> set_userdata('UserId',$login['iUserId']);
       if($login){
       redirect($this->config->item('base_url') . 'user/dashboard');
       }else{
@@ -67,6 +75,14 @@ class User extends MY_Controller {
       $data['title'] = 'Dashboard';
       $this->template->write_view('content', 'user/dashboard', $data);
       $this->template->render();
+   }
+
+   public function logout()
+{
+     $this->session->unset_userdata('UserId');
+     $this->session->sess_destroy();
+
+     redirect($this->config->item('base_url'));
    }
   }
 ?>

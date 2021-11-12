@@ -20,7 +20,7 @@ class User_model extends CI_model{
       $this->db->where('tStatus',1);
       $query = $this->db->get('vnr_user');
       if($query->num_rows() >0){
-        return $query;
+        return $query->row_array();
       }else{
         return false;
       }

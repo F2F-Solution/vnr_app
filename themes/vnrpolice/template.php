@@ -2,8 +2,10 @@
 
 $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 $this->db->select('*')->from('vnr_user');
-$query = $this->db->get()->result();
-// print_r($query);exit;?>
+$this->db->where('iUserId',$this->session->userdata('UserId'));
+$query = $this->db->get()->row_array();
+// print_r($query);exit;
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<!--begin::Head-->
@@ -232,8 +234,8 @@ $query = $this->db->get()->result();
 													<div class="menu-content d-flex align-items-center px-3">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-50px me-5">
-                                                        <!-- <img src="<?php echo base_url();?>uploads/<?php echo $user['vImage']; ?>" alt="Admin" /> -->
-															<img alt="Logo" src="<?php echo $theme_path ?>/assets/media/avatars/150-26.jpg" />
+                                                        <img src="<?php echo base_url();?>uploads/<?php echo $query['vImage']; ?>" alt="Admin" />
+															<!-- <img alt="Logo" src="<?php echo $theme_path ?>/assets/media/avatars/150-26.jpg" /> -->
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Username-->
@@ -268,7 +270,7 @@ $query = $this->db->get()->result();
 												<!--end::Menu item-->
 												<!--begin::Menu item-->
 												<div class="menu-item px-5">
-													<a href="<?php echo  base_url();?>" class="menu-link px-5">Sign Out</a>
+													<a href="<?php echo  base_url('user/logout');?>" class="menu-link px-5">Sign Out</a>
 												</div>
 												<!--end::Menu item-->
 												<!--begin::Menu separator-->

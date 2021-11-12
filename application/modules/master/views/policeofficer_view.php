@@ -219,7 +219,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y">
-                <form id="editform" method="post" class="form"  action="<?php  echo base_url('master/police_officer/update/'.$post->iPoliceOfficerId)?>"  enctype="multipart/form-data">
+                <form id="editform" method="post" class="form"  action="<?php  echo base_url('master/police_officer/update/')?>"  enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
                                 <div class="current" data-kt-stepper-element="content">
