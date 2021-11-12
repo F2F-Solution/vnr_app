@@ -35,7 +35,7 @@
 							<th>Landline NO</th>
 							<th>Primary Attender</th>
                             <th>Address</th>
-							<th>Map</th>
+							<!-- <th>Map</th> -->
 							<th>Pincode</th>
                             <th>Actions</th>
                         </tr>
@@ -48,9 +48,9 @@
 </div>
 
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-650px">
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
         <div class="modal-content">
-            <div class="modal-header" id="kt_modal_add_user_header">
+            <div class="modal-header py-7 d-flex justify-content-between" id="kt_modal_add_user_header">
                 <h2 class="fw-bolder">Add Details of Police Station</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
@@ -61,7 +61,7 @@
                     </span>
                 </div>
             </div>
-            <div class="modal-body scroll-y">
+            <div class="modal-body scroll-y m-5">
                 <form id="form" method="post" class="form" action="<?php echo base_url();?>policestation/police_station/save_data/" enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
@@ -127,10 +127,10 @@
                                             <span class="required"> Map </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <!-- <input type="text" class="form-control form-control-lg form-control-solid" name="map"  id="map"/> -->
                                         <div id="map" style="width: 300px; height: 300px;"></div>
-                                        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-                                        
+                                        <div id="current"></div>
+                                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwpXSYswuXaJyfDoBxXTxYeAYRwzZIjGE"async></script>
+
                                         <span id="input6" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                    <div class="fv-row mb-10">
@@ -139,6 +139,8 @@
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <input type="text" class="form-control form-control-lg form-control-solid" name="pincode"  id="pincode"/>
+                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude"/>
+                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude"/>
                                         <span id="input7" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                 </div>
@@ -158,7 +160,7 @@
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content">
             <div class="modal-header" id="kt_modal_add_user_header">
-                <h2 class="fw-bolder">Edit Details of Police Officers</h2>
+                <h2 class="fw-bolder">Edit Details of Police Station</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -235,16 +237,21 @@
                                             <span class="required"> Map </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <!-- <input type="text" class="form-control form-control-lg form-control-solid" name="map"  id="map1"/> -->
-                                        <!-- <div id="map"></div> -->
-                                        <span id="input13" class="val" style="color:#F00; font-style:oblique;"></span>
+                                        <div id="map1" style="width: 300px; height: 300px;"></div>
+                                        <div id="current1"></div>
+                                        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwpXSYswuXaJyfDoBxXTxYeAYRwzZIjGE"async></script> -->
+
+                                        <span id="input15" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
+
                                    <div class="fv-row mb-10">
                                         <label class="d-flex align-items-center fs-5 fw-bold ">
                                             <span class="required"> Pincode  </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <input type="text" class="form-control form-control-lg form-control-solid" name="pincode"  id="pincode1"/>
+                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude1"/>
+                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude1"/>
                                         <span id="input14" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                 </div>
@@ -289,7 +296,8 @@
 				$("#land_number1").val(data.iStationLandNo);
 				$("#attender1").val(data.vPrimaryAttender);
 				$("#address1").val(data.vAddress);
-				// $('#map1').val(data.iLocation);    
+			    $('#latitude1').val(data.vStationLatitude);    
+			    $('#longitude1').val(data.vStationlongitude);    
                 $("#pincode1").val(data.iPincode);
                 $("#policestation_id").val(data.iPoliceStationId);
 			}
@@ -298,28 +306,67 @@
 	});
 
 </script>  
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwpXSYswuXaJyfDoBxXTxYeAYRwzZIjGE"async></script>
 <script>
 $(document).ready(function() {
     $(document).on("click", ".add_station", function(e) {
         e.preventDefault();
         
     });
-    var map;
-    var elevator;
-    var latlng=new google.maps.LatLng('11.016844', '76.955833');
-    var myOptions = {
-        zoom: 6,
-        center: latlng
-    };
-    map = new google.maps.Map($('#map')[0], myOptions);
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 6,
+            center: new google.maps.LatLng(11.016844, 76.955833),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        var myMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(11.033940, 76.936410),
+            draggable: true
+        });
 
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        icon: 'http://google-maps-icons.googlecode.com/files/walking-tour.png',
-        draggable: true
+        google.maps.event.addListener(myMarker, 'dragend', function (evt) {
+        // console.log('Lat'+evt.latLng.lat().toFixed(3));
+        // console.log('Long'+evt.latLng.lng().toFixed(3));
+            document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+            $('#latitude').val(evt.latLng.lat().toFixed(3));
+            $('#longitude').val(evt.latLng.lng().toFixed(3));
+        });
+
+        google.maps.event.addListener(myMarker, 'dragstart', function (evt) {
+            document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
+        });
+
+        map.setCenter(myMarker.position);
+        myMarker.setMap(map);
+});	
+
+$(document).ready(function() {
+    $(document).on("click", ".addAttr", function(e) {
+        e.preventDefault();
+        
     });
-  
+        var map = new google.maps.Map(document.getElementById('map1'), {
+            zoom: 6,
+            center: new google.maps.LatLng(11.016844, 76.955833),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var myMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(11.033940, 76.936410),
+            draggable: true
+        });
+
+        google.maps.event.addListener(myMarker, 'dragend', function (evt) {
+        // console.log('Lat'+evt.latLng.lat().toFixed(3));
+        // console.log('Long'+evt.latLng.lng().toFixed(3));
+            document.getElementById('current1').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+            $('#latitude1').val(evt.latLng.lat().toFixed(3));
+            $('#longitude1').val(evt.latLng.lng().toFixed(3));
+        });
+
+        google.maps.event.addListener(myMarker, 'dragstart', function (evt) {
+            document.getElementById('current1').innerHTML = '<p>Currently dragging marker...</p>';
+        });
+
+        map.setCenter(myMarker.position);
+        myMarker.setMap(map);
 });	
 </script>
