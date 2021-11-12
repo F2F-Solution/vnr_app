@@ -22,7 +22,7 @@ class Police_officer extends MY_Controller {
             $config['allowed_types'] = 'jpg|jpeg|png';
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
-             if ($this->upload->do_upload('image')) {
+            if ($this->upload->do_upload('image')) {
                 $data      = $this->upload->data();
                 $fileNames = $data['file_name'];
             }

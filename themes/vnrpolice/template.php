@@ -137,34 +137,22 @@ $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
 									</span>
                                 </a>
 								</div>
-								
-							<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 								<a	<?php// if($uriMethod_name=="manage_ads"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php //echo base_url();?>master/police_station">
 									<span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-calendar3-event fs-3"></i></span>
 										<span class="menu-title">Manage Ads</span>
 									</span>
                                 </a>
-                                </div>
-								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-									<a href="<?php echo base_url();?>managenews/news">
-									   <span class="menu-link">
-									      <span class="menu-icon"><i class="bi bi-sticky fs-3"></i></span>
-										  <span class="menu-title">Manage News</span>
-									   </span>
-                                   </a>
-							  </div>
-								<!-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-								<a	<?php// if($uriMethod_name=="manage_ads"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php //echo base_url();?>master/police_station">
-									<span class="menu-link">
-										<span class="menu-icon"><i class="bi bi-calendar3-event fs-3"></i></span>
-										<span class="menu-title">Manage Ads</span>
-									</span>
+                               </div>
+							   <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+							   <a href="<?php echo base_url();?>managenews/news">
                                     <span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-sticky fs-3"></i></span>
 										<span class="menu-title">Manage News</span>
 									</span>
-							  </div> -->
+                               </a>
+							  </div>
 							<!--end::Menu-->
 						</div>
 						<!--end::Aside Menu-->

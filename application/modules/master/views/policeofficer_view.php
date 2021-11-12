@@ -383,7 +383,7 @@
 				$("#station").val(data.iPoliceStationId);    
 				// console.log(baseurl+'/uploads/'+data.tImage);	
 				// $('#show_image').attr('src',baseurl+'uploads/'+data.tImage);
-				$('.image-input-outline').css('background-image', 'url(' + baseurl+'uploads/'+data.tImage + ')');
+				// $('.image-input-outline').css('background-image', 'url(' + baseurl+'uploads/'+data.tImage + ')');
                 $("#policeofficer_id").val(data.iPoliceOfficerId);
 			}
 		});	
