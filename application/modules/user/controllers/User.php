@@ -1,12 +1,11 @@
 <?php
 class User extends MY_Controller {
    public function __construct(){
-               
-             parent::__construct();
-            //  if(empty($this->session->userdata('UserId'))){
-            // }
-             $this->load->model('User_model'); 
-             $this->load->library('session');  
+      parent::__construct();
+   //  if(empty($this->session->userdata('UserId'))){
+   // }
+      $this->load->model('User_model'); 
+      $this->load->library('session');  
     }
    //  SIGNIN PAGE
     public function index(){
@@ -81,7 +80,6 @@ class User extends MY_Controller {
 {
      $this->session->unset_userdata('UserId');
      $this->session->sess_destroy();
-
      redirect($this->config->item('base_url'));
    }
   }

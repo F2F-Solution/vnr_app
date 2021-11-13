@@ -1,6 +1,7 @@
 <?php
 
 $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
+$this->load->library('session');
 $this->db->select('*')->from('vnr_user');
 $this->db->where('iUserId',$this->session->userdata('UserId'));
 $query = $this->db->get()->row_array();
@@ -224,7 +225,7 @@ $query = $this->db->get()->row_array();
 										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 											<!--begin::Menu wrapper-->
 											<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-												<img src="<?php echo $theme_path ?>/assets/media/avatars/150-26.jpg" alt="user" />
+												<img src="<?php echo base_url();?>uploads/<?php echo $query['vImage']; ?>" alt="Admin" />
 											</div>
 											
 											<!--begin::Menu-->
@@ -254,7 +255,7 @@ $query = $this->db->get()->row_array();
 												<!--end::Menu separator-->
 												<!--begin::Menu item-->
 												<div class="menu-item px-5">
-													<a href="" class="menu-link px-5">My Profile</a>
+													<a href="<?php echo base_url();?>user/Admin" class="menu-link px-5">My Profile</a>
 												</div>
 												<!--end::Menu item-->
 												<!--begin::Menu separator-->

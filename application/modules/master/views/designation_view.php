@@ -200,7 +200,7 @@
 
 <!-- Form validation -->
 <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
-<script>
+<!-- <script>
 $(document).ready(function () {
 $("#submit1").on('click',function () {
 var error = 0;
@@ -246,7 +246,7 @@ $("#designationName").on('blur', function() {
         // return false;
     } else if (!filter.test(name)) {
         form_validation = false;
-        $("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+        $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
         // return false;
     } else {
         $("#input1").html("");
@@ -305,7 +305,7 @@ $("form").submit();
 var form_validation = false;
 $("#designationName").on('blur', function() {
     var name = $("#designationName").val();
-    var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+    var filter = /^[a-zA-Z.\s]+[\S]{3,30}$/;
     if (name == "" || name == null || name.trim().length == 0) {
         form_validation = false;
         $("#input3").html("Required Field");
@@ -331,4 +331,4 @@ if (status == "") {
 }
 });
 });
-</script>
+</script> -->
