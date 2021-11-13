@@ -82,7 +82,7 @@
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
 												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
@@ -161,7 +161,7 @@
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
 												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
@@ -225,11 +225,12 @@
 			dataType : "JSON",
 			data : {id:id},
 			success: function(data){
-                // console.log(data);
+                 console.log(data);
                 $("#ads_id").val(data.iAdId);
 				$("#type_AD").val(data.iAdtype);
 				$("#content1").val(data.vAdContent);
 				$("#status1").val(data.tAdStatus);
+                $('.officer_file').css('background-image', 'url(./uploads/'+data.vAdImage+ ')');
 				// $('#image1').val(data.vNewsImage);
 
 			}

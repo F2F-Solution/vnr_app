@@ -76,31 +76,31 @@
                                     <div class="w-100">
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Officer Name </span>
+                                                <span class="">Officer Name </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" id="name" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid required" name="name" id="name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
-										<span class="required"> Email </span>
+										<span class=""> Email </span>
 										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 									</label>
-									<input type="text" class="form-control form-control-lg form-control-solid" name="email"  id="email"/>
+									<input type="text" class="form-control form-control-lg form-control-solid required" name="email"  id="email"/>
 									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
 								</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Contact NO </span>
+                                                <span class="">Contact NO </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" id="number" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid required" name="number" id="number" />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Gender </span>
+                                                <span class="">Gender </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
 										<div class="form-check form-check-custom form-check-solid me-10">
@@ -116,10 +116,10 @@
                                     </div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="required"> Designation </span>
+											<span class=""> Designation </span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
-										<select class="form-select form-select-solid " name="designation" aria-label="Select example">
+										<select class="form-select form-select-solid required" name="designation" aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['designation_name'] as $row){
@@ -131,10 +131,10 @@
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="required">Department </span>
+											<span class="">Department </span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
-										<select class="form-select form-select-solid "  name="department"  aria-label="Select example">
+										<select class="form-select form-select-solid required "  name="department"  aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['department_name'] as $row){
@@ -146,10 +146,10 @@
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="required">Group</span>
+											<span class="">Group</span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
 										</label>
-										<select class="form-select form-select-solid "  name="group"  aria-label="Select example">
+										<select class="form-select form-select-solid required"  name="group"  aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['group_name'] as $row){
@@ -161,10 +161,10 @@
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="required">Police station</span>
+											<span class="">Police station</span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
 										</label>
-										<select class="form-select form-select-solid "  name="station"  aria-label="Select example">
+										<select class="form-select form-select-solid required "  name="station"  aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['station_name'] as $row){
@@ -176,8 +176,8 @@
 									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
-										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
+										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('../assets/media/avatars/blank.png')">
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('../assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
 												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
@@ -191,7 +191,7 @@
 										</div>
 										<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
 									</div>
-									<span id="input9" class="val" style="color:#F00; font-style:oblique;"></span>
+									<span id="input9" class="val" style="color:#F00; font-style:oblique;"></span>	
                                 </div><br>
                             </div>
                           </div>
@@ -212,7 +212,7 @@
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" 	height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                         </svg>
                     </span>
@@ -318,13 +318,11 @@
 									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
-										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
+										<div class="image-input image-input-outline"  data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7"></i>
-												<!-- <img src="" id="show_image" width="50px" height="50px" /> -->
 												<input type="file" name="image" accept=".png, .jpg, .jpeg" id="image">
-												<!-- <img src="<?php echo base_url()?>uploads/Hydrangeas.jpg" alt="profile" id="image" width="50" height="60"> -->
 											</label>
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 												<i class="bi bi-x fs-2"></i>
@@ -381,10 +379,9 @@
 				$("#group").val(data.iGroupid);
 				$("#department").val(data.iDepartmentId);
 				$("#station").val(data.iPoliceStationId);    
-				// console.log(baseurl+'/uploads/'+data.tImage);	
-				// $('#show_image').attr('src',baseurl+'uploads/'+data.tImage);
-				// $('.image-input-outline').css('background-image', 'url(' + baseurl+'uploads/'+data.tImage + ')');
+				$('.officer_file').css('background-image', 'url(../uploads/'+data.tImage + ')');
                 $("#policeofficer_id").val(data.iPoliceOfficerId);
+				// alert('url(../uploads/'+data.tImage + ')');
 			}
 		});	
 		return false;
@@ -392,48 +389,28 @@
 
 </script>  
 
-<!-- FLASH DATA FADEOUT -->
-<script> 
-    setTimeout(function() {
-        $('#fadeout').hide('fast');
-    }, 2000);
-	$("#upload-img").click(function() {
-		alert("1");
-		$("#show_image").attr('src','');
-	});
-	$("#show_image").attr('src','');
-</script>
+
 
 <!-- validation -->
-<!-- <script>
+<script>
 $(document).ready(function () {
 $("#submit1").on('click',function (event) {
 event.preventDefault();
+
 var error = 0;
 $('#form').find('.required').each(function(){
 var _val = $(this).val();
 var type = $(this).attr('type');
-if(type == 'radio'){
-    var gender = $('input[name="gender"]:checked').length;
-    
-    if(gender == 0){
-        $(this).closest('div.form-group').find('span.val').text("Required Field");
-    }else{
-        $(this).closest('div.form-group').find('span.val').text("");
-        $('input[name="gender"]').removeClass('required');
-    }
-}else{
+
     if(_val == ''){
         error++;  
         $(this).closest('div').find('span.val').text("Required Field");
     }else{
         $(this).closest('div').find('span.val').text("");
     }    
-}
-
 });
-// alert(error);
-if(error > 8){
+alert(error);
+if(error > 0){
     return false;
 }else{
 $("form").submit();
@@ -486,8 +463,8 @@ if (number =="") {
 }
 });
 $("#image").on('blur', function() {
-var resume = $("#image").val();
-if (resume =="") {
+var image = $("#image").val();
+if (image =="") {
     form_validation = false;
     $("#input9").html("Required Field");
 } 
@@ -497,5 +474,5 @@ else {
 }
 });
 });
-</script> -->
+</script>
 

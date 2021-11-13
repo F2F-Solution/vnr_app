@@ -75,8 +75,8 @@ class Police_officer extends MY_Controller {
       //edit data
       public function get(){
           $iPoliceOfficerId = $_POST['id'];
-        $row = $this->Policeofficer_model->find_data($iPoliceOfficerId);
-        echo json_encode($row);
+          $row = $this->Policeofficer_model->find_data($iPoliceOfficerId);
+          echo json_encode($row);
       }
       //update data
       public function update(){
