@@ -1,4 +1,5 @@
 <?php $theme_path = $this->config->item('theme_locations') . 'vnrpolice';
+$this->load->library('session');
 $this->db->select('*')->from('vnr_user');
 $this->db->where('iUserId',$this->session->userdata('UserId'));
 $query = $this->db->get()->row_array();

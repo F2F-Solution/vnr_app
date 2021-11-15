@@ -72,7 +72,7 @@
                                                 <span class="required">Station Name </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" id="station_name" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
@@ -80,7 +80,7 @@
                                                 <span class="required">Contact NO </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" id="number" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
 											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
                                     <div class="fv-row mb-10">
@@ -88,7 +88,7 @@
                                                 <span class="required">Emergency contact </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="emergency_number" id="emergency_number" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number" />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
                                     <div class="fv-row mb-10">
@@ -96,8 +96,8 @@
                                                 <span class="required">Landline number </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="land_number" id="land_number" />
-											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number" />
+											<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
@@ -119,7 +119,7 @@
                                             <span class="required"> Address </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="address"  id="address"/>
+                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address"/>
                                         <span id="input5" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                    <div class="fv-row mb-10">
@@ -138,7 +138,7 @@
                                             <span class="required"> Pincode  </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="pincode"  id="pincode"/>
+                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode"/>
                                         <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude"/>
                                         <input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude"/>
                                         <span id="input7" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -181,7 +181,7 @@
                                                 <span class="required">Station Name </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" id="station_name1" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name1" />
 											<span id="input8" class="val" style="color:#F00; font-style:oblique;"></span>
                                             <input type="hidden" name="policestationid" id="policestation_id"  />
                                         </div>
@@ -190,7 +190,7 @@
                                                 <span class="required">Contact NO </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" id="number1" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number1" />
 											<span id="input9" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
                                     <div class="fv-row mb-10">
@@ -198,7 +198,7 @@
                                                 <span class="required">Emergency contact </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="emergency_number" id="emergency_number1" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number1" />
 											<span id="input10" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
                                     <div class="fv-row mb-10">
@@ -206,7 +206,7 @@
                                                 <span class="required">Landline number </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="land_number" id="land_number1" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number1" />
 											<span id="input11" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
 									<div class="fv-row mb-10">
@@ -229,7 +229,7 @@
                                             <span class="required"> Address </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="address"  id="address1"/>
+                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address1"/>
                                         <span id="input12" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
                                    <div class="fv-row mb-10">
@@ -249,7 +249,7 @@
                                             <span class="required"> Pincode  </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="pincode"  id="pincode1"/>
+                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode1"/>
                                         <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude1"/>
                                         <input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude1"/>
                                         <span id="input14" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -258,7 +258,7 @@
 							   </div><br>
                             </div>
                           </div>
-                        	<button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+                        	<button type="submit" id="submit2" class="btn btn-lg btn-primary" >Submit</button>
                         </div>
                     </div>
                 </form>
@@ -369,4 +369,207 @@ $(document).ready(function() {
         map.setCenter(myMarker.position);
         myMarker.setMap(map);
 });	
+</script>
+
+<script>
+$(document).ready(function () {
+	$("#submit1").on('click',function () {
+	var error = 0;
+	$('#form').find('.validation').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	if(error > 0){
+	return false;
+	}else{
+	$("form").submit();
+	}
+	});
+	var form_validation = false;
+	$("#station_name").on('blur', function() {
+	var name = $("#station_name").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input1").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input1").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+
+	$("#number").on('blur', function() {
+	var number = $("#number").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input2").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input2").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input2").html("");
+	}
+	});
+    $("#emergency_number").on('blur', function() {
+	var number = $("#emergency_number").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input3").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input3").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input3").html("");
+	}
+	});
+    $("#land_number").on('blur', function() {
+	var number = $("#land_number").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input4").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input4").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input4").html("");
+	}
+	});
+    $("#address").on('blur', function() {
+	var name = $("#address").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input5").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input5").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input5").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	
+});
+
+$(document).ready(function () {
+	$("#submit2").on('click',function (event) {
+        // event.preventDefault();
+	var error = 0;
+	$('#editform').find('.validation').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	if(error > 0){
+	return false;
+	}else{
+	$("editform").submit();
+	}
+	});
+	var form_validation = false;
+	$("#station_name1").on('blur', function() {
+	var name = $("#station_name1").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input8").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input8").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input8").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+
+	$("#number1").on('blur', function() {
+	var number = $("#number1").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input9").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input9").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input9").html("");
+	}
+	});
+    $("#emergency_number1").on('blur', function() {
+	var number = $("#emergency_number1").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input3").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input10").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input10").html("");
+	}
+	});
+    $("#land_number1").on('blur', function() {
+	var number = $("#land_number1").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input11").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input11").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input11").html("");
+	}
+	});
+    $("#address1").on('blur', function() {
+	var name = $("#address1").val();
+	 var filter = /^[\S]$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input12").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input12").html("Not valid ");
+		// return false;
+	} else {
+		$("#input12").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	
+});
 </script>

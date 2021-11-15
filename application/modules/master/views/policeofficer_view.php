@@ -77,34 +77,34 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="">Officer Name </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify Name"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid required" name="name" id="name" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
 										<span class=""> Email </span>
-										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
+										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify mail id"></i>
 									</label>
-									<input type="text" class="form-control form-control-lg form-control-solid required" name="email"  id="email"/>
+									<input type="text" class="form-control form-control-lg form-control-solid validation" name="email"  id="email"/>
 									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
 								</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="">Contact NO </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify number"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid required" name="number" id="number" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="">Gender </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify gender"></i>
                                             </label>
 										<div class="form-check form-check-custom form-check-solid me-10">
-											<input class="form-check-input" type="radio" name="gender" value="female" id="flexRadioLg"/>
+											<input class="form-check-input validation" type="radio" name="gender" value="female" id="flexRadioLg"/>
 											<label class="form-check-label" for="flexRadioLg"> Female </label>
                                    		</div><br>
                                    		<div class="form-check form-check-custom form-check-solid me-10">
@@ -117,9 +117,9 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class=""> Designation </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
+											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify Designation"></i>
 										</label>
-										<select class="form-select form-select-solid required" name="designation" aria-label="Select example">
+										<select class="form-select form-select-solid validation" name="designation" aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['designation_name'] as $row){
@@ -134,7 +134,7 @@
 											<span class="">Department </span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
-										<select class="form-select form-select-solid required "  name="department"  aria-label="Select example">
+										<select class="form-select form-select-solid validation "  name="department"  aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['department_name'] as $row){
@@ -149,7 +149,7 @@
 											<span class="">Group</span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
 										</label>
-										<select class="form-select form-select-solid required"  name="group"  aria-label="Select example">
+										<select class="form-select form-select-solid validation"  name="group"  aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['group_name'] as $row){
@@ -162,9 +162,9 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="">Police station</span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
+											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify police station"></i>
 										</label>
-										<select class="form-select form-select-solid required "  name="station"  aria-label="Select example">
+										<select class="form-select form-select-solid validation "  name="station"  aria-label="Select example">
 											<option>SELECT</option>
 											<?php
 											foreach($groups['station_name'] as $row){
@@ -177,10 +177,10 @@
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('../assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('../assets/media/svg/brand-logos/volicity-9.svg')"></div>
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
-												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
+												<input type="file" class="validation" name="image" id="image" accept=".png, .jpg, .jpeg" />
 											</label>
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 												<i class="bi bi-x fs-2"></i>
@@ -229,7 +229,8 @@
                                                 <span class="required">Officer Name </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name" id="officer_name"  />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="officer_name"  />
+											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                             <input type="hidden" name="policeofficerid" id="policeofficer_id"  />
                                     </div>
 									<div class="fv-row mb-10">
@@ -237,15 +238,17 @@
 										<span class="required"> Email </span>
 										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 									</label>
-									<input type="text" class="form-control form-control-lg form-control-solid" name="email" id="officer_email" />
-									</div>
+									<input type="text" class="form-control form-control-lg form-control-solid validation" name="email" id="officer_email" />
+									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
+								    </div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Contact NO </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="number" id="officer_number"  />
-                                    </div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="officer_number"  />
+											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
+									</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Gender </span>
@@ -316,13 +319,15 @@
 											?>
 										</select>									
 									</div>
+									<input type="hidden" name="old_image" id="old_image">
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline"  data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7"></i>
-												<input type="file" name="image" accept=".png, .jpg, .jpeg" id="image">
+												<input type="file" class="" name="image" accept=".png, .jpg, .jpeg" id="image">
+												<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
 											</label>
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 												<i class="bi bi-x fs-2"></i>
@@ -336,7 +341,7 @@
                                 </div><br>
                             </div>
                           </div>
-                        	<button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+                        	<button type="submit" id="submit_edit" class="btn btn-lg btn-primary" >Submit</button>
                         </div>
                     </div>
                 </form>
@@ -382,6 +387,8 @@
 				$('.officer_file').css('background-image', 'url(../uploads/'+data.tImage + ')');
                 $("#policeofficer_id").val(data.iPoliceOfficerId);
 				// alert('url(../uploads/'+data.tImage + ')');
+				$('#old_image').val(data.tImage);
+
 			}
 		});	
 		return false;
@@ -389,90 +396,170 @@
 
 </script>  
 
-
+<!-- FLASH DATA FADEOUT -->
+<script> 
+    setTimeout(function() {
+        $('#fadeout').hide('fast');
+    }, 2000);
+</script>
 
 <!-- validation -->
+
 <script>
 $(document).ready(function () {
-$("#submit1").on('click',function (event) {
-event.preventDefault();
-
-var error = 0;
-$('#form').find('.required').each(function(){
-var _val = $(this).val();
-var type = $(this).attr('type');
-
-    if(_val == ''){
-        error++;  
-        $(this).closest('div').find('span.val').text("Required Field");
-    }else{
-        $(this).closest('div').find('span.val').text("");
-    }    
+	$("#submit1").on('click',function () {
+	var error = 0;
+	$('#form').find('.validation').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	if(error > 0){
+	return false;
+	}else{
+	$("form").submit();
+	}
+	});
+	var form_validation = false;
+	$("#name").on('blur', function() {
+	var name = $("#name").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input1").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input1").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	$("#email").on('blur', function() {
+	var mail = $("#email").val();
+	var efilter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	if (mail == "") {
+	form_validation = false;
+	$("#input2").html("Required Field");
+	} else if (!efilter.test(mail) && mail != "") {
+	form_validation = false;
+	$("#input2").html("Enter Valid Email");
+	} else {
+	form_validation = true;
+	$("#input2").html("");
+	}
+	});
+	$("#number").on('blur', function() {
+	var number = $("#number").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input3").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input3").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input3").html("");
+	}
+	});
+	$("#image").on('blur', function() {
+	var image = $("#image").val();
+	if (image =="") {
+	form_validation = false;
+	$("#input9").html("Required Field");
+	} 
+	else {
+	form_validation = true;
+	$("#input9").html("");
+	}
+	});
 });
-alert(error);
-if(error > 0){
-    return false;
-}else{
-$("form").submit();
-}
-});
-var form_validation = false;
-$("#name").on('blur', function() {
-    var name = $("#name").val();
-    var filter = /^[a-zA-Z.\s]+[\S]{3,30}$/;
-    if (name == "" || name == null || name.trim().length == 0) {
-        form_validation = false;
-        $("#input1").html("Required Field");
-        // return false;
-    } else if (!filter.test(name)) {
-        form_validation = false;
-        $("#input1").html("Alphabets and Min 3 to Max 30 without space ");
-        // return false;
-    } else {
-        $("#input1").html("");
-        form_validation = true;
-        // return true;
-    }
-});
-$("#email").on('blur', function() {
-var mail = $("#email").val();
-var efilter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-if (mail == "") {
-    form_validation = false;
-    $("#input2").html("Required Field");
-} else if (!efilter.test(mail) && mail != "") {
-    form_validation = false;
-    $("#input2").html("Enter Valid Email");
-} else {
-    form_validation = true;
-    $("#input2").html("");
-}
-});
-$("#number").on('blur', function() {
-var number = $("#number").val();
-var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
-if (number =="") {
-    form_validation = false;
-    $("#input3").html("Required Field");
-} else if (!nfilter.test(number) && number != "") {
-    form_validation = false;
-    $("#input3").html("Enter Valid number");
-} else {
-    form_validation = true;
-    $("#input3").html("");
-}
-});
-$("#image").on('blur', function() {
-var image = $("#image").val();
-if (image =="") {
-    form_validation = false;
-    $("#input9").html("Required Field");
-} 
-else {
-    form_validation = true;
-    $("#input9").html("");
-}
-});
+$(document).ready(function () {
+	$("#submit_edit").on('click',function () {
+	var error = 0;
+	$('#editform').find('.validation').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	alert(error);
+	if(error > 0){
+	return false;
+	}else{
+	$("form").submit();
+	}
+	});
+	var form_validation = false;
+	$("#officer_name").on('blur', function() {
+	var name = $("#officer_name").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input1").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input1").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	$("#officer_email").on('blur', function() {
+	var mail = $("#officer_email").val();
+	var efilter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	if (mail == "") {
+	form_validation = false;
+	$("#input2").html("Required Field");
+	} else if (!efilter.test(mail) && mail != "") {
+	form_validation = false;
+	$("#input2").html("Enter Valid Email");
+	} else {
+	form_validation = true;
+	$("#input2").html("");
+	}
+	});
+	$("#officer_number").on('blur', function() {
+	var number = $("#officer_number").val();
+	var nfilter = /^(\+91-|\+91|0)?\d{10}$/;
+	if (number =="") {
+	form_validation = false;
+	$("#input3").html("Required Field");
+	} else if (!nfilter.test(number) && number != "") {
+	form_validation = false;
+	$("#input3").html("Enter Valid number");
+	} else {
+	form_validation = true;
+	$("#input3").html("");
+	}
+	});
+	$("#image").on('blur', function() {
+	var image = $("#image").val();
+	if (image =="") {
+	form_validation = false;
+	$("#input4").html("Required Field");
+	} 
+	else {
+	form_validation = true;
+	$("#input4").html("");
+	}
+	});
 });
 </script>
 

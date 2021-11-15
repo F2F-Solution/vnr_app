@@ -73,6 +73,9 @@ class Manage_ads extends MY_Controller {
     public function update(){
         $iAdId = $_POST['ads_id'];
         $fileNames = "";
+        if(!empty($_POST['old_image'])){
+            $fileNames = $_POST['old_image'];
+        }
     if (!empty($_FILES['image']['name'])) {
             $config['upload_path']   = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png';

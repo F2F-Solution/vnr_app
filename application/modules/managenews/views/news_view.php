@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y m-5">
-                <form id="form" method="post" class="form" action="<?php echo base_url();?>managenews/news/save_data/" enctype="multipart/form-data">
+                <form id="form_add" method="post" class="form" action="<?php echo base_url();?>managenews/news/save_data/" enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
                                 <div class="current" data-kt-stepper-element="content">
@@ -66,17 +66,17 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">News subject </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify subject"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="subject" id="subject" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="subject" id="subject" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Message</span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify message"></i>
                                             </label>
-                                            <textarea class="form-control form-control-lg form-control-solid" name="message" id="message" ></textarea>
+                                            <textarea class="form-control form-control-lg form-control-solid validation" name="message" id="message" ></textarea>
 											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
                                     <div class="fv-row mb-10">
@@ -105,7 +105,7 @@
 										</label>
 										<select class="form-select form-select-solid " name="status" aria-label="Select example">
 											<option>SELECT</option>
-                                            <option value="0">Active</option>
+                                            <option value="0" selected>Active</option>
                                             <option value="1">Inactive</option>
 										</select>	
 										<!-- <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span> -->
@@ -146,18 +146,19 @@
                                                 <span class="required">News subject </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="subject" id="subject1" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation1" name="subject" id="subject1" />
                                             <input type="hidden" class="form-control form-control-lg form-control-solid" name="news_id" id="news_id" />
-											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
+											<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Message</span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <textarea class="form-control form-control-lg form-control-solid" name="message" id="message1" ></textarea>
-											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
+                                            <textarea class="form-control form-control-lg form-control-solid validation1" name="message" id="message1" ></textarea>
+											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
+                                    <input type="hidden" name="old_image" id="old_image">
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('..assets/media/avatars/blank.png')">
@@ -192,7 +193,7 @@
                                  </div>
 							   </div><br>
                              </div>
-                        	<button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+                        	<button type="submit"  id="submit2" class="btn btn-lg btn-primary" >Submit</button>
                         </div>
                     </div>
                 </form>
@@ -230,12 +231,124 @@
 				$("#message1").val(data.vNewsMessage);
 				$("#subject1").val(data.vNewsSubject);
 				$("#status1").val(data.tNewsStatus);
-				// $('#image1').val(data.vNewsImage);news_image
                 $('.news_image').css('background-image', 'url(../uploads/'+data.vNewsImage + ')');
-
-// alert('url(../uploads/'+data.vNewsImage + ')');
+                $('#old_image').val(data.vNewsImage);
 			}
 		});	
 		return false;
 	});
+</script>
+<script>
+$(document).ready(function () {
+	$("#submit1").on('click',function () {
+	var error = 0;
+	$('#form_add').find('.validation').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	//  alert(error);
+	if(error > 0){
+	return false;
+	}else{
+	$("form").submit();
+	}
+	});
+	var form_validation = false;
+	$("#subject").on('blur', function() {
+	var name = $("#subject").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input1").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input1").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	$("#message").on('blur', function() {
+	var name = $("#message").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input2").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input2").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input2").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+});
+$(document).ready(function () {
+	$("#submit2").on('click',function () {
+	var error = 0;
+	$('#editform').find('.validation1').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	//   alert(error);
+	if(error > 0){
+	return false;
+	}else{
+	$("editform").submit();
+	}
+	});
+	var form_validation = false;
+	$("#message1").on('blur', function() {
+	var name = $("#message1").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input3").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input3").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input3").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	$("#subject1").on('blur', function() {
+	var name = $("#subject1").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input4").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input4").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input4").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+});
 </script>

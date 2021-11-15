@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y m-5">
-                <form id="form" method="post" class="form" action="<?php echo base_url();?>manage_ads/save_data/" enctype="multipart/form-data">
+                <form id="form_add" method="post" class="form" action="<?php echo base_url();?>manage_ads/save_data/" enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
                                 <div class="current" data-kt-stepper-element="content">
@@ -68,7 +68,7 @@
                                                 <span class="required">ADS Type </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="type" id="type1" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="type" id="type1" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
@@ -76,16 +76,16 @@
                                                 <span class="required">Content</span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <textarea class="form-control form-control-lg form-control-solid" name="content" id="content" ></textarea>
+                                            <textarea class="form-control form-control-lg form-control-solid validation" name="content" id="content" ></textarea>
 											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
-												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
+												<input type="file" class="validation" name="image" id="image" accept=".png, .jpg, .jpeg" />
 											</label>
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 												<i class="bi bi-x fs-2"></i>
@@ -105,7 +105,7 @@
 										</label>
 										<select class="form-select form-select-solid " name="status" aria-label="Select example">
 											<option>SELECT</option>
-                                            <option value="0">Active</option>
+                                            <option value="0" selected >Active</option>
                                             <option value="1">Inactive</option>
 										</select>	
 										<!-- <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span> -->
@@ -146,8 +146,8 @@
                                                 <span class="required">ADS Type </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="type" id="type_AD" />
-											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation1" name="type" id="type_AD" />
+											<span id="input5" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
@@ -155,16 +155,17 @@
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <textarea class="form-control form-control-lg form-control-solid" name="content" id="content1" ></textarea>
-                                            <input type="hidden" class="form-control form-control-lg form-control-solid" name="ads_id" id="ads_id" />
-                                            <span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
+                                            <input type="hidden" class="form-control form-control-lg form-control-solid validation1" name="ads_id" id="ads_id" />
+                                            <span id="input6" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
+                                    <input type="hidden" name="old_image" id="old_image">
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
-												<input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" />
+												<input type="file" name="image" class="" id="image" accept=".png, .jpg, .jpeg" />
 											</label>
 											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 												<i class="bi bi-x fs-2"></i>
@@ -192,7 +193,7 @@
                                  </div>
 							   </div><br>
                              </div>
-                        	<button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+                        	<button type="submit" id="submit2" class="btn btn-lg btn-primary" >Submit</button>
                         </div>
                     </div>
                 </form>
@@ -231,10 +232,124 @@
 				$("#content1").val(data.vAdContent);
 				$("#status1").val(data.tAdStatus);
                 $('.officer_file').css('background-image', 'url(./uploads/'+data.vAdImage+ ')');
+                $('#old_image').val(data.vAdImage);
 				// $('#image1').val(data.vNewsImage);
 
 			}
 		});	
 		return false;
 	});
+</script>
+<script>
+$(document).ready(function () {
+	$("#submit1").on('click',function () {
+	var error = 0;
+	$('#form_add').find('.validation').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	if(error > 0){
+	return false;
+	}else{
+	$("form").submit();
+	}
+	});
+	var form_validation = false;
+	$("#type1").on('blur', function() {
+	var name = $("#type1").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input1").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input1").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input1").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	$("#content").on('blur', function() {
+	var name = $("#content").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input2").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input2").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input2").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+});
+$(document).ready(function () {
+	$("#submit2").on('click',function () {
+	var error = 0;
+	$('#editform').find('.validation1').each(function(){
+	var _val = $(this).val();
+	if(_val == ''){
+		error++;  
+		$(this).closest('div').find('span.val').text("Required Field");
+	}else{
+		$(this).closest('div').find('span.val').text("");
+	}    
+	
+	});
+	//  alert(error);
+	if(error > 0){
+	return false;
+	}else{
+	$("form").submit();
+	}
+	});
+	var form_validation = false;
+	$("#type_AD").on('blur', function() {
+	var name = $("#type_AD").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input5").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input5").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input5").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+	$("#content1").on('blur', function() {
+	var name = $("#content1").val();
+	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	if (name == "" || name == null || name.trim().length == 0) {
+		form_validation = false;
+		$("#input6").html("Required Field");
+		// return false;
+	} else if (!filter.test(name)) {
+		form_validation = false;
+		$("#input6").html("Alphabets and Min 3 to Max 30 without space ");
+		// return false;
+	} else {
+		$("#input6").html("");
+		form_validation = true;
+		// return true;
+	}
+	});
+});
 </script>

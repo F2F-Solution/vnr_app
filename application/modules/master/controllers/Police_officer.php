@@ -82,6 +82,9 @@ class Police_officer extends MY_Controller {
       public function update(){
         $iPoliceOfficerId = $_POST['policeofficerid'];
         $fileNames = "";
+        if(!empty($_POST['old_image'])){
+            $fileName = $_POST['old_image'];
+        }
         if (!empty($_FILES['image']['name'])) {
             $config['upload_path']   = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png';
