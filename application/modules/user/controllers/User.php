@@ -72,6 +72,10 @@ class User extends MY_Controller {
    public function dashboard(){
       $data= array();                         
       $data['title'] = 'Dashboard';
+      $data['lockedhome'] = $this->User_model->getcount_lockedhome(); //Filter lockedhome 
+      $data['policeofficer'] = $this->User_model->getcount_policeofficer(); //Filter policeofficer  
+      $data['policestation'] = $this->User_model->getcount_policestation(); //Filter policestation  
+      $data['unvisited'] = $this->User_model->getcount_unvisited_home(); //Filter unvisitedlockedhome 
       $this->template->write_view('content', 'user/dashboard', $data);
       $this->template->render();
    }

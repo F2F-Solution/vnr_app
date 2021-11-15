@@ -24,7 +24,27 @@ class User_model extends CI_model{
       }else{
         return false;
       }
-
+    }
+    public function getcount_lockedhome(){
+      $this->db->select('*');
+      $query = $this->db->get('vnr_locked_home');
+      return $query->row_array();
+    }
+    public function getcount_policeofficer(){
+      $this->db->select('*');
+      $query = $this->db->get('vnr_police_officer');
+      return $query->row_array();
+    }
+    public function getcount_policestation(){
+      $this->db->select('*');
+      $query = $this->db->get('vnr_police_station');
+      return $query->row_array();
+    }
+    public function getcount_unvisited_home(){
+      $this->db->select('*');
+      $this->db->where('tStatus',3);
+      $query = $this->db->get('vnr_locked_home');
+      return $query->result();
     }
 }
 ?>
