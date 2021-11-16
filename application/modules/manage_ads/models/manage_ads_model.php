@@ -3,19 +3,20 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Manage_ads_model extends CI_model{
+  public $table = 'vnr_manage_ads';
+  private $column_order = array(null, 'iAdtype','vAdContent','vAdImage','tAdStatus'); //set column field database for datatable orderable
+//   private $column_search = array('ADS tYPE'); //set column field database for datatable searchable 
+  private $order = array('iAdId' => 'desc'); // default descending order
     public function __construct(){
-         $table = 'vnr_manage_ads';
-         $column_order = array(null, 'S.No','ADS tYPE','ADS Content','ADS image','Actions'); //set column field database for datatable orderable
-         $column_search = array('ADS tYPE'); //set column field database for datatable searchable 
-         $order = array('id' => 'desc'); // default descending order
         $this->load->database();
     }
     public function store($user){
         $this->db->insert('vnr_manage_ads',$user);
     }
      //list data
-     private function list_data() {        
-        $this->db->from($this->table);
+     private function list_data() {      
+        $this->db->select('iAdtype','vAdContent','vAdImage','tAdStatus');
+        $this->db->from('vnr_manage_ads');  
         $i = 0; 
         foreach ($this->column_search as $item) 
         {
@@ -42,10 +43,10 @@ class Manage_ads_model extends CI_model{
     }
     public function listtable_data() {
         $this->list_data();
+      
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('*');
-        $this->db->from('vnr_manage_ads');
+       
         $query = $this->db->get();
         return $query->result();
     }
@@ -57,7 +58,7 @@ class Manage_ads_model extends CI_model{
 
     function count_filtered_gen_posts() {
         $this->list_data();
-        $query = $this->db->get('vnr_manage_ads');
+        $query = $this->db->get();
         return $query->num_rows();
     }
      // edit data

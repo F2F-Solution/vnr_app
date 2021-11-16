@@ -3,11 +3,11 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class News_model extends CI_model{
+ private  $table = 'vnr_news';
+ private  $column_order = array(null, 'vNewsSubject','vNewsMessage','vNewsImage','tNewsStatus'); //set column field database for datatable orderable
+//  private  $column_search = array('vNewsSubject'); //set column field database for datatable searchable 
+ private  $order = array('inewsid' => 'desc'); // default descending order
     public function __construct(){
-         $table = 'vnr_news';
-         $column_order = array(null, 'S.No','News Subject','News Message','News image','Actions'); //set column field database for datatable orderable
-         $column_search = array('News Subject'); //set column field database for datatable searchable 
-         $order = array('id' => 'desc'); // default descending order
         $this->load->database();
     }
     public function store($user){
@@ -15,7 +15,8 @@ class News_model extends CI_model{
     }
      //list data
      private function list_data() {        
-        $this->db->from($this->table);
+        $this->db->select('vNewsSubject','vNewsMessage','vNewsImage','tNewsStatus');
+        $this->db->from('vnr_news');
         $i = 0; 
         foreach ($this->column_search as $item) 
         {
@@ -44,8 +45,6 @@ class News_model extends CI_model{
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('*');
-        $this->db->from('vnr_news');
         $query = $this->db->get();
         return $query->result();
     }
@@ -57,7 +56,7 @@ class News_model extends CI_model{
 
     function count_filtered_gen_posts() {
         $this->list_data();
-        $query = $this->db->get('vnr_news');
+        $query = $this->db->get();
         return $query->num_rows();
     }
      // edit data

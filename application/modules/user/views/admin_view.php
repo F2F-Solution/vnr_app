@@ -150,20 +150,32 @@ $query = $this->db->get()->row_array();
                                         </div>
                                         <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
                                         </div>
-                                        <div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required"> Profile </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
-                                            </label>
-                                            <label class="file">
-                                            <input class="required" type="file" id="image" name="image"> 
-                                            <span id="input6" class="val" style="color:#F00; font-style:oblique;"></span>								   </div>
-                                    </div>
+                                        <input type="text" name="old_image" id="old_image">
+                                    <div class="fv-row mb-10">
+									<div class="col-lg-8">
+										<div class="image-input image-input-outline"  data-kt-image-input="true" style="background-image: url('..assets/media/avatars/blank.png')">
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center profile" style="background-size: 75%; background-image: url('')"></div>
+											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+												<i class="bi bi-pencil-fill fs-7"></i>
+												<input type="file"  name="image" accept=".png, .jpg, .jpeg" id="image">
+												<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
+											</label>
+											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+												<i class="bi bi-x fs-2"></i>
+											</span>
+											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+												<i class="bi bi-x fs-2"></i>
+											</span>
+										</div>
+										<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+									</div>
+                                </div><br>
                             </div>
-					    </div><br>
+                           
+                        </div>
                      </div>
-             </div>
-                    <button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+                     <button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+                   </div>
         </div>
     </div>
               </form>
@@ -189,6 +201,9 @@ $query = $this->db->get()->row_array();
 				else 
 				$("#gender_male").prop("checked", true);
                 $("#admin_id").val(data[0].iUserId);
+                $('.profile').css('background-image', 'url(../uploads/'+data[0].vImage + ')');
+                $('#old_image').val(data[0].vImage);
+
 			}
 		});	
 		return false;

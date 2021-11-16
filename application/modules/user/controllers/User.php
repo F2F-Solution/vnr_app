@@ -2,17 +2,11 @@
 class User extends MY_Controller {
    public function __construct(){
       parent::__construct();
-   //  if(empty($this->session->userdata('UserId'))){
-   // }
       $this->load->model('User_model'); 
       $this->load->library('session');  
     }
    //  SIGNIN PAGE
     public function index(){
-      // if(empty($this->session->userdata('UserId'))){
-      //    redirect($this->config->item('base_url'));
-      //  }
-         
       $data= array();                         
       $data['title'] = 'Signin Pages';
       $this->template->set_master_template('../../themes/vnrpolice/template_signin.php');
@@ -79,12 +73,48 @@ class User extends MY_Controller {
       $this->template->write_view('content', 'user/dashboard', $data);
       $this->template->render();
    }
-
+   // terms and condition
+   public function terms_condition(){
+      $data= array();                         
+      $data['title'] = 'terms';
+      $data['terms']=$this->User_model->getlist_terms();  
+      // print_r($data);exit;
+      $this->template->write_view('content', 'user/terms', $data);
+      $this->template->render();
+   }
+   //Delete data
+   public function delete_terms($iTermsandConditionsId){
+      $this->User_model->delete_data($iTermsandConditionsId);
+      redirect($this->config->item('base_url') . 'user/terms');
+  }
+   public function get(){
+      $iTermsandConditionsId = $_POST['id'];
+      $row = $this->User_model->find_data($iTermsandConditionsId);
+      echo json_encode($row);
+      // print_r($row);exit;
+   }
+//update data
+   public function update(){
+      $iTermsandConditionsId = $_POST['term_id'];
+      $user=array(
+         'vTermsandConditions'=>$this->input->post('term_name'), 
+      );
+      //  print_r($user);exit;
+      $this->User_model->update_data($user,$iTermsandConditionsId);
+      redirect($this->config->item('base_url') . 'user/terms_condition');
+   }
    public function logout()
-{
+  {  
      $this->session->unset_userdata('UserId');
      $this->session->sess_destroy();
      redirect($this->config->item('base_url'));
+   }
+   public function datatable(){
+      $data= array();                         
+      $data['title'] = 'table';
+      $this->template->write_view('content', 'user/datatable', $data);
+      $this->template->render();
+
    }
   }
 ?>

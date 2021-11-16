@@ -16,16 +16,17 @@
                 <li class="breadcrumb-item text-dark">Lists</li>
             </ul>
         </div>
+		<?php if($this->session->flashdata('status')): ?>
+                <div id="fadeout" class="alert alert-success" role="alert">
+                    <?= $this->session->flashdata('status'); ?>
+                </div>
+        <?php endif; ?>
         <div class="d-flex align-items-center py-1">
             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add Police officer</button>
         </div>
     </div>
 </div>
-<?php if($this->session->flashdata('status')): ?>
-                <div id="fadeout" class="alert alert-success" role="alert">
-                    <?= $this->session->flashdata('status'); ?>
-                </div>
-<?php endif; ?>
+
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
         <div class="card">
@@ -77,7 +78,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="">Officer Name </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify Name"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -85,7 +85,6 @@
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
 										<span class=""> Email </span>
-										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify mail id"></i>
 									</label>
 									<input type="text" class="form-control form-control-lg form-control-solid validation" name="email"  id="email"/>
 									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -93,7 +92,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="">Contact NO </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify number"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -101,7 +99,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="">Gender </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify gender"></i>
                                             </label>
 										<div class="form-check form-check-custom form-check-solid me-10">
 											<input class="form-check-input validation" type="radio" name="gender" value="female" id="flexRadioLg"/>
@@ -117,7 +114,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class=""> Designation </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify Designation"></i>
 										</label>
 										<select class="form-select form-select-solid validation" name="designation" aria-label="Select example">
 											<option>SELECT</option>
@@ -132,7 +128,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="">Department </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid validation "  name="department"  aria-label="Select example">
 											<option>SELECT</option>
@@ -142,12 +137,10 @@
 											}
 											?>
 										</select>	
-										<!-- <span id="input6" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="">Group</span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
 										</label>
 										<select class="form-select form-select-solid validation"  name="group"  aria-label="Select example">
 											<option>SELECT</option>
@@ -157,12 +150,10 @@
 											}
 											?>
 										</select>
-										<!-- <span id="input7" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="">Police station</span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify police station"></i>
 										</label>
 										<select class="form-select form-select-solid validation "  name="station"  aria-label="Select example">
 											<option>SELECT</option>
@@ -172,7 +163,6 @@
 											}
 											?>
 										</select>
-										<!-- <span id="inputs" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
@@ -227,7 +217,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Officer Name </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="officer_name"  />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -236,7 +225,6 @@
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
 										<span class="required"> Email </span>
-										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 									</label>
 									<input type="text" class="form-control form-control-lg form-control-solid validation" name="email" id="officer_email" />
 									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -244,7 +232,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Contact NO </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="officer_number"  />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -252,7 +239,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Gender </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
 										<div class="form-check form-check-custom form-check-solid me-10">
 											<input class="form-check-input gender" type="radio" name="gender" value="female" id="gender_female">
@@ -266,7 +252,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Designation </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid " name="designation" id="designation" aria-label="Select example">
 											<option>SELECT</option>
@@ -280,7 +265,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required">Department </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid "  name="department" id="department" aria-label="Select example">
 											<option>SELECT</option>
@@ -294,7 +278,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required">Group</span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
 										</label>
 										<select class="form-select form-select-solid "  name="group" id="group" aria-label="Select example">
 											<option>SELECT</option>
@@ -308,7 +291,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required">Police Station</span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
 										</label>
 										<select class="form-select form-select-solid "  name="station" id="station" aria-label="Select example">
 											<option>SELECT</option>
@@ -325,7 +307,6 @@
 										<div class="image-input image-input-outline"  data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-												<i class="bi bi-pencil-fill fs-7"></i>
 												<input type="file" class="" name="image" accept=".png, .jpg, .jpeg" id="image">
 												<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
 											</label>
@@ -351,7 +332,11 @@
 <!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
 <script>
+
     var table;
     table = $("#user_data").DataTable({
             searchDelay: 500,
@@ -361,8 +346,45 @@
             ajax: {
                 url:"<?php echo base_url() . '/master/police_officer/list_data'; ?>",  
                 type:"POST"
-            }
+            },
+			"columnDefs":[
+				{
+				"targets":[0],
+				"orderable":false
+				}
+			]
         });
+		$(document).on('click','.removeAttr',function(event){
+      event.preventDefault();
+        var id = $(this).attr('data-id');
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+			console.log(result.isConfirmed);
+        if (result.isConfirmed) {
+			$.ajax({
+				url: "<?php echo base_url() . '/master/police_officer/delete';?>",
+				type: 'POST',
+				data:{id:id},
+				success: function(data) {
+						Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+					);      
+					table.ajax.reload();
+				}
+			});
+        }
+    });
+  });
+	//	table.ajax.reload();
 		//EDIT FORM DATA
 	$(document)	.on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');
@@ -386,7 +408,6 @@
 				$("#station").val(data.iPoliceStationId);    
 				$('.officer_file').css('background-image', 'url(../uploads/'+data.tImage + ')');
                 $("#policeofficer_id").val(data.iPoliceOfficerId);
-				// alert('url(../uploads/'+data.tImage + ')');
 				$('#old_image').val(data.tImage);
 
 			}
@@ -496,7 +517,7 @@ $(document).ready(function () {
 	}    
 	
 	});
-	alert(error);
+	// alert(error);
 	if(error > 0){
 	return false;
 	}else{

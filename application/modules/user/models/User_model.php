@@ -25,6 +25,7 @@ class User_model extends CI_model{
         return false;
       }
     }
+    //filter data 
     public function getcount_lockedhome(){
       $this->db->select('*');
       $query = $this->db->get('vnr_locked_home');
@@ -46,5 +47,29 @@ class User_model extends CI_model{
       $query = $this->db->get('vnr_locked_home');
       return $query->result();
     }
+    // get data from terms and condition
+    public function getlist_terms(){
+      $this->db->select('*');
+      $query = $this->db->get('vnr_terms_and_conditions');
+      return $query->result();
+     }  
+    //  edit data
+     public function find_data($iTermsandConditionsId){
+      $this->db->where('iTermsandConditionsId', $iTermsandConditionsId);
+      $query = $this->db->get('vnr_terms_and_conditions');
+      return $query->row_array();
+     }
+   //update data
+    public function update_data($data,$iTermsandConditionsId){
+        $this->db->where('iTermsandConditionsId', $iTermsandConditionsId);
+        $this->db->update('vnr_terms_and_conditions',$data);
+        // print_r($this->db->last_query());exit;
+     }
+
+    //Delete data
+    public function delete_data($iTermsandConditionsId){
+      $this->db->where('iTermsandConditionsId', $iTermsandConditionsId);
+      $this-> db->delete('vnr_terms_and_conditions');
+  }
 }
 ?>

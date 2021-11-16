@@ -15,18 +15,16 @@
                 <li class="breadcrumb-item text-dark">Lists</li>
             </ul>
         </div>
-
-        <div class="d-flex align-items-center py-1">
-            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add User</button>
-        </div>
-
-    </div>
-</div>
-<?php if($this->session->flashdata('status')): ?>
+        <?php if($this->session->flashdata('status')): ?>
                 <div id="fadeout" class="alert alert-success" role="alert">
                     <?= $this->session->flashdata('status'); ?>
                 </div>
-            <?php endif; ?>
+        <?php endif; ?>
+        <div class="d-flex align-items-center py-1">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add User</button>
+        </div>
+    </div>
+</div>
 <div class="post d-flex flex-column-fluid" id="kt_post">
    <div id="kt_content_container" class="container-xxl">
      <div class="card">
@@ -213,7 +211,44 @@
 <!-- validation -->
 <!-- Form validation -->
 <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
 <script>
+  $(document).on('click','.removeAttr',function(event){
+      event.preventDefault();
+        var id = $(this).attr('data-id');
+        // alert(id);
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+                if (isConfirm) {
+                $.ajax({
+                    url: "<?php echo base_url() . 'master/designation/delete';?>",
+                    type: 'POST',
+                    data:{id:id},
+                    success: function(data) {
+                                Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        );             
+                    }
+                });
+            };
+        };
+    });
+  });
+
+
 $(document).ready(function () {
     $("#submit1").on('click',function () {
     var error = 0;

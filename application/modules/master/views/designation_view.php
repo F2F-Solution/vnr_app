@@ -14,16 +14,16 @@
                 <li class="breadcrumb-item text-dark">Lists</li>
             </ul>
         </div>
+        <?php if($this->session->flashdata('status')): ?>
+                <div id="fadeout" class="alert alert-success" role="alert">
+                    <?= $this->session->flashdata('status'); ?>
+                </div>
+        <?php endif; ?>
         <div class="d-flex align-items-center py-1">
             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add User</button>
         </div>
     </div>
 </div>
-<?php if($this->session->flashdata('status')): ?>
-                <div id="fadeout" class="alert alert-success" role="alert">
-                    <?= $this->session->flashdata('status'); ?>
-                </div>
-<?php endif; ?>
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
         <div class="card">
@@ -169,6 +169,7 @@
 
         $(document)	.on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');
+        console.log(id);
 		$.ajax({
 			type : "POST",
 			url  : "<?php echo base_url() . 'master/designation/get';?>",
@@ -196,6 +197,9 @@
         $('#fadeout').hide('fast');
     }, 2000);
 </script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
 
 <!-- Form validation -->
 <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
@@ -278,41 +282,37 @@
     });
 </script>
 
-<!-- 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
   $(document).on('click','.removeAttr',function(event){
       event.preventDefault();
         var id = $(this).attr('data-id');
-       swal({
-        title: "Are you sure?",
-        text: "You will not be able to recover this imaginary file!",
-        type: "warning",
+        // alert(id);
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel plx!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-
-      function(isConfirm) {
-        if (isConfirm) {
-          $.ajax({
-             url: "<?php //echo base_url() . 'master/designation/delete';?>",
-             type: 'POST',
-             data:{id:id},
-             error: function() {
-                alert('Something is wrong');
-             },
-             success: function(data) {
-                  swal("Deleted!", "Your imaginary file has been deleted.", "success");
-             }
-          });
-        } else {
-          swal("Cancelled", "Your imaginary file is safe :)", "error");
-        }
-      });
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+                if (isConfirm) {
+                $.ajax({
+                    url: "<?php echo base_url() . 'master/designation/delete';?>",
+                    type: 'POST',
+                    data:{id:id},
+                    success: function(data) {
+                                Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        );             
+                    }
+                });
+            };
+        };
     });
+  });
 </script>
-    -->
+   

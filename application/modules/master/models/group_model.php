@@ -3,11 +3,12 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Group_model extends CI_model{
+   private $table = 'vnr_police_group';
+   private $column_order = array(null,'vGroupName','tStatus'); //set column field database for datatable orderable
+    // $column_search = array('vGroupName','tStatus'); //set column field database for datatable searchable 
+   private $order = array('iGroupid' => 'desc'); // default descending order
     public function __construct(){
-        $table = 'vnr_police_group';
-        $column_order = array(null, 'S.No','Group','Status','Actions'); //set column field database for datatable orderable
-        $column_search = array('Group'); //set column field database for datatable searchable 
-        $order = array('id' => 'desc'); // default descending order
+      
        $this->load->database();
    }
     //store data into DB
@@ -19,8 +20,9 @@ class Group_model extends CI_model{
         $query = $this->db->get('vnr_police_group');  
         return $query;  
     }
-    private function list_data() {        
-        $this->db->from($this->table);
+    private function list_data() {     
+        $this->db->select('vGroupName','tStatus');
+        $this->db->from('vnr_police_group');   
         $i = 0; 
         foreach ($this->column_search as $item) 
         {
@@ -51,14 +53,13 @@ class Group_model extends CI_model{
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('*');
-        $this->db->from('vnr_police_group');
+       
         $query = $this->db->get();
         return $query->result();
     }
     function count_filtered_gen_posts() {
         $this->list_data();
-            $query = $this->db->get('vnr_police_group');
+        $query = $this->db->get();
         return $query->num_rows();
     }
     //edit data

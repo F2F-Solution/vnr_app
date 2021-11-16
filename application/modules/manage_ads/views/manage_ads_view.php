@@ -66,7 +66,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">ADS Type </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="type" id="type1" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -74,7 +73,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Content</span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <textarea class="form-control form-control-lg form-control-solid validation" name="content" id="content" ></textarea>
 											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -101,7 +99,6 @@
                                 <div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Status </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid " name="status" aria-label="Select example">
 											<option>SELECT</option>
@@ -144,7 +141,6 @@
                                     <div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">ADS Type </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation1" name="type" id="type_AD" />
 											<span id="input5" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -152,7 +148,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Content</span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <textarea class="form-control form-control-lg form-control-solid" name="content" id="content1" ></textarea>
                                             <input type="hidden" class="form-control form-control-lg form-control-solid validation1" name="ads_id" id="ads_id" />
@@ -181,7 +176,6 @@
                                 <div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Status </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid " name="status" id="status1" aria-label="Select example">
 											<option value="">SELECT</option>

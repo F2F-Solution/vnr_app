@@ -18,9 +18,11 @@ class Admin extends MY_Controller {
        echo json_encode($user);
     }
     public function update(){
-        $iUserId = $_POST['adminid'];
-        // print_r($iUserId);exit;
         $fileNames = "";
+        $iUserId = $_POST['adminid'];
+        if(!empty($_POST['old_image'])){
+          $fileNames = $_POST['old_image'];
+      }
         if (!empty($_FILES['image']['name'])) {
             $config['upload_path']   = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png';
@@ -30,7 +32,7 @@ class Admin extends MY_Controller {
                 $data      = $this->upload->data();
                 $fileNames = $data['file_name'];
              }
-        }
+        } 
         $user=array(
           'vUserName'=>$this->input->post('username'), 
           'vEmail'=>$this->input->post('email'), 

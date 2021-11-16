@@ -66,7 +66,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">News subject </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify subject"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="subject" id="subject" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -74,7 +73,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Message</span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify message"></i>
                                             </label>
                                             <textarea class="form-control form-control-lg form-control-solid validation" name="message" id="message" ></textarea>
 											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -101,7 +99,6 @@
                                 <div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Status </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid " name="status" aria-label="Select example">
 											<option>SELECT</option>
@@ -144,7 +141,6 @@
                                     <div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">News subject </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation1" name="subject" id="subject1" />
                                             <input type="hidden" class="form-control form-control-lg form-control-solid" name="news_id" id="news_id" />
@@ -153,8 +149,7 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Message</span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
-                                            </label>
+sta                                            </label>
                                             <textarea class="form-control form-control-lg form-control-solid validation1" name="message" id="message1" ></textarea>
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
@@ -181,7 +176,6 @@
                                 <div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Status </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid " name="status" id="status1" aria-label="Select example">
 											<option value="">SELECT</option>

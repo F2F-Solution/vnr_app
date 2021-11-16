@@ -150,13 +150,21 @@ $query = $this->db->get()->row_array();
                                 </a>
                                </div>
 							   <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-							   <a href="<?php echo base_url();?>managenews/news">
-                                    <span class="menu-link">
-										<span class="menu-icon"><i class="bi bi-sticky fs-3"></i></span>
-										<span class="menu-title">Manage News</span>
-									</span>
-                               </a>
-							  </div>
+									<a href="<?php echo base_url();?>managenews/news">
+										<span class="menu-link">
+											<span class="menu-icon"><i class="bi bi-sticky fs-3"></i></span>
+											<span class="menu-title">Manage News</span>
+										</span>
+									</a>
+								</div>
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+									<a href="<?php echo base_url();?>user/terms_condition">
+										<span class="menu-link">
+											<span class="menu-icon"><i class="bi bi-card-list fs-3"></i></span>
+											<span class="menu-title">Terms and Condition</span>
+										</span>
+									</a>
+								</div>
 							<!--end::Menu-->
 						</div>
 						<!--end::Aside Menu-->

@@ -16,6 +16,12 @@
                 <li class="breadcrumb-item text-dark">Lists</li>
             </ul>
         </div>
+        
+        <?php if($this->session->flashdata('status')): ?>
+                        <div id="fadeout" class="alert alert-success" role="alert">
+                            <?= $this->session->flashdata('status'); ?>
+                        </div>
+        <?php endif; ?>
         <div class="d-flex align-items-center py-1">
             <button type="button" class="btn btn-sm btn-primary add_station" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add Police Station</button>
         </div>
@@ -70,7 +76,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Station Name </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -78,7 +83,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Contact NO </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
 											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -86,7 +90,6 @@
                                     <div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Emergency contact </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number" />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -94,7 +97,6 @@
                                     <div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Landline number </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number" />
 											<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -102,7 +104,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Primary attender </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid " name="attender" aria-label="Select example">
 											<option>SELECT</option>
@@ -117,7 +118,6 @@
                                     <div class="fv-row mb-10">
                                         <label class="d-flex align-items-center fs-5 fw-bold ">
                                             <span class="required"> Address </span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address"/>
                                         <span id="input5" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -125,7 +125,6 @@
                                    <div class="fv-row mb-10">
                                         <label class="d-flex align-items-center fs-5 fw-bold ">
                                             <span class="required"> Map </span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <div id="map" style="width: 300px; height: 300px;"></div>
                                         <div id="current"></div>
@@ -136,7 +135,6 @@
                                    <div class="fv-row mb-10">
                                         <label class="d-flex align-items-center fs-5 fw-bold ">
                                             <span class="required"> Pincode  </span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode"/>
                                         <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude"/>
@@ -179,7 +177,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Station Name </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name1" />
 											<span id="input8" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -188,7 +185,6 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Contact NO </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number1" />
 											<span id="input9" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -196,7 +192,6 @@
                                     <div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Emergency contact </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number1" />
 											<span id="input10" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -204,7 +199,6 @@
                                     <div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Landline number </span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number1" />
 											<span id="input11" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -212,7 +206,6 @@
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Primary attender </span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
 										</label>
 										<select class="form-select form-select-solid " name="attender" id="attender1" aria-label="Select example">
 											<option>SELECT</option>
@@ -227,7 +220,6 @@
                                     <div class="fv-row mb-10">
                                         <label class="d-flex align-items-center fs-5 fw-bold ">
                                             <span class="required"> Address </span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address1"/>
                                         <span id="input12" class="val" style="color:#F00; font-style:oblique;"></span>
@@ -235,7 +227,6 @@
                                    <div class="fv-row mb-10">
                                         <label class="d-flex align-items-center fs-5 fw-bold ">
                                             <span class="required"> Map </span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <div id="map1" style="width: 300px; height: 300px;"></div>
                                         <div id="current1"></div>
@@ -247,7 +238,6 @@
                                    <div class="fv-row mb-10">
                                         <label class="d-flex align-items-center fs-5 fw-bold ">
                                             <span class="required"> Pincode  </span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify department"></i>
                                         </label>
                                         <input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode1"/>
                                         <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude1"/>
@@ -280,6 +270,36 @@
                 type:"POST"
             }
         });
+		$(document).on('click','.removeAttr',function(event){
+      event.preventDefault();
+        var id = $(this).attr('data-id');
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+			console.log(result.isConfirmed);
+        if (result.isConfirmed) {
+			$.ajax({
+				url: "<?php echo base_url() . 'policestation/Police_station/delete';?>",
+				type: 'POST',
+				data:{id:id},
+				success: function(data) {
+						Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+					);      
+					table.ajax.reload();
+				}
+			});
+        }
+    });
+  });
 	//EDIT FORM DATA
 	$(document)	.on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');

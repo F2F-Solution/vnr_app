@@ -3,11 +3,11 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Department_model extends CI_model{
+    private $table = 'vnr_police_department';
+    private $column_order = array(null, 'vDepartmentName','tStatus'); //set column field database for datatable orderable
+    // private $column_search = array('vDepartmentName','tStatus'); //set column field database for datatable searchable 
+    private $order = array('vDepartmentName' => 'desc'); // default descending order
     public function __construct(){
-        $table = 'vnr_police_department';
-        $column_order = array(null, 'S.No','Department','Status','Email',  'Actions'); //set column field database for datatable orderable
-        $column_search = array('Department'); //set column field database for datatable searchable 
-        $order = array('id' => 'desc'); // default descending order
        $this->load->database();
    }
     //store data into DB
@@ -19,8 +19,9 @@ class Department_model extends CI_model{
         $query = $this->db->get('vnr_police_department');  
         return $query;  
     }
-    private function list_data() {        
-        $this->db->from($this->table);
+    private function list_data() {    
+        $this->db->select('vDepartmentName','tStatus');
+        $this->db->from('vnr_police_department');    
         $i = 0; 
         foreach ($this->column_search as $item) 
         {
@@ -51,14 +52,13 @@ class Department_model extends CI_model{
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('*');
-        $this->db->from('vnr_police_department');
+      
         $query = $this->db->get();
         return $query->result();
     }
     function count_filtered_gen_posts() {
         $this->list_data();
-            $query = $this->db->get('vnr_police_department');
+            $query = $this->db->get();
         return $query->num_rows();
     }
     //edit data
