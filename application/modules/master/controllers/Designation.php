@@ -7,6 +7,9 @@ class Designation extends MY_Controller {
     }
     //Designation page
     public function index(){
+        if (empty($this->session->userdata('UserId'))) {
+            redirect(base_url('/'));
+          }
         $data= array();                         
         $data['title'] = 'Designation Pages';
         $data['designation'] = $this->designation_model->select(); 

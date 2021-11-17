@@ -6,6 +6,9 @@ class Lockedhome extends MY_Controller {
     }
     //station page
     public function index(){
+      if (empty($this->session->userdata('UserId'))) {
+        redirect(base_url('/'));
+      }
         $data= array();                         
         $data['title'] = 'lockedhome Pages';
         $this->template->write_view('content', 'lockedhome/lockedhome_view', $data);

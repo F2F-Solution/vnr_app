@@ -6,6 +6,9 @@ class Police_station extends MY_Controller {
     }
     //station page
     public function index(){
+      if (empty($this->session->userdata('UserId'))) {
+        redirect(base_url('/'));
+      }
         $data= array();                         
         $data['title'] = 'Policestation Pages';
         $data['policestation'] = $this->Policestation_model->getallattender();  

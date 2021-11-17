@@ -7,6 +7,9 @@ class Department extends MY_Controller {
     }
     //Department page
     public function index(){
+        if (empty($this->session->userdata('UserId'))) {
+            redirect(base_url('/'));
+          }
         $data= array();                         
         $data['title'] = 'Department Pages';
         $data['department'] = $this->department_model->select(); 

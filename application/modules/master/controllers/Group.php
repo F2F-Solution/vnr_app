@@ -7,6 +7,9 @@ class Group extends MY_Controller {
     }
     //Group page
     public function index(){
+      if (empty($this->session->userdata('UserId'))) {
+        redirect(base_url('/'));
+      }
         $data= array();                         
         $data['title'] = 'Group Pages';
         $data['group'] = $this->group_model->select(); 

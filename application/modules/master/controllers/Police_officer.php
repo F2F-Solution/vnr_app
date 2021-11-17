@@ -7,6 +7,9 @@ class Police_officer extends MY_Controller {
     }
     //Group page
     public function index(){
+        if (empty($this->session->userdata('UserId'))) {
+            redirect(base_url('/'));
+          }
         $data= array();                         
         $data['title'] = 'Policeofficer Pages';
         $data['groups'] = $this->Policeofficer_model->getalldesignation();  
