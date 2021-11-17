@@ -80,7 +80,6 @@
                                         <div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Status</span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify group"></i>
                                             </label>
                                             <select class="form-select form-select-solid "  name="status" id="status" aria-label="Select example">
                                                 <option>SELECT</option>
