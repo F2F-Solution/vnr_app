@@ -149,7 +149,7 @@
 									<div class="fv-row mb-10">
                                             <label class="d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="required">Message</span>
-sta                                            </label>
+											</label>
                                             <textarea class="form-control form-control-lg form-control-solid validation1" name="message" id="message1" ></textarea>
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                     </div>
@@ -198,6 +198,9 @@ sta                                            </label>
 <!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
 <script>
     var table;
     table = $("#user_data").DataTable({
@@ -210,6 +213,37 @@ sta                                            </label>
                 type:"POST"
             }
         });
+		$(document).on('click','.removeAttr',function(event){
+      event.preventDefault();
+        var id = $(this).attr('data-id');
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+			console.log(result.isConfirmed);
+        if (result.isConfirmed) {
+			$.ajax({
+				url: "<?php echo base_url() . 'managenews/news/delete';?>",
+				type: 'POST',
+				data:{id:id},
+				success: function(data) {
+						Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+					);      
+					table.ajax.reload();
+				}
+			});
+        }
+    });
+  });
+
         //EDIT FORM DATA
 	$(document)	.on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');

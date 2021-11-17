@@ -64,7 +64,7 @@
                         <div class="fv-row mb-7 ">
                             <label class="required fw-bold fs-6 mb-2">Designation</label>
                             <input type="text validation" name="designation_name" class="form-control form-control-solid mb-3 mb-lg-0 validation" id="designationName"/>
-                            <span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
+                            <span id="input_designation" class="val" style="color:#F00; font-style:oblique;"></span>
                         </div>
                         <div class="mb-7">
                             <label class="required fw-bold fs-6 mb-5">Status</label>
@@ -152,8 +152,15 @@
         </div>
     </div>
 </div>
+<!-- form validation -->
+<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+<!-- datatable script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<!-- sweetalert -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
 <script>
     var table;
     table = $("#user_data").DataTable({
@@ -166,127 +173,9 @@
                 type:"POST"
             }
         });
-
-        $(document)	.on('click','.addAttr',function(){
-		var id = $(this).attr('data-id');
-        console.log(id);
-		$.ajax({
-			type : "POST",
-			url  : "<?php echo base_url() . 'master/designation/get';?>",
-			dataType : "JSON",
-			data : {id:id},
-			success: function(data){
-				//  console.log(data.vDepartmentName);	
-				$("#designation_name1").val(data.vDesignationName);
-                if(data.tStatus == '0')
-				$("#status_active").prop("checked", true);
-				else 
-				$("#status_inactive").prop("checked", true);
-                $("#designation_id").val(data.iDesignationId);
-
-			}
-		});	
-		return false;
-	});
-
-</script>  
-
-<!-- FLASH DATA FADEOUT -->
-<script> 
-    setTimeout(function() {
-        $('#fadeout').hide('fast');
-    }, 2000);
-</script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
-
-<!-- Form validation -->
-<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#submit1").on('click',function () {
-            var error = 0;
-            $('#form_add').find('.validation').each(function(){
-                var _val = $(this).val();
-                    if(_val == ''){
-                        error++;  
-                        $(this).closest('div').find('span.val').text("Required Field");
-                    }else{
-                        $(this).closest('div').find('span.val').text("");
-                    }    
-            });       
-                if(error > 0){
-                    return false;
-                }else{
-                    $("form_add").submit();
-                }
-        });
-            var form_validation = false;
-            $("#designationName").on('blur', function() {
-                var name = $("#designationName").val();
-                var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
-                if (name == "" || name == null || name.trim().length == 0) {
-                    form_validation = false;
-                    $("#input1").html("Required Field");
-                    // return false;
-                } else if (!filter.test(name)) {
-                    form_validation = false;
-                    $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
-                    // return false;
-                } else {
-                    $("#input1").html("");
-                    form_validation = true;
-                    // return true;
-                }
-          });
-    });
-
-
-    $(document).ready(function () {
-        $("#submit").on('click',function () {
-        var error = 0;
-        $('#form_edit').find('.validation').each(function(){
-        var _val = $(this).val();
-        if(_val == ''){
-            error++;  
-            $(this).closest('div').find('span.val').text("Required Field");
-        }else{
-            $(this).closest('div').find('span.val').text("");
-        }    
-     });       
-        if(error > 0){
-        return false;
-        }else{
-        $("form_edit").submit();
-        }
-        });
-        var form_validation = false;
-        $("#designationName1").on('blur', function() {
-        var name = $("#designationName1").val();
-        var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
-        if (name == "" || name == null || name.trim().length == 0) {
-            form_validation = false;
-            $("#input1").html("Required Field");
-            // return false;
-        } else if (!filter.test(name)) {
-            form_validation = false;
-            $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
-            // return false;
-        } else {
-            $("#input1").html("");
-            form_validation = true;
-            // return true;
-        }
-        });
-    });
-</script>
-
-<script type="text/javascript">
-  $(document).on('click','.removeAttr',function(event){
-      event.preventDefault();
+    $(document).on('click','.removeAttr',function(event){
+        event.preventDefault();
         var id = $(this).attr('data-id');
-        // alert(id);
         Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -296,23 +185,96 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
+			console.log(result.isConfirmed);
         if (result.isConfirmed) {
-                if (isConfirm) {
-                $.ajax({
-                    url: "<?php echo base_url() . 'master/designation/delete';?>",
-                    type: 'POST',
-                    data:{id:id},
-                    success: function(data) {
-                                Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                        );             
-                    }
-                });
-            };
-        };
+			$.ajax({
+				url: "<?php echo base_url() . 'master/designation/delete';?>",
+				type: 'POST',
+				data:{id:id},
+				success: function(data) {
+						Swal.fire(
+					'Deleted!',
+					'It has been deleted.',
+					'success'
+					);      
+					table.ajax.reload();
+				}
+			});
+        }
+     });
     });
-  });
+    $(document).on('click','.addAttr',function(){
+		var id = $(this).attr('data-id');
+		$.ajax({
+			type : "POST",
+			url  : "<?php echo base_url() . 'master/designation/get';?>",
+			dataType : "JSON",
+			data : {id:id},
+			success: function(data){
+				$("#designation_name1").val(data.vDesignationName);
+                if(data.tStatus == '0')
+				$("#status_active").prop("checked", true);
+				else 
+				$("#status_inactive").prop("checked", true);
+                $("#designation_id").val(data.iDesignationId);
+			}
+		});	
+		return false;
+	});
+    // <!-- FLASH DATA FADEOUT -->
+    setTimeout(function() {
+        $('#fadeout').hide('fast');
+    }, 2000);
+    // <!-- Form validation -->
+    $(document).ready(function () {
+        $("#submit1").on('click',function () {
+            var error = 0;
+            $('#form_add').find('.validation').each(function(){
+                var _val = $(this).val();                                                                                                                    
+                var _id  = $(this).attr('id');
+                var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
+                if(_val == '' || _val == null ){
+                    error++;  
+                    $(this).closest('div').find('span.val').text("Required Field");
+                } else if (_id == "designationName" && !filter.test(_val)) {
+                    error++; 
+                    $("#input_designation").html("Alphabets and Min 2 to Max 30 without space ");                                                                              
+                } else{
+                    $(this).closest('div').find('span.val').text("");
+                }    
+            });       
+            if(error > 0){
+                return false;
+            }else{
+                $("form_add").submit();
+            }
+     });
+});
+    // edit page validation
+    $(document).ready(function () {
+        $("#submit").on('click',function () {
+                var error = 0;
+                $('#form_edit').find('.validation').each(function(){
+                    var _val = $(this).val();
+                    var _id  = $(this).attr('id');
+                    var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
+                    if(_val == '' || _val == null || _val.trim().length == 0){
+                        error++;  
+                        $(this).closest('div').find('span.val').text("Required Field");
+                    }else if (_id == "designation_name1" && !filter.test(_val)) {
+                        error++
+                        $("#input3").html("Alphabets and Min 2 to Max 30 without space ");
+                    }else{
+                        $(this).closest('div').find('span.val').text("");
+                    }    
+                });       
+                if(error > 0){
+                    return false;
+                }else{
+                    $("form_edit").submit();
+                }
+        });
+    });
 </script>
+
    

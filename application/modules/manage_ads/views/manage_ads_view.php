@@ -198,6 +198,10 @@
 <!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
 <script>
     var table;
     table = $("#user_data").DataTable({
@@ -210,6 +214,37 @@
                 type:"POST"
             }
         });
+		$(document).on('click','.removeAttr',function(event){
+      event.preventDefault();
+        var id = $(this).attr('data-id');
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+			console.log(result.isConfirmed);
+        if (result.isConfirmed) {
+			$.ajax({
+				url: "<?php echo base_url() . 'manage_ads/delete';?>",
+				type: 'POST',
+				data:{id:id},
+				success: function(data) {
+						Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+					);      
+					table.ajax.reload();
+				}
+			});
+        }
+    });
+  });
+
         //EDIT FORM DATA
 	$(document)	.on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');
