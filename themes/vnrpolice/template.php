@@ -72,9 +72,9 @@ $query = $this->db->get()->row_array();
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
 									</div>
 								</div>
-								<?php //$uriMethod_name=$this->router->fetch_method(); ?>
+								<?php $uriMethod_name = $this->uri->segments[2]; ?>
 								<div class="menu-item">
-									<a class='menu-link active' href="<?php echo base_url();?>user/dashboard">
+									<a class="menu-link <?php if($uriMethod_name=="dashboard"){ echo 'active'; } ?>" href="<?php echo base_url();?>user/dashboard">
 										<span class="menu-icon">
 											<i class="bi bi-grid fs-3"></i>
 										</span>
@@ -90,7 +90,7 @@ $query = $this->db->get()->row_array();
 									</span>
                                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                                       <div class="menu-item">
-											<a 	<?php if($uriMethod_name=="designation"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/designation">
+											<a class="menu-link <?php if($uriMethod_name=="designation"){ echo 'active'; } ?>" href="<?php echo base_url();?>master/designation">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -98,7 +98,7 @@ $query = $this->db->get()->row_array();
 											</a>
 										</div>
                                         <div class="menu-item">
-											<a 	<?php if($title=="Department Pages"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/department">
+											<a 	class="menu-link <?php if($uriMethod_name=="department"){ echo 'active'; } ?>"  href="<?php echo base_url();?>master/department">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -106,7 +106,7 @@ $query = $this->db->get()->row_array();
 											</a>
 										</div>
                                         <div class="menu-item">
-											<a 	<?php if($uriMethod_name=="group"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/group">
+											<a 	class="menu-link <?php if($uriMethod_name=="group"){ echo 'active'; } ?>" href="<?php echo base_url();?>master/group">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -114,7 +114,7 @@ $query = $this->db->get()->row_array();
 											</a>
 										</div>
                                         <div class="menu-item">
-													<a	<?php if($uriMethod_name=="police_officer"){echo "class='menu-link active'";} else{echo "class='menu-link '" ; } ?> href="<?php echo base_url();?>master/police_officer">
+													<a class="menu-link <?php if($uriMethod_name=="police_officer"){ echo 'active'; } ?>" href="<?php echo base_url();?>master/police_officer">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
@@ -127,7 +127,7 @@ $query = $this->db->get()->row_array();
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 							    	<a href="<?php echo base_url();?>policestation/police_station">
-									<span class="menu-link">
+									<span class="menu-link <?php if($uriMethod_name=="police_station"){ echo 'active'; } ?>">
 										<span class="menu-icon"><i class="bi bi-shield-check fs-3"></i></span>
 										<span class="menu-title">Police Station</span>
 									</span>
@@ -135,15 +135,15 @@ $query = $this->db->get()->row_array();
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 								<a href="<?php echo base_url();?>lockedhome/Lockedhome">
-									<span class="menu-link">
+									<span class="menu-link <?php if($uriMethod_name=="Lockedhome"){ echo 'active'; } ?>">
 										<span class="menu-icon"><i class="bi bi-hr fs-3"></i></span>
 										<span class="menu-title">Locked Home</span>
 									</span>
                                 </a>
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-								<a href="<?php echo base_url();?>manage_ads">
-									<span class="menu-link">
+								<a href="<?php echo base_url();?>manage_ads/manage_ads">
+									<span class="menu-link <?php if($uriMethod_name=="manage_ads"){ echo 'active'; } ?>">
 										<span class="menu-icon"><i class="bi bi-calendar3-event fs-3"></i></span>
 										<span class="menu-title">Manage Ads</span>
 									</span>
@@ -151,7 +151,7 @@ $query = $this->db->get()->row_array();
                                </div>
 							   <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 									<a href="<?php echo base_url();?>managenews/news">
-										<span class="menu-link">
+										<span class="menu-link <?php if($uriMethod_name=="news"){ echo 'active'; } ?>">
 											<span class="menu-icon"><i class="bi bi-sticky fs-3"></i></span>
 											<span class="menu-title">Manage News</span>
 										</span>
@@ -159,7 +159,7 @@ $query = $this->db->get()->row_array();
 								</div>
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 									<a href="<?php echo base_url();?>user/terms_condition">
-										<span class="menu-link">
+										<span class="menu-link <?php if($uriMethod_name=="terms_condition"){ echo 'active'; } ?>">
 											<span class="menu-icon"><i class="bi bi-card-list fs-3"></i></span>
 											<span class="menu-title">Terms and Condition</span>
 										</span>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php $theme_path = $this->config->item('theme_locations') . 'vnrpolice';?>
 <link href="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
 <div class="toolbar" id="kt_toolbar">
@@ -265,7 +266,7 @@
             serverSide: true,
             order: [[1, 'asc']],
             ajax: {
-                url:"<?php echo base_url() . 'policestation/Police_station/list_data'; ?>",  
+                url:"<?php echo base_url() . 'policestation/police_station/list_data'; ?>",  
                 type:"POST"
             }
         });
@@ -284,7 +285,7 @@
 			console.log(result.isConfirmed);
         if (result.isConfirmed) {
 			$.ajax({
-				url: "<?php echo base_url() . 'policestation/Police_station/delete';?>",
+				url: "<?php echo base_url() . 'policestation/police_station/delete';?>",
 				type: 'POST',
 				data:{id:id},
 				success: function(data) {
@@ -305,7 +306,7 @@
 		var baseurl = "<?php print base_url(); ?>";
 		$.ajax({
 			type : "POST",
-			url  : "<?php echo base_url() . 'policestation/Police_station/get';?>",
+			url  : "<?php echo base_url() . 'policestation/police_station/get';?>",
 			dataType : "JSON",
 			data : {id:id},
 			success: function(data){
@@ -413,7 +414,7 @@ $(document).ready(function () {
 	var form_validation = false;
 	$("#station_name").on('blur', function() {
 	var name = $("#station_name").val();
-	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	// var filter = /^$/;
 	if (name == "" || name == null || name.trim().length == 0) {
 		form_validation = false;
 		$("#input1").html("Required Field");
@@ -473,7 +474,7 @@ $(document).ready(function () {
 	});
     $("#address").on('blur', function() {
 	var name = $("#address").val();
-	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	var filter = /^[a-zA-Z.\s][0-9]+[\S]{2,30}$/;
 	if (name == "" || name == null || name.trim().length == 0) {
 		form_validation = false;
 		$("#input5").html("Required Field");
@@ -514,7 +515,7 @@ $(document).ready(function () {
 	var form_validation = false;
 	$("#station_name1").on('blur', function() {
 	var name = $("#station_name1").val();
-	var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
+	var filter = /^$/;
 	if (name == "" || name == null || name.trim().length == 0) {
 		form_validation = false;
 		$("#input8").html("Required Field");
@@ -574,7 +575,7 @@ $(document).ready(function () {
 	});
     $("#address1").on('blur', function() {
 	var name = $("#address1").val();
-	 var filter = /^[\S]$/;
+	var filter = /^[a-zA-Z.\s][0-9]+[\S]{2,30}$/;
 	if (name == "" || name == null || name.trim().length == 0) {
 		form_validation = false;
 		$("#input12").html("Required Field");
@@ -591,4 +592,10 @@ $(document).ready(function () {
 	});
 	
 });
+</script>
+<!-- FLASH DATA FADEOUT -->
+<script> 
+    setTimeout(function() {
+        $('#fadeout').hide('fast');
+    }, 2000);
 </script>

@@ -3,6 +3,8 @@ class News extends MY_Controller {
    public function __construct(){
              parent::__construct();
              $this->load->model('News_model'); 
+             $this->load->library('session');
+
     }
     //station page
     public function index(){

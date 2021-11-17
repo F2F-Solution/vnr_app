@@ -3,11 +3,11 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Policestation_model extends CI_model{
+   private $table = 'vnr_police_station';
+   private $column_order = array(null, 'vStationName','iEmergencyNO','vPrimaryAttender','iPoliceStationNumber','iStationLandNo','vEmail','vAddress','iPincode'); //set column field database for datatable orderable
+   //  $column_search = array('Station name'); //set column field database for datatable searchable 
+   private $order = array('id' => 'desc'); // default descending order
     public function __construct(){
-         $table = 'vnr_police_station';
-         $column_order = array(null, 'S.No','Station Name','Contact No','Emergency contact','landline no','Primary attender','Address','Map','Pincode','Actions'); //set column field database for datatable orderable
-         $column_search = array('Station name'); //set column field database for datatable searchable 
-         $order = array('id' => 'desc'); // default descending order
         $this->load->database();
     }
      //fetch data for dropdown list
@@ -20,8 +20,10 @@ class Policestation_model extends CI_model{
         $this->db->insert('vnr_police_station',$user);
     }
      //list data
-     private function list_data() {        
-        $this->db->from($this->table);
+     private function list_data() {   
+        $this->db->select('vnr_police_station.*,officer.vOfficerName');
+        $this->db->from('vnr_police_station');
+        $this->db->join('vnr_police_officer as officer', 'vnr_police_station.vPrimaryAttender = officer.iPoliceOfficerId', 'left');
         $i = 0; 
         foreach ($this->column_search as $item) 
         {
@@ -50,9 +52,6 @@ class Policestation_model extends CI_model{
         $this->list_data();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('vnr_police_station.*,officer.vOfficerName');
-        $this->db->from('vnr_police_station');
-        $this->db->join('vnr_police_officer as officer', 'vnr_police_station.vPrimaryAttender = officer.iPoliceOfficerId', 'left');
         $query = $this->db->get();
         return $query->result();
     }
@@ -64,7 +63,7 @@ class Policestation_model extends CI_model{
 
     function count_filtered_gen_posts() {
         $this->list_data();
-        $query = $this->db->get('vnr_police_station');
+        $query = $this->db->get();
         return $query->num_rows();
     }
      // edit data
@@ -77,7 +76,6 @@ class Policestation_model extends CI_model{
      public function update_data($data,$iPoliceStationId){
         $this->db->where('iPoliceStationId', $iPoliceStationId);
         $this->db->update('vnr_police_station',$data);
-        // print_r($this->db->last_query());exit;
     }
      //Delete data  
      public function delete_data($iPoliceStationId){
