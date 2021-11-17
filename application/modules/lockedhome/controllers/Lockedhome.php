@@ -75,6 +75,5 @@ class Lockedhome extends MY_Controller {
     public function delete($iLockedHomeId){
         $iLockedHomeId = $_POST['id'];
         $this->lockedhome_model->delete_data($iLockedHomeId);
-        redirect($this->config->item('base_url') . 'lockedhome/Lockedhome');
     }
 }

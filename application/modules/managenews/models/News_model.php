@@ -15,7 +15,7 @@ class News_model extends CI_model{
     }
      //list data
      private function list_data() {        
-        $this->db->select('vNewsSubject','vNewsMessage','vNewsImage','tNewsStatus');
+        $this->db->select('inewsid,vNewsSubject,vNewsMessage,vNewsImage,tNewsStatus');
         $this->db->from('vnr_news');
         $i = 0; 
         foreach ($this->column_search as $item) 

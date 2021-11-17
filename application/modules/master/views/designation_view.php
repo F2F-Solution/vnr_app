@@ -203,6 +203,7 @@
         }
      });
     });
+    // edit
     $(document).on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');
 		$.ajax({

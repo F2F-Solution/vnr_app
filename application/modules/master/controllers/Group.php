@@ -72,6 +72,7 @@ class Group extends MY_Controller {
         redirect($this->config->item('base_url') . 'master/group');
     }
     public function delete($iGroupid){
+        $iGroupid = $_POST['id'];
         $this->group_model->delete_data($iGroupid);
         redirect($this->config->item('base_url') . 'master/group');
     }

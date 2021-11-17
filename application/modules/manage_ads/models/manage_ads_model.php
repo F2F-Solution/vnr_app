@@ -15,7 +15,7 @@ class Manage_ads_model extends CI_model{
     }
      //list data
      private function list_data() {      
-        $this->db->select('iAdtype','vAdContent','vAdImage','tAdStatus');
+        $this->db->select('iAdId,iAdtype,vAdContent,vAdImage,tAdStatus');
         $this->db->from('vnr_manage_ads');  
         $i = 0; 
         foreach ($this->column_search as $item) 

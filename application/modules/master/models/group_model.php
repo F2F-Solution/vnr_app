@@ -21,7 +21,7 @@ class Group_model extends CI_model{
         return $query;  
     }
     private function list_data() {     
-        $this->db->select('vGroupName','tStatus');
+        $this->db->select('iGroupid,vGroupName,tStatus');
         $this->db->from('vnr_police_group');   
         $i = 0; 
         foreach ($this->column_search as $item) 

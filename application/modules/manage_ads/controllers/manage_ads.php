@@ -7,6 +7,9 @@ class Manage_ads extends MY_Controller {
     }
     //Department page
     public function index(){
+        if (empty($this->session->userdata('UserId'))) {
+            redirect(base_url('/'));
+          }
         $data= array();                         
         $data['title'] = 'Manage ad Page';
         $this->template->write_view('content', 'manage_ads/manage_ads_view', $data);
@@ -35,6 +38,9 @@ class Manage_ads extends MY_Controller {
         redirect($this->config->item('base_url') . 'manage_ads');
       }
       public function list_data(){
+        //    if (empty($this->session->userdata('iUserId'))) {
+        //     redirect(base_url());
+        // }
         $data = $input_arr = array();
         $input_data = $this->input->post();
         $sno = $input_data['start'] + 1;

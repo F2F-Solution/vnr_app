@@ -12,7 +12,7 @@ class Lockedhome_model extends CI_model{
     }
     //list data
     private function list_data() {       
-        $this->db->select('vCustomerName','iPhoneNumber','dFromDate','dToDate','vAddress','iPincode','iIdProofNumber','vAttachment');
+        $this->db->select('iLockedHomeId,vCustomerName,iPhoneNumber,dFromDate,dToDate,vAddress,iPincode,iIdProofNumber,vAttachment,tStatus,');
         $this->db->from('vnr_locked_home'); 
         $i = 0; 
         foreach ($this->column_search as $item) 

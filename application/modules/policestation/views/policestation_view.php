@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php $theme_path = $this->config->item('theme_locations') . 'vnrpolice';?>
 <link href="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
 <div class="toolbar" id="kt_toolbar">

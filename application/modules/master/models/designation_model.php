@@ -23,7 +23,7 @@ class Designation_model extends CI_model{
     private function list_data() {  
         $this->db->select('vnr_police_designation.iDesignationId,vnr_police_designation.vDesignationName,vnr_police_designation.tStatus');
         $this->db->from('vnr_police_designation'); 
-        // $this->db->order_by('vnr_police_designation.iDesignationId', 'desc');
+        $this->db->order_by('vnr_police_designation.iDesignationId', 'desc');
         $i = 0; 
         foreach ($this->column_search as $item) {
             if($_POST['search']['value']) 

@@ -2,11 +2,15 @@
 class User extends MY_Controller {
    public function __construct(){
       parent::__construct();
+       
       $this->load->model('User_model'); 
-      $this->load->library('session');  
+      $this->load->library('session'); 
     }
    //  SIGNIN PAGE
     public function index(){
+      if ($this->session->userdata('UserId')) {
+         redirect(base_url('user/dashboard') );
+      } 
       $data= array();                         
       $data['title'] = 'Signin Pages';
       $this->template->set_master_template('../../themes/vnrpolice/template_signin.php');
@@ -53,9 +57,8 @@ class User extends MY_Controller {
       'vEmail'=>$this->input->post('email'),
       'vPassword'=>$this->input->post('password'),
       );
-      // print_r($user);exit;
       $login = $this->User_model->verify($user); 
-      $this -> session -> set_userdata('UserId',$login['iUserId']);
+      $this->session->set_userdata('UserId',$login['iUserId']);
       if($login){
       redirect($this->config->item('base_url') . 'user/dashboard');
       }else{
@@ -64,6 +67,9 @@ class User extends MY_Controller {
    }
    //dashboard
    public function dashboard(){
+      if (empty($this->session->userdata('UserId'))) {
+         redirect(base_url('/'));
+       }
       $data= array();                         
       $data['title'] = 'Dashboard';
       $data['lockedhome'] = $this->User_model->getcount_lockedhome(); //Filter lockedhome 
@@ -105,9 +111,11 @@ class User extends MY_Controller {
    }
    public function logout()
   {  
-     $this->session->unset_userdata('UserId');
-     $this->session->sess_destroy();
-     redirect($this->config->item('base_url'));
+      $this->load->driver('cache');
+      $this->session->unset_userdata('UserId');
+      $this->session->sess_destroy();
+      $this->cache->clean();
+      redirect($this->config->item('base_url'));   
    }
    public function datatable(){
       $data= array();                         

@@ -160,10 +160,15 @@
         </div>
     </div>
 </div>
-
-
+<!-- Form validation -->
+<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+<!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<!-- sweet alert -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
 <script>
     var table;
     table = $("#user_data").DataTable({
@@ -176,8 +181,37 @@
                 type:"POST"
             }
         });
-
-        $(document)	.on('click','.addAttr',function(){
+    $(document).on('click','.removeAttr',function(event){
+        event.preventDefault();
+        var id = $(this).attr('data-id');
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+			console.log(result.isConfirmed);
+        if (result.isConfirmed) {
+			$.ajax({
+				url: "<?php echo base_url() . 'master/department/delete';?>",
+				type: 'POST',
+				data:{id:id},
+				success: function(data) {
+						Swal.fire(
+					'Deleted!',
+					'It has been deleted.',
+					'success'
+					);      
+					table.ajax.reload();
+				}
+			});
+        }
+     });
+    });
+    $(document)	.on('click','.addAttr',function(){
 		var id = $(this).attr('data-id');
 		$.ajax({
 			type : "POST",
@@ -198,64 +232,18 @@
 		});	
 		return false;
 	});
-
-</script>  
-<!-- FLASH DATA FADEOUT -->
-<script> 
+// <!-- FLASH DATA FADEOUT -->
     setTimeout(function() {
         $('#fadeout').hide('fast');
     }, 2000);
-</script>
-
-
-<!-- validation -->
-<!-- Form validation -->
-<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
-<script>
-  $(document).on('click','.removeAttr',function(event){
-      event.preventDefault();
-        var id = $(this).attr('data-id');
-        // alert(id);
-        Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-        if (result.isConfirmed) {
-                if (isConfirm) {
-                $.ajax({
-                    url: "<?php echo base_url() . 'master/designation/delete';?>",
-                    type: 'POST',
-                    data:{id:id},
-                    success: function(data) {
-                                Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                        );             
-                    }
-                });
-            };
-        };
-    });
-  });
-
-
 $(document).ready(function () {
     $("#submit1").on('click',function () {
     var error = 0;
     $('#form_add').find('.validation').each(function(){
         var _val = $(this).val();
         var name = $(this).attr('name');
-        // console.log(name);
+        var _id  = $(this).attr('id');
+        var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
         if(name == 'status'){
             var status = $('input[name="status"]:checked').length;
             // var status = 0;
@@ -266,9 +254,12 @@ $(document).ready(function () {
                 $('input[name="status"]').removeClass('required');
             }
         }else{
-            if(_val == ''){
+            if(_val == ''||_val == null){
                 error++;  
                 $(this).closest('div').find('span.val').text("Required Field");
+            }else if (_id == "department_name1" && !filter.test(_val)){
+                error++;
+                $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
             }else{
                 $(this).closest('div').find('span.val').text("");
             }    
@@ -278,40 +269,19 @@ $(document).ready(function () {
             return false;
         }else{
         $("form_add").submit();
-        }
-        });
-        var form_validation = false;
-        $("#department_name1").on('blur', function() {
-            var name = $("#department_name1").val();
-            var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
-            if (name == "" || name == null || name.trim().length == 0) {
-                form_validation = false;
-                $("#input1").html("Required Field");
-                // return false;
-            } else if (!filter.test(name)) {
-                form_validation = false;
-                $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
-                // return false;
-            } else {
-                $("#input1").html("");
-                form_validation = true;
-                // return true;
             }
-        });
+     });
 });
-
-
 $(document).ready(function () {
         $("#submit2").on('click',function () {
         var error = 0;
         $('#form1').find('.validation').each(function(){
         var _val = $(this).val();
         var name = $(this).attr('name');
-        // console.log(name);
-
+        var _id  = $(this).attr('id');
+        var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
         if(name == 'status'){
             var status = $('input[name="status"]:checked').length;
-        // var status = 0;
         if(status == 0){
             $(this).closest('div.form-group').find('span.val').text("Required Field");
         }else{
@@ -319,39 +289,24 @@ $(document).ready(function () {
             $('input[name="status"]').removeClass('required');
         }
         }else{
-        if(_val == ''){
+        if(_val == ''||_val == null){
             error++;  
             $(this).closest('div').find('span.val').text("Required Field");
-        }else{
-            $(this).closest('div').find('span.val').text("");
-        }    
+        }else if (_id == "department_name" && !filter.test(_val)){
+                error++;
+                $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
+            }else{
+                $(this).closest('div').find('span.val').text("");
+            }    
         }
-        });       
+        });     
         if(error > 0){
-        return false;
+            return false;
         }else{
         $("form").submit();
-        }
-        });
-        var form_validation = false;
-        $("#department_name1").on('blur', function() {
-        var name = $("#department_name1").val();
-        var filter = /^[a-zA-Z.\s]+[\S]{2,30}$/;
-        if (name == "" || name == null || name.trim().length == 0) {
-            form_validation = false;
-            $("#input1").html("Required Field");
-            // return false;
-        } else if (!filter.test(name)) {
-            form_validation = false;
-            $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
-            // return false;
-        } else {
-            $("#input1").html("");
-            form_validation = true;
-            // return true;
-        }
-        });
-    });
+            }
+     });
+});
 </script>
 
 

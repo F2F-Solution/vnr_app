@@ -119,7 +119,7 @@
                 </div>
            </div>
          <div class="modal-body scroll-y">
-            <form id="kt_modal_edit_user_form" method="post" class="form" action="<?php  echo base_url('master/group/update/')?>">
+            <form id="form_edit" method="post" class="form" action="<?php  echo base_url('master/group/update/')?>">
                 <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                     <div class="fv-row mb-7">
                         <label class="required fw-bold fs-6 mb-2">Group</label>
@@ -154,9 +154,16 @@
         </div>
     </div>
 </div>
-       
+<!-- datatable -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script  src="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<!-- Form validation -->
+<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+<!-- sweet alert -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
+
 <script>
     var table;
     table = $("#user_data").DataTable({
@@ -189,30 +196,14 @@
 		});	
 		return false;
 	});
-
-</script>  
-
-<!-- FLASH DATA FADEOUT -->
-<script> 
+// <!-- FLASH DATA FADEOUT -->
     setTimeout(function() {
         $('#fadeout').hide('fast');
     }, 2000);
-</script>
-
-
-
-<!-- Form validation -->
-<script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.css" rel="stylesheet" type="text/css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.js"></script>
-
-<script>
-    $(document).on('click','.removeAttr',function(event){
-      event.preventDefault();
+// sweet alert
+     $(document).on('click','.removeAttr',function(event){
+        event.preventDefault();
         var id = $(this).attr('data-id');
-        // alert(id);
         Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -222,31 +213,33 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
+			console.log(result.isConfirmed);
         if (result.isConfirmed) {
-                if (isConfirm) {
-                $.ajax({
-                    url: "<?php echo base_url() . 'master/designation/delete';?>",
-                    type: 'POST',
-                    data:{id:id},
-                    success: function(data) {
-                                Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                        );             
-                    }
-                });
-            };
-        };
+			$.ajax({
+				url: "<?php echo base_url() . 'master/group/delete';?>",
+				type: 'POST',
+				data:{id:id},
+				success: function(data) {
+						Swal.fire(
+					'Deleted!',
+					'It has been deleted.',
+					'success'
+					);      
+					table.ajax.reload();
+				}
+			});
+        }
+     });
     });
-  });
+    // validation
     $(document).ready(function () {
         $("#submit1").on('click',function () {
             var error = 0;
             $('#form').find('.validation').each(function(){
             var _val = $(this).val();
             var name = $(this).attr('name');
-            // console.log(name);
+            var _id  = $(this).attr('id');
+            var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
             if(name == 'status'){
                 var status = $('input[name="status"]:checked').length;
                 // var status = 0;
@@ -257,10 +250,13 @@
                     $('input[name="status"]').removeClass('required');
                 }
             }else{
-                if(_val == ''){
+                if(_val == '' || _val == null ){
                     error++;  
                     $(this).closest('div').find('span.val').text("Required Field");
-                }else{
+                }else if (_id == "group_name" && !filter.test(_val)) {
+                    error++;
+                    $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
+               } else{
                     $(this).closest('div').find('span.val').text("");
                 }    
             }
@@ -270,44 +266,17 @@
         }else{
         $("form").submit();
         }
-        });
-        var form_validation = false;
-        $("#group_name").on('blur', function() {
-            var name = $("#group_name").val();
-            var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
-            if (name == "" || name == null || name.trim().length == 0) {
-                form_validation = false;
-                $("#input1").html("Required Field");
-                // return false;
-            } else if (!filter.test(name)) {
-                form_validation = false;
-                $("#input1").html("Alphabets and Min 2 to Max 30 without space ");
-                // return false;
-            } else {
-                $("#input1").html("");
-                form_validation = true;
-                // return true;
-            }
-        });
-        $(".status").on('blur', function() {
-        var status = $(".status").val();
-        if (status == "") {
-            form_validation = false;
-            $("#input2").html("Required Field");
-        }else {
-            form_validation = true;
-            $("#input2").html("");
-        }
-        });
-    });
-
-
-    $(document).ready(function () {
+     });
+});
+$(document).ready(function () {
         $("#submit2").on('click',function () {
+            // alert(1);
             var error = 0;
             $('#form_edit').find('.validation').each(function(){
             var _val = $(this).val();
             var name = $(this).attr('name');
+            var _id  = $(this).attr('id');
+            var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
             if(name == 'status'){
                 var status = $('input[name="status"]:checked').length;
                 // var status = 0;
@@ -318,47 +287,22 @@
                     $('input[name="status"]').removeClass('required');
                 }
             }else{
-                if(_val == ''){
+                if(_val == ''|| _val == null ){
                     error++;  
                     $(this).closest('div').find('span.val').text("Required Field");
-                }else{
+                }else if (_id ="group_name1" && !filter.test(_val)) {
+                    error++;
+                    $("#input3").html("Alphabets and Min 2 to Max 30 without space ");
+               } else{
                     $(this).closest('div').find('span.val').text("");
                 }    
             }
-            });       
-            if(error > 0){
-                return false;
-            }else{
-            $("form_edit").submit();
-            }
-            });
-            var form_validation = false;
-            $("#group_name").on('blur', function() {
-                var name = $("#group_name").val();
-                var filter = /^[a-zA-Z.\s]+[\S]{1,30}$/;
-                if (name == "" || name == null || name.trim().length == 0) {
-                    form_validation = false;
-                    $("#input3").html("Required Field");
-                    // return false;
-                } else if (!filter.test(name)) {
-                    form_validation = false;
-                    $("#input3").html("Alphabets and Min 2 to Max 30 without space ");
-                    // return false;
-                } else {
-                    $("#input3").html("");
-                    form_validation = true;
-                    // return true;
-                }
-            });
-            $(".status").on('blur', function() {
-            var status = $(".status").val();
-            if (status == "") {
-                form_validation = false;
-                $("#input4").html("Required Field");
-            }else {
-                form_validation = true;
-                $("#input4").html("");
-            }
-        });
-    });
+        });       
+        if(error > 0){
+            return false;
+        }else{
+        $("form").submit();
+        }
+     });
+});
 </script>
