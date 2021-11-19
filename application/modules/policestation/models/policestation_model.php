@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 class Policestation_model extends CI_model{
    private $table = 'vnr_police_station';
    private $column_order = array(null, 'vStationName','iEmergencyNO','vPrimaryAttender','iPoliceStationNumber','iStationLandNo','vEmail','vAddress','iPincode'); //set column field database for datatable orderable
-   //  $column_search = array('Station name'); //set column field database for datatable searchable 
+   private $column_search = array('Station name'); //set column field database for datatable searchable 
    private $order = array('id' => 'desc'); // default descending order
     public function __construct(){
         $this->load->database();
