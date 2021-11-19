@@ -71,14 +71,49 @@ class User_model extends CI_model{
       $this->db->where('iTermsandConditionsId', $iTermsandConditionsId);
       $this-> db->delete('vnr_terms_and_conditions');
   }
+  //fetch detail for forget password
   public function forgetpassword($iPhoneNumber){
-      $this->db->select('iPhoneNumber');
+      $this->db->select('*');
       $this->db->from('vnr_user'); 
       $this->db->where('iPhoneNumber', $iPhoneNumber); 
-      $query=$this->db->get();
+      $query = $this->db->get();
+      if($query->num_rows() >0){
       return $query->row_array();
-    echo "<pre>" ;print_r($query);exit;
+      }else{
+        return false;
+      }
+  }
+  //otp generation
+  public function generateNumericOTP($n) {  
+    $generator = "135792468"; 
+    $result = ""; 
+    for ($i = 1; $i <= $n; $i++) { 
+        $result .= substr($generator, (rand()%(strlen($generator))), 1); 
+    }  
+    return $result; 
+  }
+  //save otp to Database
+  public function otp_generate($number,$data){
+    $this->db->where('iPhoneNumber', $number); 
+    $this->db->update('vnr_user',$data);
+  }
+  // otp verify
+  public function check_otp($iOtpCode,$id){
+    $this->db->select('*');
+    $this->db->from('vnr_user'); 
+    $this->db->where('iOtpCode',$iOtpCode);
+    $this->db->where('iUserId',$id);
+    $query = $this->db->get();
+    if($query->num_rows() >0){
+    return $query->row_array();
+    }else{
+      return false;
+    }
+  }
+  function update_password($id,$data){
+    $this->db->where('iUserId', $id); 
+    $this->db->update('vnr_user',$data); 
+      
   }
 }
- 
 ?>

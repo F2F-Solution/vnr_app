@@ -54,8 +54,8 @@
                     <thead>
                         <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                             <th>S.No</th>
-                            <th >Officer Name</th>
-							<th>Image</th>
+                            <th>Image</th>
+							<th>Officer Name</th>
 							<th>Gender</th>     
                             <th>Email</th>
 							<th>Contact NO</th>

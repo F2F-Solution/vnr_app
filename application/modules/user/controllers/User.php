@@ -92,14 +92,14 @@ class User extends MY_Controller {
    public function delete_terms($iTermsandConditionsId){
       $this->User_model->delete_data($iTermsandConditionsId);
       redirect($this->config->item('base_url') . 'user/terms');
-  }
+   }
    public function get(){
       $iTermsandConditionsId = $_POST['id'];
       $row = $this->User_model->find_data($iTermsandConditionsId);
       echo json_encode($row);
       // print_r($row);exit;
    }
-//update data
+   //update data
    public function update(){
       $iTermsandConditionsId = $_POST['term_id'];
       $user=array(
@@ -109,14 +109,15 @@ class User extends MY_Controller {
       $this->User_model->update_data($user,$iTermsandConditionsId);
       redirect($this->config->item('base_url') . 'user/terms_condition');
    }
-   public function logout()
-  {  
+   // logout
+   public function logout(){  
       $this->load->driver('cache');
       $this->session->unset_userdata('UserId');
       $this->session->sess_destroy();
       $this->cache->clean();
       redirect($this->config->item('base_url'));   
    }
+   // forgot password page
    public function forget_password(){
       $data= array();                         
       $data['title'] = 'password';
@@ -124,19 +125,48 @@ class User extends MY_Controller {
       $this->template->write_view('content', 'user/forget_password', $data);
       $this->template->render();
    }
-   public function check_number(){
-         $number = $this->input->post('phone_number');    
-         // print_r($number) ;exit;
-         $findnumber = $this->User_model->forgetpassword($iPhoneNumber);  
-
-         //  print_r($findnumber);exit;
-         if($findnumber == $number){
-             echo 1 ;   
-         }else{
-         // $this->session->set_flashdata('msg',' Email not found!');
-       redirect(base_url().'user/','refresh');
+   // send otp
+   public function check_number(){ 
+      $number = $this->input->post('phone_number');    
+      $findnumber = $this->User_model->forgetpassword($number);  
+      if($findnumber){
+        $otp = $this->User_model->generateNumericOTP('4');  
+        $update['iOtpCode'] = $otp;
+        $data['userid'] = $findnumber['iUserId'];
+        $this->User_model->otp_generate($findnumber['iPhoneNumber'],$update);
+        $this->template->set_master_template('../../themes/vnrpolice/template_signin.php');
+        $this->template->write_view('content', 'user/reset_password', $data);
+        $this->template->render();
+      }else{
+        echo "<script>alert('Number does not registered, please try with registerd number!')</script>";
+        } 
    }
-//   }
-}
+   //verify otp
+     public function verify_otp(){
+         $otp = $this->input->post('otp'); 
+         $user_id = $this->input->post('user_id'); 
+         $verify_otp = $this->User_model->check_otp($otp,$user_id);  
+         if($verify_otp){
+            $data['userid'] = $user_id;
+            $this->template->set_master_template('../../themes/vnrpolice/template_signin.php');
+            $this->template->write_view('content', 'user/change_password', $data);
+            $this->template->render();
+         }else{
+            echo "<script>alert('OTP does not match, please enter correct OTP!')</script>";
+         }
+    }
+   //  update password
+    public function update_password(){
+         $new_password =  $this->input->post('new_password'); 
+         $confirm_password =  $this->input->post('confirm_password');
+         $user_id = $this->input->post('id'); 
+      if($new_password == $confirm_password){
+         $data = $this->User_model->update_password($user_id, array('vPassword' => md5($new_password)));
+         redirect($this->config->item('base_url'));
+
+      }else{
+         echo 2;
+      }
+   }
 }
 ?>

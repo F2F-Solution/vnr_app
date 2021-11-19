@@ -33,7 +33,9 @@ class Lockedhome extends MY_Controller {
           $row[] = $post->vAddress;
           $row[] = $post->iPincode;
           $row[] = $post->iIdProofNumber;
-          $row[] = '<a href="'.base_url().'uploads/'.$post->vAttachment.'"><img src="'.base_url().'uploads/'.$post->vAttachment.'" class="img-thumbnail tt" width="100" height="50" /></a>';
+          $row[] = '<img src="'.base_url().'uploads/'.$post->vAttachment.'" class="img-thumbnail" width="100" height="50" />';
+
+          // $row[] = '<a href="'.base_url().'uploads/'.$post->vAttachment.'"><img src="'.base_url().'uploads/'.$post->vAttachment.'" class="img-thumbnail" width="100" height="50" /></a>';
           if($post->tStatus == 0){
             $row[] = "<div class=\"badge badge-light-success fw-bolder\">Completed</div>";
           }
