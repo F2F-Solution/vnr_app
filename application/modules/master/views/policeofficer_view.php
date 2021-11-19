@@ -1,5 +1,24 @@
 <?php $theme_path = $this->config->item('theme_locations') . 'vnrpolice';?>
 
+
+<style>
+.popup{
+    position:fixed;
+    top:10%;
+    left: 40%;
+    height:400px;
+    width: 600px;
+    background:color:#fff;
+    padding:15px;
+    box-shadow: 3px 3px 5px #aaa;
+    display: none;
+}
+
+.popup img{
+    height:100%;
+    width:100%;
+}
+</style>
 <link href="<?php echo $theme_path ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
 <div class="toolbar" id="kt_toolbar">
     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
@@ -44,7 +63,8 @@
 							<th>Department</th>
 							<th>Group</th>
 							<th>Police station</th>
-                            <th >Actions</th>
+							<th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -62,7 +82,7 @@
                 <h2 class="fw-bolder">Add Details of Police Officers</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="close_modal" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                         </svg>
@@ -76,96 +96,16 @@
                                 <div class="current" data-kt-stepper-element="content">
                                     <div class="w-100">
 									<div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
+                                            <label class="required d-flex align-items-center fs-5 fw-bold ">
                                                 <span class="">Officer Name </span>
                                             </label>
                                             <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
-									<div class="fv-row mb-10">
-									<label class="d-flex align-items-center fs-5 fw-bold ">
-										<span class=""> Email </span>
-									</label>
-									<input type="text" class="form-control form-control-lg form-control-solid validation" name="email"  id="email"/>
-									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
-								</div>
-									<div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="">Contact NO </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
-											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
-                                    </div>
-									<div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="">Gender </span>
-                                            </label>
-										<div class="form-check form-check-custom form-check-solid me-10">
-											<input class="form-check-input validation" type="radio" name="gender" value="female" id="flexRadioLg"/>
-											<label class="form-check-label" for="flexRadioLg"> Female </label>
-                                   		</div><br>
-                                   		<div class="form-check form-check-custom form-check-solid me-10">
-											<input class="form-check-input" type="radio" name="gender" value="male" id="flexRadioLg"/>
-											<label class="form-check-label" for="flexRadioLg">Male </label>
-                                 		</div>
-										 <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
-
-                                    </div>
-									<div class="fv-row mb-10">
-										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class=""> Designation </span>
-										</label>
-										<select class="form-select form-select-solid validation" name="designation" aria-label="Select example">
-											<option>SELECT</option>
-											<?php
-											foreach($groups['designation_name'] as $row){
-										       echo  '<option value="'.$row->iDesignationId.'">'.$row->vDesignationName.'</option>';
-											}
-											?>
-										</select>	
-										<!-- <span id="input5" class="val" style="color:#F00; font-style:oblique;"></span> -->
-									</div>
-									<div class="fv-row mb-10">
-										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="">Department </span>
-										</label>
-										<select class="form-select form-select-solid validation "  name="department"  aria-label="Select example">
-											<option>SELECT</option>
-											<?php
-											foreach($groups['department_name'] as $row){
-										       echo  '<option value="'.$row->iDepartmentId.'">'.$row->vDepartmentName.'</option>';
-											}
-											?>
-										</select>	
-									</div>
-									<div class="fv-row mb-10">
-										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="">Group</span>
-										</label>
-										<select class="form-select form-select-solid validation"  name="group"  aria-label="Select example">
-											<option>SELECT</option>
-											<?php
-											foreach($groups['group_name'] as $row){
-										       echo  '<option value="'.$row->iGroupid.'">'.$row->vGroupName.'</option>';
-											}
-											?>
-										</select>
-									</div>
-									<div class="fv-row mb-10">
-										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="">Police station</span>
-										</label>
-										<select class="form-select form-select-solid validation "  name="station"  aria-label="Select example">
-											<option>SELECT</option>
-											<?php
-											foreach($groups['station_name'] as $row){
-										       echo  '<option value="'.$row->iPoliceStationId.'">'.$row->vStationName.'</option>';
-											}
-											?>
-										</select>
-									</div>
-                                    <div class="fv-row mb-10">
-									<div class="col-lg-8">
+										<div class="col-lg-8">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Officer Image </span>
+											</label>
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('../assets/media/avatars/blank.png')">
 											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('../assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
@@ -184,7 +124,137 @@
 									<span id="input9" class="val" style="color:#F00; font-style:oblique;"></span>	
                                 </div><br>
                             </div>
-                          </div>
+									<div class="fv-row mb-10">
+									<label class="required d-flex align-items-center fs-5 fw-bold ">
+										<span class=""> Email </span>
+									</label>
+									<input type="text" class="form-control form-control-lg form-control-solid validation" name="email"  id="email"/>
+									<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
+								</div>
+									<div class="fv-row mb-10">
+                                            <label class="required d-flex align-items-center fs-5 fw-bold ">
+                                                <span class="">Contact NO </span>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
+											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
+                                    </div>
+									<div class="fv-row mb-10">
+                                            <label class="required d-flex align-items-center fs-5 fw-bold ">
+                                                <span class="">Gender </span>
+                                            </label>
+										<div class="form-check form-check-custom form-check-solid me-10">
+											<input class="form-check-input validation" type="radio" name="gender" value="female" id="flexRadioLg"/>
+											<label class="form-check-label" for="flexRadioLg"> Female </label>
+                                   		</div><br>
+                                   		<div class="form-check form-check-custom form-check-solid me-10">
+											<input class="form-check-input" type="radio" name="gender" value="male" id="flexRadioLg"/>
+											<label class="form-check-label" for="flexRadioLg">Male </label>
+                                 		</div>
+										 <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
+
+                                    </div>
+									<div class="fv-row mb-10">
+										<label class="required d-flex align-items-center fs-5 fw-bold ">
+											<span class=""> Designation </span>
+										</label>
+										<select class="form-select form-select-solid validation" name="designation" aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											foreach($groups['designation_name'] as $row){
+										       echo  '<option value="'.$row->iDesignationId.'">'.$row->vDesignationName.'</option>';
+											}
+											?>
+										</select>	
+										<!-- <span id="input5" class="val" style="color:#F00; font-style:oblique;"></span> -->
+									</div>
+									<div class="fv-row mb-10">
+										<label class="required d-flex align-items-center fs-5 fw-bold ">
+											<span class="">Department </span>
+										</label>
+										<select class="form-select form-select-solid validation "  name="department"  aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											foreach($groups['department_name'] as $row){
+										       echo  '<option value="'.$row->iDepartmentId.'">'.$row->vDepartmentName.'</option>';
+											}
+											?>
+										</select>	
+									</div>
+									<div class="fv-row mb-10">
+										<label class="required d-flex align-items-center fs-5 fw-bold ">
+											<span class="">Group</span>
+										</label>
+										<select class="form-select form-select-solid validation"  name="group"  aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											foreach($groups['group_name'] as $row){
+										       echo  '<option value="'.$row->iGroupid.'">'.$row->vGroupName.'</option>';
+											}
+											?>
+										</select>
+									</div>
+									<div class="fv-row mb-10">
+										<label class="d-flex align-items-center fs-5 fw-bold required">
+											<span class="">Station Name</span>
+										</label>
+										<select class="form-select form-select-solid validation "  name="station"  aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											foreach($groups['station_name'] as $row){
+										       echo  '<option value="'.$row->iPoliceStationId.'">'.$row->vStationName.'</option>';
+											}
+											?>
+										</select>
+									</div>
+									<!-- <div class="fv-row mb-10">
+										<label class="d-flex align-items-center fs-5 fw-bold required">
+											<span class="">Station Address</span>
+										</label>
+										<select class="form-select form-select-solid validation "  name="station"  aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											// foreach($groups['station_address'] as $row){
+										    //    echo  '<option value="'.$row->iPoliceStationId.'">'.$row->vAddress.'</option>';
+											// }
+											?>
+										</select>
+									</div> -->
+									<!-- <div class="fv-row mb-10">
+										<label class="d-flex align-items-center fs-5 fw-bold required">
+											<span class="">Pincode</span>
+										</label>
+										<select class="form-select form-select-solid validation "  name="station"  aria-label="Select example">
+											<option>SELECT</option>
+											<?php
+											// foreach($groups['station_pincode'] as $row){
+										    //    echo  '<option value="'.$row->iPoliceStationId.'">'.$row->iPincode.'</option>';
+											// }
+											?>
+										</select>
+									</div> -->
+                                    <div class="fv-row mb-10">
+									<div class="mb-7">
+									<label class="required fw-bold fs-6 mb-5">Status</label>
+									<div class="d-flex fv-row">
+										<div class="form-check form-check-custom form-check-solid">
+											<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="kt_modal_update_role_option_0" checked />
+											<label class="form-check-label" for="kt_modal_update_role_option_0">
+												<div class="fw-bolder text-gray-800">Active</div>
+											</label>
+										</div>
+									</div>
+									<div class='separator separator-dashed my-5'></div>
+									<div class="d-flex fv-row">
+										<div class="form-check form-check-custom form-check-solid">
+											<input class="form-check-input me-3 " name="status" type="radio" value="1" id="kt_modal_update_role_option_1" />
+											<label class="form-check-label" for="kt_modal_update_role_option_1">
+												<div class="fw-bolder text-gray-800">Inactive</div>
+											</label>
+										</div>
+									</div>
+									<span id="input10" class="val" style="color:#F00; font-style:oblique;"></span>
+								</div>
+							</div>
                         	<button type="submit" class="btn btn-lg btn-primary" id="submit1" >Submit</button>
                         </div>
                     </div>
@@ -201,7 +271,7 @@
                 <h2 class="fw-bolder">Edit Details of Police Officers</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  id="close_edit_modal" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="6" y="17.3137" width="16" 	height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                         </svg>
@@ -222,6 +292,28 @@
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
                                             <input type="hidden" name="policeofficerid" id="policeofficer_id"  />
                                     </div>
+									<input type="hidden" name="old_image" id="old_image">
+                                    <div class="fv-row mb-10">
+									<label class="d-flex align-items-center fs-5 fw-bold ">
+                                             <span class="required">Officer Image </span>
+                                    </label>
+									<div class="col-lg-8">
+										<div class="image-input image-input-outline"  data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
+											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+											<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
+												<input type="file" class="" name="image" accept=".png, .jpg, .jpeg" id="image">
+												<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
+											</label>
+											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+												<i class="bi bi-x fs-2"></i>
+											</span>
+											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+												<i class="bi bi-x fs-2"></i>
+											</span>
+										</div>
+										<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+									</div><br>
 									<div class="fv-row mb-10">
 									<label class="d-flex align-items-center fs-5 fw-bold ">
 										<span class="required"> Email </span>
@@ -290,7 +382,7 @@
 									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="required">Police Station</span>
+											<span class="required">Station Name</span>
 										</label>
 										<select class="form-select form-select-solid "  name="station" id="station" aria-label="Select example">
 											<option>SELECT</option>
@@ -301,23 +393,21 @@
 											?>
 										</select>									
 									</div>
-									<input type="hidden" name="old_image" id="old_image">
-                                    <div class="fv-row mb-10">
-									<div class="col-lg-8">
-										<div class="image-input image-input-outline"  data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('assets/media/svg/brand-logos/volicity-9.svg')"></div>
-											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-												<input type="file" class="" name="image" accept=".png, .jpg, .jpeg" id="image">
-												<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
-											</label>
-											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-												<i class="bi bi-x fs-2"></i>
-											</span>
-											<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-												<i class="bi bi-x fs-2"></i>
-											</span>
+								
+									<div class="mb-7">
+										<label class="required fw-bold fs-6 mb-5">Status</label>
+										<div class="d-flex fv-row">
+											<div class="form-check form-check-custom form-check-solid">
+												<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="status_active" >Active
+											</div>
 										</div>
-										<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+										<div class='separator separator-dashed my-5'></div>
+										<div class="d-flex fv-row">
+											<div class="form-check form-check-custom form-check-solid">
+												<input class="form-check-input me-3" name="status" type="radio" value="1" id="status_inactive">Inactive
+											</div>
+										</div>
+										<span id="input5" class="val" style="color:#F00; font-style:oblique;"></span>
 									</div>
                                 </div><br>
                             </div>
@@ -402,6 +492,10 @@
 				$("#gender_female").prop("checked", true);
 				else 
 				$("#gender_male").prop("checked", true);
+				if(data.tStatus == '0')
+				$("#status_active").prop("checked", true);
+				else 
+				$("#status_inactive").prop("checked", true);
 				$('#designation').val(data.iDesignationId);
 				$("#group").val(data.iGroupid);
 				$("#department").val(data.iDepartmentId);
@@ -582,5 +676,26 @@ $(document).ready(function () {
 	}
 	});
 });
+
+// modal hide
+$(document).ready(function () {
+        $("#close_modal").on('click',function () {
+            $('#kt_modal_add_user').modal('hide');
+        });
+});
+$(document).ready(function () {
+        $("#close_edit_modal").on('click',function () {
+            $('#kt_modal_edit_user').modal('hide');
+        });
+});
 </script>
 
+<script>
+// $(document).ready(function () {
+// 	var id = $(this).attr('data-id');
+// 	var baseurl = "<?php print base_url(); ?>";
+//         $(".img-thumbnail").on('click',function () {
+// 		// alert(1);
+//         });
+// });
+</script>

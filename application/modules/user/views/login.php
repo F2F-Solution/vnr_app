@@ -45,10 +45,12 @@
       <!-- kt_sign_in_submit -->
       <button type="submit" id="" class="btn btn-lg btn-primary w-100 mb-5">
         <span class="indicator-label">Continue</span>
-        <span class="indicator-progress">Please wait...
-        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
       </button>
       <!--end::Submit button-->
+      <div class="powered_by_text">
+                <a href="<?php echo base_url('user/forget_password') ?>" class="forget_password" style="margin-right:  119px;">Forget Password?</a>
+                <a href="<?php echo base_url('user/register_view') ?>" class="register">Register </a>
+            </div>
       <!--begin::Separator-->
     <!--end::Actions-->
   </form>

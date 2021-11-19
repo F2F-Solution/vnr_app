@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 class Department_model extends CI_model{
     private $table = 'vnr_police_department';
     private $column_order = array(null, 'vnr_police_department.vDepartmentName','vnr_police_department.tStatus'); 
-    // private $column_search = array('vDepartmentName','tStatus'); 
+    private $column_search = array('vDepartmentName','tStatus'); 
     private $order = array('iDepartmentId' => 'desc'); 
     public function __construct(){
        $this->load->database();

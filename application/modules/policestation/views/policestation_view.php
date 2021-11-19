@@ -43,6 +43,7 @@
                             <th>Address</th>
 							<!-- <th>Map</th> -->
 							<th>Pincode</th>
+							<th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -60,7 +61,7 @@
                 <h2 class="fw-bolder">Add Details of Police Station</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="close_modal" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                         </svg>
@@ -143,6 +144,29 @@
 								   </div>
                                 </div>
 							   </div><br>
+                               <div class="fv-row mb-10">
+									<div class="mb-7">
+									<label class="required fw-bold fs-6 mb-5">Status</label>
+									<div class="d-flex fv-row">
+										<div class="form-check form-check-custom form-check-solid">
+											<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="kt_modal_update_role_option_0" checked />
+											<label class="form-check-label" for="kt_modal_update_role_option_0">
+												<div class="fw-bolder text-gray-800">Active</div>
+											</label>
+										</div>
+									</div>
+									<div class='separator separator-dashed my-5'></div>
+									<div class="d-flex fv-row">
+										<div class="form-check form-check-custom form-check-solid">
+											<input class="form-check-input me-3 " name="status" type="radio" value="1" id="kt_modal_update_role_option_1" />
+											<label class="form-check-label" for="kt_modal_update_role_option_1">
+												<div class="fw-bolder text-gray-800">Inactive</div>
+											</label>
+										</div>
+									</div>
+									<span id="input_active" class="val" style="color:#F00; font-style:oblique;"></span>
+								</div>
+							</div>
                             </div>
                             <button type="submit" class="btn btn-lg btn-primary" id="submit1" >Submit</button>
                           </div>
@@ -155,13 +179,13 @@
 </div>
 
 <div class="modal fade" id="kt_modal_edit_user" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-650px">
+<div class="modal-dialog modal-dialog-centered mw-1000px">
         <div class="modal-content">
             <div class="modal-header" id="kt_modal_add_user_header">
                 <h2 class="fw-bolder">Edit Details of Police Station</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="close_edit_modal" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                         </svg>
@@ -230,8 +254,6 @@
                                         </label>
                                         <div id="map1" style="width: 300px; height: 300px;"></div>
                                         <div id="current1"></div>
-                                        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwpXSYswuXaJyfDoBxXTxYeAYRwzZIjGE"async></script> -->
-
                                         <span id="input15" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
 
@@ -244,6 +266,29 @@
                                         <input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude1"/>
                                         <span id="input14" class="val" style="color:#F00; font-style:oblique;"></span>
 								   </div>
+                                   <div class="fv-row mb-10">
+									<div class="mb-7">
+									<label class="required fw-bold fs-6 mb-5">Status</label>
+									<div class="d-flex fv-row">
+										<div class="form-check form-check-custom form-check-solid">
+											<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="status_active" />
+											<label class="form-check-label" for="kt_modal_update_role_option_0">
+												<div class="fw-bolder text-gray-800">Active</div>
+											</label>
+										</div>
+									</div>
+									<div class='separator separator-dashed my-5'></div>
+									<div class="d-flex fv-row">
+										<div class="form-check form-check-custom form-check-solid">
+											<input class="form-check-input me-3 " name="status" type="radio" value="1" id="status_inactive" />
+											<label class="form-check-label" for="kt_modal_update_role_option_1">
+												<div class="fw-bolder text-gray-800">Inactive</div>
+											</label>
+										</div>
+									</div>
+									<span id="input15" class="val" style="color:#F00; font-style:oblique;"></span>
+								</div>
+							</div>
                                 </div>
 							   </div><br>
                             </div>
@@ -320,6 +365,10 @@
 			    $('#longitude1').val(data.vStationlongitude);    
                 $("#pincode1").val(data.iPincode);
                 $("#policestation_id").val(data.iPoliceStationId);
+                if(data.tStatus == '0')
+				$("#status_active").prop("checked", true);
+				else 
+				$("#status_inactive").prop("checked", true);
 			}
 		});	
 		return false;
@@ -356,6 +405,21 @@ $(document).ready(function() {
 
         map.setCenter(myMarker.position);
         myMarker.setMap(map);
+// 		function getReverseGeocodingData(lat, lng) {
+//     var latlng = new google.maps.LatLng(lat, lng);
+//     // This is making the Geocode request
+//     var geocoder = new google.maps.Geocoder();
+//     geocoder.geocode({ 'latLng': latlng },  (results, status) =>{
+//         if (status !== google.maps.GeocoderStatus.OK) {
+//             alert(status);
+//         }
+//         // This is checking to see if the Geoeode Status is OK before proceeding
+//         if (status == google.maps.GeocoderStatus.OK) {
+//             console.log(results);
+//             var address = (results[0].formatted_address);
+//         }
+//     });
+// }
 });	
 
 $(document).ready(function() {
@@ -592,9 +656,21 @@ $(document).ready(function () {
 	});
 	
 });
-</script>
-<!-- FLASH DATA FADEOUT -->
-<script> 
+
+// modal hide
+$(document).ready(function () {
+        $("#close_modal").on('click',function () {
+            $('#kt_modal_add_user').modal('hide');
+        });
+});
+$(document).ready(function () {
+        $("#close_edit_modal").on('click',function () {
+            $('#kt_modal_edit_user').modal('hide');
+        });
+});
+
+// <!-- FLASH DATA FADEOUT -->
+
     setTimeout(function() {
         $('#fadeout').hide('fast');
     }, 2000);

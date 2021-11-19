@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 class Group_model extends CI_model{
    private $table = 'vnr_police_group';
    private $column_order = array(null,'vGroupName','tStatus'); //set column field database for datatable orderable
-    // $column_search = array('vGroupName','tStatus'); //set column field database for datatable searchable 
+   private $column_search = array('vGroupName','tStatus'); //set column field database for datatable searchable 
    private $order = array('iGroupid' => 'desc'); // default descending order
     public function __construct(){
       

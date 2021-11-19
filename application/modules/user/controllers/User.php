@@ -117,12 +117,26 @@ class User extends MY_Controller {
       $this->cache->clean();
       redirect($this->config->item('base_url'));   
    }
-   public function datatable(){
+   public function forget_password(){
       $data= array();                         
-      $data['title'] = 'table';
-      $this->template->write_view('content', 'user/datatable', $data);
+      $data['title'] = 'password';
+      $this->template->set_master_template('../../themes/vnrpolice/template_signin.php');
+      $this->template->write_view('content', 'user/forget_password', $data);
       $this->template->render();
-
    }
-  }
+   public function check_number(){
+         $number = $this->input->post('phone_number');    
+         // print_r($number) ;exit;
+         $findnumber = $this->User_model->forgetpassword($iPhoneNumber);  
+
+         //  print_r($findnumber);exit;
+         if($findnumber == $number){
+             echo 1 ;   
+         }else{
+         // $this->session->set_flashdata('msg',' Email not found!');
+       redirect(base_url().'user/','refresh');
+   }
+//   }
+}
+}
 ?>

@@ -50,7 +50,7 @@
                 <h2 class="fw-bolder">Add Details of ADS</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="close_modal" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                         </svg>
@@ -80,7 +80,7 @@
                                     <div class="fv-row mb-10">
 									<div class="col-lg-8">
 										<div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/avatars/blank.png')">
-											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('')"></div>
+											<div class="image-input-wrapper w-125px h-125px bgi-position-center officer_file" style="background-size: 75%; background-image: url('../assets/media/svg/brand-logos/volicity-9.svg')"></div>
 											<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
 												<i class="bi bi-pencil-fill fs-7" id="upload-img"></i>
 												<input type="file" class="validation" name="image" id="image" accept=".png, .jpg, .jpeg" />
@@ -125,7 +125,7 @@
                 <h2 class="fw-bolder">Edit Details of ADS</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="close_edit_modal" viewBox="0 0 24 24" fill="none">
                             <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                             <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                         </svg>
@@ -260,7 +260,7 @@
 				$("#type_AD").val(data.iAdtype);
 				$("#content1").val(data.vAdContent);
 				$("#status1").val(data.tAdStatus);
-                $('.officer_file').css('background-image', 'url(./uploads/'+data.vAdImage+ ')');
+                $('.officer_file').css('background-image', 'url(../uploads/'+data.vAdImage+ ')');
                 $('#old_image').val(data.vAdImage);
 				// $('#image1').val(data.vNewsImage);
 
@@ -380,5 +380,15 @@ $(document).ready(function () {
 		// return true;
 	}
 	});
+});
+$(document).ready(function () {
+        $("#close_modal").on('click',function () {
+            $('#kt_modal_add_user').modal('hide');
+        });
+});
+$(document).ready(function () {
+        $("#close_edit_modal").on('click',function () {
+            $('#kt_modal_edit_user').modal('hide');
+        });
 });
 </script>

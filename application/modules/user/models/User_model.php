@@ -71,5 +71,14 @@ class User_model extends CI_model{
       $this->db->where('iTermsandConditionsId', $iTermsandConditionsId);
       $this-> db->delete('vnr_terms_and_conditions');
   }
+  public function forgetpassword($iPhoneNumber){
+      $this->db->select('iPhoneNumber');
+      $this->db->from('vnr_user'); 
+      $this->db->where('iPhoneNumber', $iPhoneNumber); 
+      $query=$this->db->get();
+      return $query->row_array();
+    echo "<pre>" ;print_r($query);exit;
+  }
 }
+ 
 ?>
