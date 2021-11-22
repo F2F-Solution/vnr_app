@@ -176,22 +176,34 @@ class Api extends REST_Controller {
 		$json_input = $this->_get_customer_post_values();
 		if(!empty($json_input)){
 			$otp = $this->api_model->generateNumericOTP('4');
-			if($json_input['type'] == 'forget password'){
+			$update_data = array();
+			if($json_input['type'] == 'forget password' || $json_input['type'] == 'customer_register'){
 				$update_data['iOtpCode'] = $otp;
 				$update = $this->api_model->update_fields($json_input['customer_id'],$update_data);
 				$details = $this->api_model->get_customer_details($customer['iCustomerId']);
-				$output = array('status' => 'Success', 'message' => 'Otp send successfully','data'=>$details);
+				if($details){
+				$output = array('status' => 'Success', 'message' => 'Otp sent successfully','data'=>$details);
+				}else{
+				$output = array('status' => 'Error', 'message' => 'User not found');
+				}
 				$this->response($output);
 			}
-			$update_data['iOtpCode'] = $otp;
-			$update = $this->api_model->update_fields($json_input['customer_id'],$update_data);
-			$details = $this->api_model->get_customer_details($customer['iCustomerId']);
-			$output = array('status' => 'Success', 'message' => 'Otp send successfully','data'=>$details);
-			$this->response($output);
+
+			if($json_input['type'] == 'employee_login' || $json_input['type'] == 'employee_register' || $json_input['type'] == 'employee_forget_password'){
+				$update_data['iOtpCode'] = $otp;
+				$login = $this->api_model->update_officer_details('iPoliceOfficerId',$json_input['employee_id'],$update_data);
+				$details = $this->api_model->get_police_officer_by_insert_id($json_input['employee_id']);
+				if($details){
+				$output = array('status'=>'success','message'=>'otp sent successfully','data'=>$details);
+				}else{
+				$output = array('status' => 'Error', 'message' => 'User not found');
+				}
+				$this->response($output);
+			}
 
 		}else
 		{
-			$output = array ('status' => 'Error', 'message' => 'User not found');
+			$output = array ('status' => 'Error', 'message' => 'Please enter input data');
             $this->response($output);
 		}
 
@@ -199,6 +211,7 @@ class Api extends REST_Controller {
 	}
 
 	public function get_locked_home_details(){
+		// print_r($_FILES);exit;
 		$data_input = $this->_get_customer_post_values();
 		if(!empty($_POST)){
 			$data_input = $_POST;
@@ -210,6 +223,35 @@ class Api extends REST_Controller {
 
 		// print_r($_FILES);
 		if (!empty($data_input)) {
+			
+			// $upload_path = '"'.base_url().'upload/"';
+			// $config['upload_path'] = $upload_path;
+			// $config['allowed_types'] = 'wmv|mp4|avi|mov';
+			// $config['max_size'] = '0';
+			// $config['max_filename'] = '255';
+			// $config['encrypt_name'] = FALSE;
+			// $config['file_name'] = 'LockedHome-'.''.rand(10000, 10000000);
+			// $this->load->library('upload', $config);
+			// $this->upload->initialize($config);
+			// if (!$this->upload->do_upload('video')) # form input field attribute
+			// {
+			// 	# Upload Failed
+			// 	$output = array('status'=>'error','message'=>'video update failed');
+			// 	$this->response($output);
+			// 	exit;
+			// }
+			// else
+			// {
+
+			// 	$file = $configVideo['file_name'];
+			// 	echo $file;
+			// 	// # Upload Successfull
+			// 	// $url = 'assets/gallery/images'.$video_name;
+			// 	// $set1 =  $this->Model_name->uploadData($url);
+			// 	// $this->session->set_flashdata('success', 'Video Has been Uploaded');
+			// 	// redirect('controllerName/method');
+			// }
+			
 			foreach($_FILES as $image){
 				$gallaryimage = $image['name'];
 				$gallarytype = $image['type'];
@@ -253,6 +295,7 @@ class Api extends REST_Controller {
 			$customer['iPincode'] = $data_input['pincode'];
 			$customer['iIdProofNumber'] = $data_input['identification_number'];
 			$customer['vIdProoftype'] = $data_input['identification_number_type'];
+			$customer['vRemarks'] = $data_input['remarks'];
 			$customer['vAttachment'] = $filename;
 			$customer['tStatus'] = 1;
 
@@ -640,32 +683,41 @@ class Api extends REST_Controller {
 
 	}
 
-	public function employee_login(){
-		$data_input = $this->_get_customer_post_values();
-		if (!empty($data_input)) {
-			$login_result = $this->api_model->check_employee_login($data_input);
-			if ($login_result) {
-				$output = array ('status' => 'Success','code'=>200, 'message' => 'Login successfully','data'=>$login_result);
-				$this->response($output);
-			} else {
-				$output = array ('status' => 'Error', 'message' => 'Invalid login credentials');
-				$this->response($output);
-			}
-		} else {
-			$output = array ('status' => 'error', 'message' => 'Please enter mobile number and password');
-			$this->response($output);
-		}
-	}
-
 	public function locked_home_update_status(){
 		$data_input = $this->_get_customer_post_values();
 		if(!empty($data_input)){
 			$home = array();
 			$home['tStatus'] = $data_input['status'];
+			$home['iPincode'] = $data_input['pincode'];
 			$update = $this->api_model->update_lockedhome('iLockedHomeId',$data_input['lockedhomeid'],$home);
 			if($update == true){
+				$customer = $this->api_model->get_lockedhome_details_by_insert_id($data_input['lockedhomeid']);
+				$history = array();
+				$history['iCustomerId'] = $customer['iCustomerId'];
+				$history['iPoliceOfficerId'] = $data_input['policeofficer_id'];
+				$history['iLockedHomeId'] = $data_input['lockedhomeid'];
+				$history['vRemarks'] = $data_input['remarks'];
+				$history['vAddress'] = $data_input['address'];
+				$history['iPincode'] = $data_input['pincode'];
+
+				if($data_input['status'] == 0){
+					$history['vStatus'] = 'completed';
+				}
+				if($data_input['status'] == 1){
+					$history['vStatus'] = 'monitoring';
+				}
+				if($data_input['status'] == 2){
+					$history['vStatus'] = 'visited';
+				}
+				if($data_input['status'] == 3){
+					$history['vStatus'] = 'open';
+				}
+				$this->api_model->get_lockedhome_history($history);
 				$details = $this->api_model->get_lockedhome_details_by_insert_id($data_input['lockedhomeid']);
-				$output = array('status' => 'success','code'=>200, 'message' => 'status updated successfully','data' => $details);
+				$notification_data['iCustomerId'] = $customer['iCustomerId'];
+				$notification_data['vNotificationContent'] = 'Your home was visited';
+				$notify = $this->api_model->get_notification($notification_data);
+				$output = array('status' => 'success','code'=>200, 'message' => 'status updated successfully','data' => $details,$notify);
 				$this->response($output);
 			}else{
 				$output = array('status'=>'error','message' =>'status not updated');
@@ -677,27 +729,389 @@ class Api extends REST_Controller {
 		}
 	}
 
-	public function update_employee(){
+	public function get_locked_home_list(){
+		$details = $this->api_model->get_home_details();
+		if($details){
+			$output = array('status'=>'success','code'=>200,'message'=>'details displayed successfully','data'=>$details);
+			$this->response($output);
+		}else{
+		$output = array('status'=>'error','message'=>'No data found');
+		$this->response($output);
+		}
+		
+	}
+
+	public function employee_register(){
 		$json_input = $this->_get_customer_post_values();
 		if(!empty($json_input)){
+
+
+			$fileNames = "";
+			if (!empty($_FILES['image']['name'])) {
+				$config['upload_path']   = './uploads/';
+				$config['allowed_types'] = 'jpg|jpeg|png';
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				 if ($this->upload->do_upload('image')) {
+					$data      = $this->upload->data();
+					$fileName = $data['file_name'];
+				}
+			}
+
+
 			$employee = array();
-			$employee['vOfficerName'] = $json_input['employee_name'];
+			$employee['vOfficerName'] = $json_input['officer_name'];
 			$employee['iEmail'] = $json_input['email_id'];
-			$employee['iMobileNumber'] = $json_input['mobile_number'];
+			$employee['iPoliceStationId'] = $json_input['station_name'];
+			$employee['iMobileNumber'] = $json_input['contact_number'];
+			$employee['vPassword'] = $json_input['password'];
+			$employee['iDepartmentId'] = $json_input['department'];
+			$employee['iDesignationId'] = $json_input['designation'];
+			// $employee['iGroupid'] = $json_input['group'];
+			$employee['iPincode'] = $json_input['pincode'];
 			$employee['vGender'] = $json_input['gender'];
-			$employee['iPoliceStationId'] = $json_input['stationid'];
-			$employee['iDesignationId'] = $json_input['designationid'];
-			$employee['iGroupid'] = $json_input['groupid'];
-			$check_duplicate_email = $this->api_model->check_employee_mail($json_input['email_id'],$json_input['employeeid']);
+			$employee['vAddress'] = $json_input['address'];
+			// $employee['tImage'] = $fileName;
+			$otp = $this->api_model->generateNumericOTP('4');
+			$employee['iOtpCode'] = $otp;
+			// print_r($employee);exit;
+			if($employee['vOfficerName'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Name is required");
+					
+					$this->response($output);
+				exit;
+			}
+			if($employee['iEmail'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Email number is required");
+					$this->response($output);
+				exit;
+			}
+			if($employee['iPoliceStationId'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Police station is required");
+					$this->response($output);
+				exit;
+			}
+			if($employee['iMobileNumber'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Mobile is required");
+					$this->response($output);
+				exit;
+			}
+			if($employee['vPassword'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Password is required");
+					$this->response($output);
+				exit;
+			}
+			if($employee['iDepartmentId'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Department is required");
+					$this->response($output);
+				exit;
+			}
+			if($employee['iDesignationId'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Designation is required");
+					$this->response($output);
+				exit;
+			}
+			if($employee['vGender'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Gender is required");
+					$this->response($output);
+				exit;
+			}
+			if($employee['iPincode'] == ""){
+				$output = array(
+					'status' => 'false',
+					'code' => '422',
+					'message' => "Pincode is required");
+					$this->response($output);
+				exit;
+			}
+			// if($employee['tImage'] == ""){
+			// 	$output = array(
+			// 		'status' => 'false',
+			// 		'code' => '422',
+			// 		'message' => "Image is required");
+			// 		$this->response($output);
+			// 	exit;
+			// }
+			// if($employee['iGroupid'] == ""){
+			// 	$output = array(
+			// 		'status' => 'false',
+			// 		'code' => '422',
+			// 		'message' => "Group is required");
+			// 		$this->response($output);
+			// 	exit;
+			// }
+			$is_mobile_number_exists = $this->api_model->is_employee_number_exists($employee['iMobileNumber']);
+			if ($is_mobile_number_exists) {
+				$output = array(
+					'status' => 'false',
+					'message' => "The given mobile number already exists.");
+					$this->response($output);
+				exit;
+			}
+			$is_email_id_exists = $this->api_model->is_employee_email_exists($employee['iEmail']);
+			if ($is_email_id_exists) {
+				$output = array(
+					'status' => 'false',
+					'message' => "The given email already exists.");
+					$this->response($output);
+				exit;
+			}
+			$insert = $this->api_model->get_police_officer($employee);
+			if (!empty($insert) && $insert != 0) {
+				$employee_details = $this->api_model->get_custom_employee_details($insert);
+				$this->response([
+					'status' => "Success",
+					'code'=>"200",
+					'message' => 'The employee has been registered successfully.',
+					'employee_details' => $employee_details
+				]);
+			}
+			
+		}else{
+		$output = array(
+			"status" => "false",
+			"code"=> "422",
+			"message" => "Provide complete employee information to add.");
+			$this->response($output);
+		}
+	}
+
+	public function employee_login(){
+        $data = $this->_get_customer_post_values();
+        if (!empty($data)) {
+                $login_result = $this->api_model->check_employee_login_details($data);
+                if ($login_result) {
+                    if($login_result == 1){
+                        $output = array ('status' => 'Error', 'message' => 'OTP not verified - Signup again');
+						$this->response($output);
+                    }else{
+						$update = array();
+						$otp = $this->api_model->generateNumericOTP('4');
+						$update['iOtpCode'] = $otp;
+						$login = $this->api_model->update_officer_details('iPoliceOfficerId',$login_result['iPoliceOfficerId'],$update);
+						$employee_details = $this->api_model->get_police_officer_by_insert_id($login_result['iPoliceOfficerId']);
+						if($login){
+						$output = array ('status' => 'Success', 'message' => 'Otp sent successfully','data'=>$employee_details);
+						$this->response($output);
+						}
+                    }
+                   
+                } else {
+                    $output = array ('status' => 'Error', 'message' => 'Invalid login credentials');
+					$this->response($output);
+                }
+        } else {
+            $output = array ('status' => 'error', 'message' => 'Please enter mobile number and password');
+			$this->response($output);
+        }
+    }
+
+	public function login_employee_otp(){
+        $data = $this->_get_customer_post_values();
+		if(!empty($data)){
+			$otp_verify = $this->api_model->get_police_officer_by_insert_id($data['employee_id']);
+			if($otp_verify){
+				if($data['otp_code'] == $otp_verify[0]['iOtpCode']){
+					$update_data['tLoginStatus'] = 1; 
+					$this->api_model->update_officer_details('iPoliceOfficerId',$data_input['employee_id'],$update_data);
+					$output = array ('status' => 'Success', 'message' => 'Login successfully','data'=>$otp_verify);
+					$this->response($output);
+				}else{
+					$output = array ('status' => 'Error', 'message' => 'Invalid otp');
+					$this->response($output);
+				}
+			}
+		}else{
+			$output = array ('status' => 'Error', 'message' => 'User not found');
+			$this->response($output);
+		}
+	}
+
+	public function check_employee_otp(){
+        $data = $this->_get_customer_post_values();
+		if(!empty($data)){
+			$otp_verify = $this->api_model->get_police_officer_by_insert_id($data['employee_id']);
+			if($otp_verify){
+				if($data['otp_code'] == $otp_verify[0]['iOtpCode']){
+					$update_data = array();
+					$update_data['tOtpVerify'] = 1;
+					$update = $this->api_model->update_officer_details('iPoliceOfficerId',$data['employee_id'],$update_data);
+					$employee = $this->api_model->get_police_officer_by_insert_id($data['employee_id']);
+					$output = array ('status' => 'Success', 'message' => 'Registration completed successfully','data'=>$employee);
+					$this->response($output);
+				}else{
+					$output = array ('status' => 'Error', 'message' => 'Invalid otp');
+					$this->response($output);
+				}
+			}else {
+			$output = array ('status' => 'Error', 'message' => 'User not found');
+			$this->response($output);
+			}
+		}else{
+			$output = array ('status' => 'Error', 'message' => 'please enter input data');
+			$this->response($output);
+		}
+
+	}
+
+	public function employee_generate_otp(){
+		$json_input = $this->_get_customer_post_values();
+		if (!empty($json_input)) {
+			$customer = $this->api_model->employee_forgot_password($json_input);
+			if($customer){
+				$update_data = array();
+				$otp = $this->api_model->generateNumericOTP('4');
+				$update_data['iOtpCode'] = $otp;
+				$login = $this->api_model->update_officer_details('iPoliceOfficerId',$customer['iPoliceOfficerId'],$update_data);
+				$details = $this->api_model->get_police_officer_by_insert_id($customer['iPoliceOfficerId']);
+				$output = array(
+					'status' => 'Success', 'code' =>200 ,'message' => 'OTP sent successfully','data'=> $details
+				);
+				$this->response($output);
+			}else{
+				$output = array(
+					'status' => 'error', 'code'=>415 , 'message' => 'Invalid credentials'
+				);
+				$this->response($output);
+			}
+        } else {
+            $output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+        }
+    }
+
+	public function employee_otp_verify(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			if($json_input['type'] == 'forget password'){
+				$details = $this->api_model->get_police_officer_by_insert_id($json_input['employee_id']);
+				// print_r($details);exit;
+				if($details){
+					if($json_input['otp_code'] == $details[0]['iOtpCode']){
+						$output = array(
+							'status' => 'Success', 'code' =>200 ,'message' => 'OTP verified successfully','data'=> $details
+						);
+						$this->response($output);
+					}else{
+						$output = array(
+							'status' => 'Error','message' => 'invalid OTP'
+						);
+						$this->response($output);
+					}
+				}else{
+					$output = array(
+						'status' => 'Error','message' => 'User not found'
+					);
+					$this->response($output);
+				}
+			}
+		}else{
+			$output = array(
+				'status' => 'Error','message' => 'please enter input data'
+			);
+			$this->response($output);
+		}
+
+	}
+
+	public function get_all_station(){
+		$station = $this->api_model->get_station_list();
+		if($station){
+			$output = array('status'=>'Success','message'=>'police station list displayed successfully','data'=> $station);
+		}else{
+			$output = array('status'=>'Error','message'=>'No data found');
+		}
+		$this->response($output);
+	}
+
+	public function employee_profile_details(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+			$details = $this->api_model->get_custom_employee_details($json_input['employee_id']);
+			if($details){
+				$output = array('status'=>'Success','message'=>'employee details displayed successfully','data'=>$details);
+			}else{
+				$output = array('status'=>'Success','message'=>'No data found');
+			}
+			$this->response($output);
+		}else{
+			$output = array('status'=>'Error','message'=>'Provide valid details');
+			$this->response($output);
+		}
+	}
+
+	public function update_employee_profile(){
+		$json_input = $this->_get_customer_post_values();
+		if(!empty($json_input)){
+
+			$fileNames = "";
+			if (!empty($_FILES['image']['name'])) {
+				$config['upload_path']   = './uploads/';
+				$config['allowed_types'] = 'jpg|jpeg|png';
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				 if ($this->upload->do_upload('image')) {
+					$data      = $this->upload->data();
+					$fileName = $data['file_name'];
+				}
+			}
+			$employee = array();
+			$employee['vOfficerName'] = $json_input['officer_name'];
+			$employee['iMobileNumber'] = $json_input['contact_number'];
+			$employee['iEmail'] = $json_input['email_id'];
+			$employee['iPoliceStationId'] = $json_input['station_name'];
+			$employee['vGender'] = $json_input['gender'];
+			$employee['iDepartmentId'] = $json_input['department'];
+			$employee['iDesignationId'] = $json_input['designation'];
+			$employee['iPincode'] = $json_input['pincode'];
+			$employee['vAddress'] = $json_input['address'];
+			// $employee['vAttachment'] = $fileName;
+			// $employee['iGroupid'] = $json_input['group'];
+			$check_duplicate_email = $this->api_model->check_employee_exists('iEmail',$json_input['email_id'],$json_input['employee_id']);
 			if($check_duplicate_email){
 				$output = array ('status' => 'Error', 'message' => 'Email Address Already Exists');
 				$this->response($output);
 				exit;
 			}
-			$profile = $this->api_model->update_employee($json_input['employeeid'],$employee);
-                if ($profile == true) {
-                    $update_data = $this->api_model->get_employee_details($json_input['employeeid']);
-                    $output = array ('status' => 'Success', 'message' => 'Profile details updated successfully','data'=>$update_data);
+			$check_duplicate_mobile = $this->api_model->check_employee_exists('iEmail',$json_input['email_id'],$json_input['employee_id']);
+			if($check_duplicate_mobile){
+				$output = array ('status' => 'Error', 'message' => 'Mobile number Address Already Exists');
+				$this->response($output);
+				exit;
+			}
+			
+			$profile = $this->api_model->update_employee($employee,$json_input['employee_id']);
+                if ($profile) {
+					$station = array();
+					$station['iPincode'] = $json_input['pincode'];
+					$station['vAddress'] = $json_input['address'];
+					$this->api_model->update_police_station($json_input['station_name'],$station);
+                    $update_data = $this->api_model->get_custom_employee_details($json_input['employee_id']);
+                    $output = array ('status' => 'Success', 'message' => 'Profile details updated','data'=>$update_data);
 					$this->response($output);
                 } else {
                     $output = array ('status' => 'Error', 'message' => 'Profile details not updated');
@@ -706,6 +1120,149 @@ class Api extends REST_Controller {
 
 		} else {
 			$output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function change_employee_password(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			if($data_input['type'] == 'change_password'){
+				$details = $this->api_model->get_police_officer_by_insert_id($data_input['employee_id']);
+				if(md5($data_input['old_password']) == $details[0]['vPassword']){
+					$update_data['vPassword'] = md5($data_input['new_password']);
+					$login = $this->api_model->update_officer_details('iPoliceOfficerId',$data_input['employee_id'],$update_data);
+					$output = array ('status' => 'Success', 'code'=>200, 'message' => 'Password changed successfully');
+					$this->response($output);
+				}else{
+					$output = array ('status' => 'Error', 'message' => 'Wrong password entered');
+					$this->response($output);
+				}
+			}
+			if($data_input['type'] == 'forgot_password'){
+				// $details = $this->api_model->get_police_officer_by_insert_id($data_input['employee_id']);
+				if($data_input['password'] == $data_input['confirm_password']){
+					$update_data['vPassword'] = md5($data_input['password']);
+					$login = $this->api_model->update_officer_details('iPoliceOfficerId',$data_input['employee_id'],$update_data);
+					$output = array ('status' => 'Success', 'code'=>200, 'message' => 'Password changed successfully');
+					$this->response($output);
+				}else{
+					$output = array ('status' => 'Error', 'message' => 'password doesnt match');
+					$this->response($output);
+				}
+			}
+		}else{
+			$output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function department_list(){
+		$department = $this->api_model->get_department();
+		if($department){
+			$output = array('status'=>'success','message'=>'department list','data'=>$department);
+		}else{
+			$output = array('status'=>'error','message'=>'No data found');
+		}
+		$this->response($output);
+	}
+
+	public function designation_list(){
+		$designation = $this->api_model->get_designation();
+		if($designation){
+			$output = array('status'=>'success','message'=>'designation list','data'=>$designation);
+		}else{
+			$output = array('status'=>'error','message'=>'No data found');
+		}
+		$this->response($output);
+	}
+
+	public function employee_logout(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$logout = $this->api_model->get_police_officer_by_insert_id($data_input['employee_id']);
+			if($logout){
+				$update = array();
+				$update['tLoginStatus'] = 0;
+				$login = $this->api_model->update_officer_details('iPoliceOfficerId',$data_input['employee_id'],$update);
+				$output = array(
+					'code'=> '200',
+					'type'=> 'Success',
+					'message' => 'Employee Logged Out Successfully.',
+				);
+				$this->response($output);
+			}else{
+				$output = array(
+					'code'=> '402',
+					'type'=> 'Error',
+					'message' => 'User not found',
+				);
+				$this->response($output);
+			}
+		}else{
+			$output = array ('status' => 'error', 'message' => 'Please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function locked_home_history(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$history = $this->api_model->get_all_lockedhome_history($data_input['customer_id']);
+			if($history){
+				$output = array('status'=>'success','message'=>'Locked home history list','data'=>$history);
+			}else{
+				$output = array('status'=>'success','message'=>'User not found');
+			}
+			$this->response($output);
+		}else{
+			$output = array('status'=>'success','message'=>'please enter input data');
+			$this->response($output);
+		}
+	}
+
+	// public function get_locked_home_list_by_customer_id(){
+	// 	$data_input = $this->_get_customer_post_values();
+	// 		if(!empty($data_input)){
+	// 			$details = $this->api_model->get_home_details();
+	// 			if($details){
+	// 				$output = array('status'=>'success','code'=>200,'message'=>'details displayed successfully','data'=>$details);
+	// 				$this->response($output);
+	// 			}else{
+	// 			$output = array('status'=>'error','message'=>'No data found');
+	// 			$this->response($output);
+	// 			}
+	// 		}
+	// }
+	
+	public function locked_home_history_by_officerid(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$history = $this->api_model->get_all_lockedhome_history_by_officer($data_input['officerid'],$data_input['lockedhomeid']);
+			if($history){
+				$output = array('status'=>'success','message'=>'Locked home history list','data'=>$history);
+			}else{
+				$output = array('status'=>'success','message'=>'User not found');
+			}
+			$this->response($output);
+		}else{
+			$output = array('status'=>'success','message'=>'please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function locked_home_history_by_customerid(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$history = $this->api_model->get_all_lockedhome_history_by_customer($data_input['customerid'],$data_input['lockedhomeid']);
+			if($history){
+				$output = array('status'=>'success','message'=>'Locked home history list','data'=>$history);
+			}else{
+				$output = array('status'=>'success','message'=>'User not found');
+			}
+			$this->response($output);
+		}else{
+			$output = array('status'=>'success','message'=>'please enter input data');
 			$this->response($output);
 		}
 	}
