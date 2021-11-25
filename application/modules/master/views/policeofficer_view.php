@@ -92,7 +92,7 @@
             <div class="modal-body scroll-y">
                 <form id="form" method="post" class="form" action="<?php echo base_url();?>master/police_officer/save_data/" enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
-                        <div class="flex-row-fluid py-lg-5 px-lg-15">
+                        <div class="flex-row-fluid">
                                 <div class="current" data-kt-stepper-element="content">
                                     <div class="w-100">
 									<div class="fv-row mb-10">

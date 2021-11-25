@@ -57,7 +57,7 @@
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-1000px">
         <div class="modal-content">
-            <div class="modal-header py-7 d-flex justify-content-between" id="kt_modal_add_user_header">
+            <div class="modal-header d-flex justify-content-between" id="kt_modal_add_user_header">
                 <h2 class="fw-bolder">Add Details of Police Station</h2>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                     <span class="svg-icon svg-icon-1">
@@ -68,40 +68,65 @@
                     </span>
                 </div>
             </div>
-            <div class="modal-body scroll-y m-5">
+            <div class="modal-body scroll-y">
                 <form id="form" method="post" class="form" action="<?php echo base_url();?>policestation/police_station/save_data/" enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
-                        <div class="flex-row-fluid py-lg-5 px-lg-15">
-                                <div class="current" data-kt-stepper-element="content">
-                                    <div class="w-100">
+                        <div class="flex-row-fluid">
+							<div class="row" data-kt-stepper-element="content">
+								<div class="col-md-4">
 									<div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Station Name </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name" />
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Station Name </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
 										</div>
 									<div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Contact NO </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Contact NO </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number" />
 											<span id="input2" class="val" style="color:#F00; font-style:oblique;"></span>
-                                    </div>
-                                    <div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Emergency contact </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number" />
+									</div>
+									<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Emergency contact </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number" />
 											<span id="input3" class="val" style="color:#F00; font-style:oblique;"></span>
-                                    </div>
-                                    <div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Landline number </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number" />
+									</div>
+									<div class="fv-row mb-10">
+										<div class="mb-7">
+										<label class="required fw-bold fs-6 mb-5">Status</label>
+											<div class="d-flex fv-row">
+												<div class="form-check form-check-custom form-check-solid">
+													<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="kt_modal_update_role_option_0" checked />
+													<label class="form-check-label" for="kt_modal_update_role_option_0">
+														<div class="fw-bolder text-gray-800">Active</div>
+													</label>
+												</div>
+											</div>
+											<div class='separator separator-dashed my-5'></div>
+											<div class="d-flex fv-row">
+												<div class="form-check form-check-custom form-check-solid">
+													<input class="form-check-input me-3 " name="status" type="radio" value="1" id="kt_modal_update_role_option_1" />
+													<label class="form-check-label" for="kt_modal_update_role_option_1">
+														<div class="fw-bolder text-gray-800">Inactive</div>
+													</label>
+												</div>
+											</div>
+											<span id="input_active" class="val" style="color:#F00; font-style:oblique;"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Landline number </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number" />
 											<span id="input4" class="val" style="color:#F00; font-style:oblique;"></span>
-                                    </div>
+									</div>
 									<div class="fv-row mb-10">
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Primary attender </span>
@@ -110,66 +135,46 @@
 											<option>SELECT</option>
 											<?php
 											foreach($policestation['attender'] as $row){
-										       echo  '<option value="'.$row->iPoliceOfficerId.'">'.$row->vOfficerName.'</option>';
+												echo  '<option value="'.$row->iPoliceOfficerId.'">'.$row->vOfficerName.'</option>';
 											}
 											?>
 										</select>	
 										<!-- <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span> -->
 									</div>
-                                    <div class="fv-row mb-10">
-                                        <label class="d-flex align-items-center fs-5 fw-bold ">
-                                            <span class="required"> Address </span>
-                                        </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address"/>
-                                        <span id="input5" class="val" style="color:#F00; font-style:oblique;"></span>
-								   </div>
-                                   <div class="fv-row mb-10">
-                                        <label class="d-flex align-items-center fs-5 fw-bold ">
-                                            <span class="required"> Map </span>
-                                        </label>
-                                        <div id="map" style="width: 300px; height: 300px;"></div>
-                                        <div id="current"></div>
-                                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwpXSYswuXaJyfDoBxXTxYeAYRwzZIjGE"async></script>
-
-                                        <span id="input6" class="val" style="color:#F00; font-style:oblique;"></span>
-								   </div>
-                                   <div class="fv-row mb-10">
-                                        <label class="d-flex align-items-center fs-5 fw-bold ">
-                                            <span class="required"> Pincode  </span>
-                                        </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode"/>
-                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude"/>
-                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude"/>
-                                        <span id="input7" class="val" style="color:#F00; font-style:oblique;"></span>
-								   </div>
-                                </div>
-							   </div><br>
-                               <div class="fv-row mb-10">
-									<div class="mb-7">
-									<label class="required fw-bold fs-6 mb-5">Status</label>
-									<div class="d-flex fv-row">
-										<div class="form-check form-check-custom form-check-solid">
-											<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="kt_modal_update_role_option_0" checked />
-											<label class="form-check-label" for="kt_modal_update_role_option_0">
-												<div class="fw-bolder text-gray-800">Active</div>
-											</label>
-										</div>
+									<div class="fv-row mb-10">
+										<label class="d-flex align-items-center fs-5 fw-bold ">
+											<span class="required"> Address </span>
+										</label>
+										<input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address"/>
+										<span id="input5" class="val" style="color:#F00; font-style:oblique;"></span>
 									</div>
-									<div class='separator separator-dashed my-5'></div>
-									<div class="d-flex fv-row">
-										<div class="form-check form-check-custom form-check-solid">
-											<input class="form-check-input me-3 " name="status" type="radio" value="1" id="kt_modal_update_role_option_1" />
-											<label class="form-check-label" for="kt_modal_update_role_option_1">
-												<div class="fw-bolder text-gray-800">Inactive</div>
-											</label>
-										</div>
+									<div class="fv-row mb-10">
+										<label class="d-flex align-items-center fs-5 fw-bold ">
+											<span class="required"> Pincode  </span>
+										</label>
+										<input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode"/>
+										<input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude"/>
+										<input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude"/>
+										<span id="input7" class="val" style="color:#F00; font-style:oblique;"></span>
 									</div>
-									<span id="input_active" class="val" style="color:#F00; font-style:oblique;"></span>
 								</div>
-							</div>
-                            </div>
-                            <button type="submit" class="btn btn-lg btn-primary" id="submit1" >Submit</button>
-                          </div>
+								<div class="col-md-4">
+									<div class="fv-row mb-10">
+										<label class="d-flex align-items-center fs-5 fw-bold ">
+											<span class="required"> Map </span>
+										</label>
+										<div id="map" style="width: 300px; height: 345px;"></div>
+										<div id="current"></div>
+										<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwpXSYswuXaJyfDoBxXTxYeAYRwzZIjGE"async></script>
+
+										<span id="input6" class="val" style="color:#F00; font-style:oblique;"></span>
+									</div>
+									
+									
+								</div>                            	
+                          	</div>
+							<button type="submit" class="btn btn-lg btn-primary" id="submit1" >Submit</button>
+						  <div>
                         </div>
                     </div>
                 </form>
