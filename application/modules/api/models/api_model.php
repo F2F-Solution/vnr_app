@@ -91,8 +91,8 @@ class Api_model extends CI_Model {
                 $result = $this->db->get()->result_array();
                 return $result;
             }else{
-                $this->db->where('iCustomerId',$query['iCustomerId']);
-                $this->db->delete('vnr_customer');
+                // $this->db->where('iCustomerId',$query['iCustomerId']);
+                // $this->db->delete('vnr_customer');
                 return 1;
             }
         }
@@ -416,8 +416,8 @@ class Api_model extends CI_Model {
                 $result = $this->db->get()->row_array();
                 return $result;
             }else{
-                $this->db->where('iPoliceOfficerId',$query['iPoliceOfficerId']);
-                $this->db->delete('vnr_police_officer');
+                // $this->db->where('iPoliceOfficerId',$query['iPoliceOfficerId']);
+                // $this->db->delete('vnr_police_officer');
                 return 1;
             }
         }

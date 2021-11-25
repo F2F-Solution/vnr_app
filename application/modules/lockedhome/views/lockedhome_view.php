@@ -305,7 +305,13 @@
             ajax: {
                 url:"<?php echo base_url() . 'lockedhome/Lockedhome/list_data'; ?>",  
                 type:"POST"
-            }
+            },
+			"columnDefs":[
+				{
+				"targets":[0,8,10],
+				"orderable":false
+				}
+			]
         });
         $(document).on('click','.removeAttr',function(event){
       event.preventDefault();

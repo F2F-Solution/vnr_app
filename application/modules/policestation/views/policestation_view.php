@@ -193,7 +193,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y">
-                <form id="editform" method="post" class="form"  action="<?php  //echo base_url('policestation/police_station/update/'.$post->iPoliceStationId)?>"  enctype="multipart/form-data">
+                <form id="editform" method="post" class="form"  action="<?php  echo base_url('policestation/police_station/update')?>"  enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
                         <div class="flex-row-fluid py-lg-5 px-lg-15">
                         <div class="current" data-kt-stepper-element="content">
@@ -314,7 +314,13 @@
             ajax: {
                 url:"<?php echo base_url() . 'policestation/police_station/list_data'; ?>",  
                 type:"POST"
-            }
+            },
+			"columnDefs":[
+				{
+				"targets":[0,8,9],
+				"orderable":false
+				}
+			]
         });
 		$(document).on('click','.removeAttr',function(event){
       event.preventDefault();
@@ -369,6 +375,7 @@
 			data : {id:id},
 			success: function(data){
 				// console.log(data);
+				$("#policestation_id").val(data.iPoliceStationId);
 				$("#station_name1").val(data.vStationName);
 				$("#number1").val(data.iPoliceStationNumber);
 				$('#emergency_number1').val(data.iEmergencyNO);
@@ -378,7 +385,6 @@
 			    $('#latitude1').val(data.vStationLatitude);    
 			    $('#longitude1').val(data.vStationlongitude);    
                 $("#pincode1").val(data.iPincode);
-                $("#policestation_id").val(data.iPoliceStationId);
                 if(data.tStatus == '0')
 				$("#status_active").prop("checked", true);
 				else 

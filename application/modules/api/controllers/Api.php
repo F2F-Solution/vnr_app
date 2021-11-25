@@ -19,6 +19,8 @@ class Api extends REST_Controller {
 			$customer['vPassword'] = $data_input['password'];
 			$customer['vAddress'] = $data_input['address'];
 			$customer['iAadharNo'] = $data_input['aadhar_number'];
+			$customer['vLatitude'] = $data_input['cus_lat'];
+			$customer['vLongitude'] = $data_input['cus_long'];
 			$customer['iPincode'] = $data_input['pincode'];
 			$customer['vProfession'] = $data_input['profession'];
 			// $customer['vEmergencyName'] = $data_input['emergency_name'];
@@ -1046,7 +1048,7 @@ class Api extends REST_Controller {
                 $login_result = $this->api_model->check_employee_login_details($data);
                 if ($login_result) {
                     if($login_result == 1){
-                        $output = array ('status' => 'Error', 'message' => 'OTP not verified - Signup again');
+                        $output = array ('status' => 'Error', 'message' => 'OTP not verified');
 						$this->response($output);
                     }else{
 						$update = array();
