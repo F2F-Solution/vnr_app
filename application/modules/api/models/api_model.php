@@ -443,8 +443,9 @@ class Api_model extends CI_Model {
     }
 
     public function get_station_list(){
-        $this->db->select('*');
-        $this->db->from('vnr_police_station');
+        $this->db->select('station.*,officer.vOfficerName as primary_attender');
+        $this->db->from('vnr_police_station as station');
+        $this->db->join('vnr_police_officer as officer','officer.iPoliceOfficerId=station.vPrimaryAttender','left');
         $query = $this->db->get();
         if($query->num_rows() >0){
             return $query->result_array();

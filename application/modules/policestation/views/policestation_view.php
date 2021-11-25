@@ -308,6 +308,7 @@
     table = $("#user_data").DataTable({
             searchDelay: 500,
             processing: true,
+            searching: true,
             serverSide: true,
             order: [[1, 'asc']],
             ajax: {
@@ -327,20 +328,32 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-			console.log(result.isConfirmed);
+			// console.log(result.isConfirmed);
         if (result.isConfirmed) {
 			$.ajax({
-				url: "<?php echo base_url() . 'policestation/police_station/delete';?>",
+				url: "<?php echo base_url(); ?>policestation/police_station/delete",
 				type: 'POST',
 				data:{id:id},
 				success: function(data) {
+					if(data.status == 'success'){
 						Swal.fire(
 					'Deleted!',
 					'Your file has been deleted.',
 					'success'
 					);      
 					table.ajax.reload();
-				}
+					}
+					// else{
+					// 	swal(data.message);
+					// }
+				},
+					error: function () {
+						Swal.fire({
+						icon: 'error',
+						// title: 'Oops...',
+						text: 'Couldnt delete parent row',
+						})
+					}
 			});
         }
     });
@@ -355,6 +368,7 @@
 			dataType : "JSON",
 			data : {id:id},
 			success: function(data){
+				// console.log(data);
 				$("#station_name1").val(data.vStationName);
 				$("#number1").val(data.iPoliceStationNumber);
 				$('#emergency_number1').val(data.iEmergencyNO);

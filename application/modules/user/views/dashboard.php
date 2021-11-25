@@ -59,7 +59,7 @@
                                                 <path opacity="0.3" d="M22 9.72498V20.725C22 21.325 21.6 21.725 21 21.725H3C2.4 21.725 2 21.325 2 20.725V9.72498L11.4 17.225C11.8 17.525 12.3 17.525 12.6 17.225L22 9.72498ZM15 11.725H18L14 7.72498V10.725C14 11.325 14.4 11.725 15 11.725Z" fill="black"></path>
                                             </svg>
                                         </span>
-                                        <a href="" class="text-success fw-bold fs-6 mt-2">Unvisited Home</a>
+                                        <a href="<?php echo base_url('lockedhome'); ?>" class="text-success fw-bold fs-6 mt-2">Unvisited Home</a>
                                         <span class="badge badge-light-success fs-8 fw-bolder"><?php echo count($unvisited)?></span>
                                     </div>
                                 </div>

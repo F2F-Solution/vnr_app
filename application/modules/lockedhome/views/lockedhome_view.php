@@ -31,7 +31,7 @@
      </div>
 </div>
 <div class="d-flex align-items-center py-1">
-            <button type="button" class="btn btn-sm btn-primary add_station" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add Police Station</button>
+            <!-- <button type="button" class="btn btn-sm btn-primary add_station" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Add Police Station</button> -->
         </div>
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
@@ -85,7 +85,7 @@
                                                 <span class="required">Status</span>
                                             </label>
                                             <select class="form-select form-select-solid "  name="status" id="status" aria-label="Select example">
-                                                <option>SELECT</option>
+                                                <option value="">SELECT</option>
                                                 <option value="0">Completed</option>
                                                 <option value="1">Monitoring</option>
                                                 <option value="2">Visited</option>
@@ -319,7 +319,7 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-			console.log(result.isConfirmed);
+			// console.log(result.isConfirmed);
         if (result.isConfirmed) {
 			$.ajax({
 				url: "<?php echo base_url() . 'lockedhome/Lockedhome/delete';?>",
@@ -332,7 +332,14 @@
 					'success'
 					);      
 					table.ajax.reload();
-				}
+				},
+					error: function () {
+						Swal.fire({
+						icon: 'error',
+						// title: 'Oops...',
+						text: 'Couldnt delete parent row',
+						})
+					}
 			});
         }
     });

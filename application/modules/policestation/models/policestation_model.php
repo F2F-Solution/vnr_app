@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
 
 class Policestation_model extends CI_model{
    private $table = 'vnr_police_station';
-   private $column_order = array(null, 'vStationName','iEmergencyNO','vPrimaryAttender','iPoliceStationNumber','iStationLandNo','vEmail','vAddress','iPincode'); //set column field database for datatable orderable
+   private $column_order = array(null, 'vStationName','iPoliceStationNumber','iEmergencyNO','iStationLandNo','vPrimaryAttender','vEmail','vAddress','iPincode'); //set column field database for datatable orderable
    private $column_search = array('Station name'); //set column field database for datatable searchable 
    private $order = array('id' => 'desc'); // default descending order
     public function __construct(){
@@ -21,7 +21,7 @@ class Policestation_model extends CI_model{
     }
      //list data
      private function list_data() {   
-        $this->db->select('vnr_police_station.*,officer.vOfficerName');
+        $this->db->select('vnr_police_station.*,officer.vOfficerName as vPrimaryAttender');
         $this->db->from('vnr_police_station');
         $this->db->join('vnr_police_officer as officer', 'vnr_police_station.vPrimaryAttender = officer.iPoliceOfficerId', 'left');
         $i = 0; 

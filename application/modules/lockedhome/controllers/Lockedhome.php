@@ -69,12 +69,39 @@ class Lockedhome extends MY_Controller {
         // echo "<pre>" ; print_r($row);exit;
     }
     public function update(){
-        $iLockedHomeId = $_POST['lockedhome'];
-        $user=array(
-          'tStatus'=>$this->input->post('status'), 
-        );
-        $this->lockedhome_model->update_data($user,$iLockedHomeId);
-        redirect($this->config->item('base_url') . 'lockedhome/Lockedhome');
+      $iLockedHomeId = $_POST['lockedhome'];
+      $user=array(
+        'tStatus'=>$this->input->post('status'), 
+      );
+      $this->lockedhome_model->update_data($user,$iLockedHomeId);
+
+      //locked home status mail sending
+      // $msg = 'Your Otp code is '.$otp.' - VNR app';
+      // $sub = 'Registration Otp';
+
+
+      // $config['protocol']    = 'smtp';
+      // $config['smtp_host']    = 'ssl://smtp.googlemail.com';
+      // $config['smtp_port']    = '465';
+      // $config['smtp_timeout'] = '7';
+      // $config['smtp_user']    = 'ftwoftesting@gmail.com';
+      // $config['smtp_pass']    = 'MotivationS@1';
+      // $config['charset']    = 'utf-8';
+      // $config['newline']    = "\r\n";
+      // $config['mailtype'] = 'text';
+      // $config['validation'] = TRUE; // bool whether to validate email or not      
+      // $this->load->library('email',$config);
+
+      // $this->email->initialize($config);
+
+      // $this->email->from('ftwoftesting@gmail.com','Tester');
+      // $this->email->to('sundarabui2k21@gmail.com'); 
+      // $this->email->subject($sub);
+      // $this->email->message($msg);  
+
+      // $this->email->send();
+
+      redirect($this->config->item('base_url') . 'lockedhome/Lockedhome');
     }
     //Delete data
     public function delete($iLockedHomeId){

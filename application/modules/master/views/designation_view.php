@@ -168,6 +168,9 @@
             processing: true,
             serverSide: true,
             order: [[1, 'asc']],
+            columnDefs: [
+        { targets: [0, 3]},
+    ],
             ajax: {
                 url:"<?php echo base_url() . '/master/designation/list_data'; ?>",  
                 type:"POST"

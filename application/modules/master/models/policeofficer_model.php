@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
 
 class Policeofficer_model extends CI_model{
     private $table = 'vnr_police_officer';
-    private $column_order = array(null,'vnr_police_officer.vOfficerName','vnr_police_officer.tImage','vnr_police_officer.iEmail','vnr_police_officer.iMobileNumber','designation.iDesignationId','iDepartmentId','group.iGroupid','station.iPoliceStationId'); //set column field database for datatable orderable
+    private $column_order = array(null,'vnr_police_officer.tImage','vnr_police_officer.vOfficerName','vnr_police_officer.vGender','vnr_police_officer.iEmail','vnr_police_officer.iMobileNumber','designation.iDesignationId','iDepartmentId','group.iGroupid','station.iPoliceStationId'); //set column field database for datatable orderable
     private $column_search = array('vOfficerName','tImage','iEmail','iMobileNumber','iDesignationId','iDepartmentId','iGroupid','iPoliceStationId'); //set column field database for datatable searchable 
     private $order = array('id' => 'desc'); // default descending order
     public function __construct(){

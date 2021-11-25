@@ -110,6 +110,39 @@ class Api extends REST_Controller {
 					$this->response($output);
 				exit;
 			}
+
+			//otp mail sending
+			$msg = 'Your Otp code is '.$otp.' - VNR app';
+			$sub = 'Registration Otp';
+
+
+			$config['protocol']    = 'smtp';
+			$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+			$config['smtp_port']    = '465';
+			$config['smtp_timeout'] = '7';
+			$config['smtp_user']    = 'ftwoftesting@gmail.com';
+			$config['smtp_pass']    = 'MotivationS@1';
+			$config['charset']    = 'utf-8';
+			$config['newline']    = "\r\n";
+			$config['mailtype'] = 'text';
+			$config['validation'] = TRUE; // bool whether to validate email or not      
+			$this->load->library('email',$config);
+
+			$this->email->initialize($config);
+
+			$this->email->from('ftwoftesting@gmail.com','Tester');
+			$this->email->to($customer['vEmail']); 
+			$this->email->subject($sub);
+			$this->email->message($msg);  
+
+			$this->email->send();
+			// if($this->email->send())
+			// {
+			// 	$this->session->set_flashdata("email_sent","Congragulation Email Send Successfully.");
+			// }else
+			// {
+			// show_error($this->email->print_debugger());
+			// }
 			
 			$insert = $this->api_model->insert_customer_details($customer);
 			if (!empty($insert) && $insert != 0) {
@@ -121,6 +154,7 @@ class Api extends REST_Controller {
 					'customer_data' => $customer_details
 				]);
 			}
+			
 		} else {
 		$output = array(
 			"status" => "false",
@@ -181,6 +215,32 @@ class Api extends REST_Controller {
 				$update_data['iOtpCode'] = $otp;
 				$update = $this->api_model->update_fields($json_input['customer_id'],$update_data);
 				$details = $this->api_model->get_customer_details($customer['iCustomerId']);
+
+				//otp mail sending
+				$msg = 'Your Otp code is '.$otp.' - VNR app';
+				$sub = 'Registration Otp';
+
+
+				$config['protocol']    = 'smtp';
+				$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+				$config['smtp_port']    = '465';
+				$config['smtp_timeout'] = '7';
+				$config['smtp_user']    = 'ftwoftesting@gmail.com';
+				$config['smtp_pass']    = 'MotivationS@1';
+				$config['charset']    = 'utf-8';
+				$config['newline']    = "\r\n";
+				$config['mailtype'] = 'text';
+				$config['validation'] = TRUE; // bool whether to validate email or not      
+				$this->load->library('email',$config);
+
+				$this->email->initialize($config);
+
+				$this->email->from('ftwoftesting@gmail.com','Tester');
+				$this->email->to($details['vEmail']); 
+				$this->email->subject($sub);
+				$this->email->message($msg);  
+
+				$this->email->send();
 				if($details){
 				$output = array('status' => 'Success', 'message' => 'Otp sent successfully','data'=>$details);
 				}else{
@@ -192,6 +252,32 @@ class Api extends REST_Controller {
 			if($json_input['type'] == 'employee_login' || $json_input['type'] == 'employee_register' || $json_input['type'] == 'employee_forget_password'){
 				$update_data['iOtpCode'] = $otp;
 				$login = $this->api_model->update_officer_details('iPoliceOfficerId',$json_input['employee_id'],$update_data);
+				$employee_details = $this->api_model->get_police_officer_by_insert_id($json_input['employee_id']);
+				//otp mail sending
+				$msg = 'Your Otp code is '.$otp.' - VNR app';
+				$sub = 'Registration Otp';
+
+
+				$config['protocol']    = 'smtp';
+				$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+				$config['smtp_port']    = '465';
+				$config['smtp_timeout'] = '7';
+				$config['smtp_user']    = 'ftwoftesting@gmail.com';
+				$config['smtp_pass']    = 'MotivationS@1';
+				$config['charset']    = 'utf-8';
+				$config['newline']    = "\r\n";
+				$config['mailtype'] = 'text';
+				$config['validation'] = TRUE; // bool whether to validate email or not      
+				$this->load->library('email',$config);
+
+				$this->email->initialize($config);
+
+				$this->email->from('ftwoftesting@gmail.com','Tester');
+				$this->email->to($employee_details[0]['iEmail']); 
+				$this->email->subject($sub);
+				$this->email->message($msg);  
+
+				$this->email->send();
 				$details = $this->api_model->get_police_officer_by_insert_id($json_input['employee_id']);
 				if($details){
 				$output = array('status'=>'success','message'=>'otp sent successfully','data'=>$details);
@@ -466,6 +552,33 @@ class Api extends REST_Controller {
 				$otp = $this->api_model->generateNumericOTP('4');
 				$update_data['iOtpCode'] = $otp;
 				$this->api_model->update_fields($customer['iCustomerId'],$update_data);
+
+				//Otp mail sending
+				$msg = 'Your Otp code is '.$otp.' - VNR app';
+				$sub = 'Registration Otp';
+
+
+				$config['protocol']    = 'smtp';
+				$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+				$config['smtp_port']    = '465';
+				$config['smtp_timeout'] = '7';
+				$config['smtp_user']    = 'ftwoftesting@gmail.com';
+				$config['smtp_pass']    = 'MotivationS@1';
+				$config['charset']    = 'utf-8';
+				$config['newline']    = "\r\n";
+				$config['mailtype'] = 'text';
+				$config['validation'] = TRUE; // bool whether to validate email or not      
+				$this->load->library('email',$config);
+
+				$this->email->initialize($config);
+
+				$this->email->from('ftwoftesting@gmail.com','Tester');
+				$this->email->to($customer['vEmail']); 
+				$this->email->subject($sub);
+				$this->email->message($msg);  
+
+				$this->email->send();
+				
 				$details = $this->api_model->get_customer_details($customer['iCustomerId']);
 				$output = array(
 					'status' => 'success', 'code' =>200 ,'message' => 'OTP sent successfully','data'=> $details
@@ -475,6 +588,7 @@ class Api extends REST_Controller {
 				$output = array(
 					'status' => 'error', 'code'=>415 , 'message' => 'Invalid credentials'
 				);
+				$this->response($output);
 			}
         } else {
             $output = array ('status' => 'error', 'message' => 'Please enter input data');
@@ -890,6 +1004,32 @@ class Api extends REST_Controller {
 					'employee_details' => $employee_details
 				]);
 			}
+
+			//otp mail sending
+			$msg = 'Your Otp code is '.$otp.' - VNR app';
+			$sub = 'Registration Otp';
+
+
+			$config['protocol']    = 'smtp';
+			$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+			$config['smtp_port']    = '465';
+			$config['smtp_timeout'] = '7';
+			$config['smtp_user']    = 'ftwoftesting@gmail.com';
+			$config['smtp_pass']    = 'MotivationS@1';
+			$config['charset']    = 'utf-8';
+			$config['newline']    = "\r\n";
+			$config['mailtype'] = 'text';
+			$config['validation'] = TRUE; // bool whether to validate email or not      
+			$this->load->library('email',$config);
+
+			$this->email->initialize($config);
+
+			$this->email->from('ftwoftesting@gmail.com','Tester');
+			$this->email->to($employee['iEmail']); 
+			$this->email->subject($sub);
+			$this->email->message($msg);  
+
+			$this->email->send();
 			
 		}else{
 		$output = array(
@@ -913,6 +1053,32 @@ class Api extends REST_Controller {
 						$otp = $this->api_model->generateNumericOTP('4');
 						$update['iOtpCode'] = $otp;
 						$login = $this->api_model->update_officer_details('iPoliceOfficerId',$login_result['iPoliceOfficerId'],$update);
+
+						//otp mail sending
+						$msg = 'Your Otp code is '.$otp.' - VNR app';
+						$sub = 'Registration Otp';
+
+
+						$config['protocol']    = 'smtp';
+						$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+						$config['smtp_port']    = '465';
+						$config['smtp_timeout'] = '7';
+						$config['smtp_user']    = 'ftwoftesting@gmail.com';
+						$config['smtp_pass']    = 'MotivationS@1';
+						$config['charset']    = 'utf-8';
+						$config['newline']    = "\r\n";
+						$config['mailtype'] = 'text';
+						$config['validation'] = TRUE; // bool whether to validate email or not      
+						$this->load->library('email',$config);
+
+						$this->email->initialize($config);
+
+						$this->email->from('ftwoftesting@gmail.com','Tester');
+						$this->email->to($login_result['iEmail']); 
+						$this->email->subject($sub);
+						$this->email->message($msg);  
+
+						$this->email->send();
 						$employee_details = $this->api_model->get_police_officer_by_insert_id($login_result['iPoliceOfficerId']);
 						if($login){
 						$output = array ('status' => 'Success', 'message' => 'Otp sent successfully','data'=>$employee_details);
@@ -987,6 +1153,32 @@ class Api extends REST_Controller {
 				$otp = $this->api_model->generateNumericOTP('4');
 				$update_data['iOtpCode'] = $otp;
 				$login = $this->api_model->update_officer_details('iPoliceOfficerId',$customer['iPoliceOfficerId'],$update_data);
+
+				//otp mail sending
+				$msg = 'Your Otp code is '.$otp.' - VNR app';
+				$sub = 'Registration Otp';
+
+
+				$config['protocol']    = 'smtp';
+				$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+				$config['smtp_port']    = '465';
+				$config['smtp_timeout'] = '7';
+				$config['smtp_user']    = 'ftwoftesting@gmail.com';
+				$config['smtp_pass']    = 'MotivationS@1';
+				$config['charset']    = 'utf-8';
+				$config['newline']    = "\r\n";
+				$config['mailtype'] = 'text';
+				$config['validation'] = TRUE; // bool whether to validate email or not      
+				$this->load->library('email',$config);
+
+				$this->email->initialize($config);
+
+				$this->email->from('ftwoftesting@gmail.com','Tester');
+				$this->email->to($customer['iEmail']); 
+				$this->email->subject($sub);
+				$this->email->message($msg);  
+
+				$this->email->send();
 				$details = $this->api_model->get_police_officer_by_insert_id($customer['iPoliceOfficerId']);
 				$output = array(
 					'status' => 'Success', 'code' =>200 ,'message' => 'OTP sent successfully','data'=> $details

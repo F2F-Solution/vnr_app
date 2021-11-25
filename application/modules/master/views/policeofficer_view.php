@@ -439,7 +439,7 @@
             },
 			"columnDefs":[
 				{
-				"targets":[0],
+				"targets":[0,10,11],
 				"orderable":false
 				}
 			]
