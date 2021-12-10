@@ -211,7 +211,13 @@
             ajax: {
                 url:"<?php echo base_url() . 'managenews/news/list_data'; ?>",  
                 type:"POST"
-            }
+            },
+			"columnDefs":[
+				{
+				"targets":[0,3,4,5],
+				"orderable":false
+				}
+			]
         });
 		$(document).on('click','.removeAttr',function(event){
       event.preventDefault();

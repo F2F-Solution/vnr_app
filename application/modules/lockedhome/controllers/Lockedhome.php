@@ -74,6 +74,19 @@ class Lockedhome extends MY_Controller {
         'tStatus'=>$this->input->post('status'), 
       );
       $this->lockedhome_model->update_data($user,$iLockedHomeId);
+      // if($_POST['status'] == 0){
+      //   $status = 'Completed';
+      // }
+      // if($_POST['status'] == 1){
+      //   $status = 'Monitoring';
+      // }
+      // if($_POST['status'] == 2){
+      //   $status = 'Visited';
+      // }
+      // $history = array(
+      //   'vStatus' => $status
+      // );
+      // $this->db->lockedhome_model->update_history($history,$iLockedHomeId);
 
       //locked home status mail sending
       // $msg = 'Your Otp code is '.$otp.' - VNR app';

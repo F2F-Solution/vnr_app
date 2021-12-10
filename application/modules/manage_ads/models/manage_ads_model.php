@@ -4,8 +4,8 @@ if (!defined('BASEPATH'))
 
 class Manage_ads_model extends CI_model{
   public $table = 'vnr_manage_ads';
-  private $column_order = array(null, 'iAdtype','vAdContent','vAdImage','tAdStatus'); //set column field database for datatable orderable
-//   private $column_search = array('ADS tYPE'); //set column field database for datatable searchable 
+  private $column_order = array(null, 'iAdtype','vAdContent','vAdImage'); //set column field database for datatable orderable
+  private $column_search = array('iAdtype','vAdContent'); //set column field database for datatable searchable 
   private $order = array('iAdId' => 'desc'); // default descending order
     public function __construct(){
         $this->load->database();

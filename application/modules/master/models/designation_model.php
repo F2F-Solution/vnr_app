@@ -74,6 +74,8 @@ class Designation_model extends CI_model{
     //Delete data
     public function delete_data($iDesignationId){
             $this->db->where('iDesignationId', $iDesignationId);
+            $this-> db->delete('vnr_police_officer');
+            $this->db->where('iDesignationId', $iDesignationId);
             $this-> db->delete('vnr_police_designation');
     }
 }

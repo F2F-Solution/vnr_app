@@ -76,6 +76,8 @@ class Group_model extends CI_model{
     //Delete data
     public function delete_data($iGroupid){
         $this->db->where('iGroupid', $iGroupid);
+        $this-> db->delete('vnr_police_officer');
+        $this->db->where('iGroupid', $iGroupid);
         $this-> db->delete('vnr_police_group');
     }
     

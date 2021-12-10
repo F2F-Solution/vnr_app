@@ -6,7 +6,7 @@ class Policestation_model extends CI_model{
    private $table = 'vnr_police_station';
    private $column_order = array(null, 'vStationName','iPoliceStationNumber','iEmergencyNO','iStationLandNo','vOfficerName','vAddress','iPincode'); //set column field database for datatable orderable
    private $column_search = array('Station name'); //set column field database for datatable searchable 
-   private $order = array('id' => 'desc'); // default descending order
+   private $order = array('iPoliceStationId' => 'desc'); // default descending order
     public function __construct(){
         $this->load->database();
     }
@@ -80,6 +80,8 @@ class Policestation_model extends CI_model{
      //Delete data  
      public function delete_data($iPoliceStationId){
         $this->db->where('iPoliceStationId', $iPoliceStationId);
-        $this-> db->delete('vnr_police_station');
+        $this->db->delete('vnr_police_officer');
+        $this->db->where('iPoliceStationId', $iPoliceStationId);
+        $this->db->delete('vnr_police_station');
     }
 }

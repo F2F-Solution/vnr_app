@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
 
 class News_model extends CI_model{
  private  $table = 'vnr_news';
- private  $column_order = array(null, 'vNewsSubject','vNewsMessage','vNewsImage','tNewsStatus'); //set column field database for datatable orderable
+ private  $column_order = array(null, 'vNewsSubject','vNewsMessage','tNewsStatus'); //set column field database for datatable orderable
 //  private  $column_search = array('vNewsSubject'); //set column field database for datatable searchable 
  private  $order = array('inewsid' => 'desc'); // default descending order
     public function __construct(){

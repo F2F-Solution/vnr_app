@@ -72,6 +72,8 @@ class Department_model extends CI_model{
     //Delete data
     public function delete_data($iDepartmentId){
         $this->db->where('iDepartmentId', $iDepartmentId);
+        $this-> db->delete('vnr_police_officer');
+        $this->db->where('iDepartmentId', $iDepartmentId);
         $this-> db->delete('vnr_police_department');
     }
 }

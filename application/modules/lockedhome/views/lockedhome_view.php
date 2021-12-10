@@ -343,7 +343,7 @@
 						Swal.fire({
 						icon: 'error',
 						// title: 'Oops...',
-						text: 'Couldnt delete parent row',
+						text: 'Not deleted!',
 						})
 					}
 			});

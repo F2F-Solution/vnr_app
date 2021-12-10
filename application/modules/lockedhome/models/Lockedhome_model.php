@@ -66,6 +66,12 @@ class Lockedhome_model extends CI_model{
      //Delete data  
      public function delete_data($iLockedHomeId){
         $this->db->where('iLockedHomeId', $iLockedHomeId);
+        $this->db->delete('vnr_locked_home_history');
+        $this->db->where('iLockedHomeId', $iLockedHomeId);
         $this-> db->delete('vnr_locked_home');
     }
+
+    // public function update_history($data,$id){
+
+    // }
 }
