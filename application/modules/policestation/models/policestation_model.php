@@ -18,6 +18,7 @@ class Policestation_model extends CI_model{
     }
     public function store($user){
         $this->db->insert('vnr_police_station',$user);
+        return $this->db->insert_id();
     }
      //list data
      private function list_data() {   

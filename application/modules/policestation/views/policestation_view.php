@@ -132,7 +132,7 @@
 											<span class="required"> Primary attender </span>
 										</label>
 										<select class="form-select form-select-solid " name="attender" aria-label="Select example">
-											<option>SELECT</option>
+											<option value="">SELECT</option>
 											<?php
 											foreach($policestation['attender'] as $row){
 												echo  '<option value="'.$row->iPoliceOfficerId.'">'.$row->vOfficerName.'</option>';
@@ -184,7 +184,7 @@
 </div>
 
 <div class="modal fade" id="kt_modal_edit_user" tabindex="-1" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered mw-1000px">
+	<div class="modal-dialog modal-dialog-centered mw-1000px">
         <div class="modal-content">
             <div class="modal-header" id="kt_modal_add_user_header">
                 <h2 class="fw-bolder">Edit Details of Police Station</h2>
@@ -237,7 +237,7 @@
 											<span class="required"> Primary attender </span>
 										</label>
 										<select class="form-select form-select-solid " name="attender" id="attender1" aria-label="Select example">
-											<option>SELECT</option>
+											<option value="">SELECT</option>
 											<?php
 											foreach($policestation['attender'] as $row){
 										       echo  '<option value="'.$row->iPoliceOfficerId.'">'.$row->vOfficerName.'</option>';

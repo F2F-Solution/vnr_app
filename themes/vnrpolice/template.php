@@ -82,7 +82,7 @@ $query = $this->db->get()->row_array();
 									</a>
 								</div>
 								
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion master">
 									<span class="menu-link">
 										<span class="menu-icon"><i class="bi bi-window fs-3"></i></span>
 										<span class="menu-title">Master</span>
@@ -342,6 +342,19 @@ $query = $this->db->get()->row_array();
 		<script src="<?php echo $theme_path ?>/assets/js/custom/modals/upgrade-plan.js"></script>
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
+		<script>
+	
+
+			$(function() {
+				var url = window.location.href;
+				url = url.split('/').pop()				
+				if(url == 'designation' || url == 'department' || url == 'group' || url == 'police_officer') {
+					$('.menu-active-bg').addClass('show');
+					$(this).css("display", "");
+					$('.master').addClass('show');
+				}
+			});
+		</script>
 	</body>
 	<!--end::Body-->
 </html>

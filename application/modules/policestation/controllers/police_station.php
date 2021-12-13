@@ -31,7 +31,10 @@ class Police_station extends MY_Controller {
             'tStatus' => $this->input->post('status'),
         );
         // print_r($user);exit;
-        $this->Policestation_model->store($user);  
+        $id = $this->Policestation_model->store($user);
+        $qr_code = $_POST['pincode'].'_'.$id;
+        $update['vAttachment'] = Generate_QRCode($qr_code);
+        $this->Policestation_model->update_data($update,$id);
         $this->session->set_flashdata('status', 'Data inserted successfully');
         redirect($this->config->item('base_url') . 'policestation/police_station');
       }
