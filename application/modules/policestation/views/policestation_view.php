@@ -35,6 +35,7 @@
                     <thead>
                         <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                             <th>S.No</th>
+                            <th>QR code</th>
                             <th>Station Name</th>
 							<th>Contact NO</th>     
                             <th>Emergency Contact no</th>
@@ -52,7 +53,7 @@
             </div>
         </div>
     </div>
-</div>
+<!-- </div> -->
 
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-1000px">
@@ -80,7 +81,7 @@
 											</label>
 											<input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name" />
 											<span id="input1" class="val" style="color:#F00; font-style:oblique;"></span>
-										</div>
+									</div>
 									<div class="fv-row mb-10">
 											<label class="d-flex align-items-center fs-5 fw-bold ">
 												<span class="required">Contact NO </span>
@@ -97,7 +98,7 @@
 									</div>
 									<div class="fv-row mb-10">
 										<div class="mb-7">
-										<label class="required fw-bold fs-6 mb-5">Status</label>
+											<label class="required fw-bold fs-6 mb-5">Status</label>
 											<div class="d-flex fv-row">
 												<div class="form-check form-check-custom form-check-solid">
 													<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="kt_modal_update_role_option_0" checked />
@@ -174,13 +175,13 @@
 								</div>                            	
                           	</div>
 							<button type="submit" class="btn btn-lg btn-primary" id="submit1" >Submit</button>
-						  <div>
+						  <!-- <div> -->
                         </div>
                     </div>
                 </form>
-           </div>
-     </div>
-</div>  
+           	</div>
+     	</div>
+	</div>  
 </div>
 
 <div class="modal fade" id="kt_modal_edit_user" tabindex="-1" aria-hidden="true">
@@ -322,7 +323,7 @@
             },
 			"columnDefs":[
 				{
-				"targets":[0,8,9],
+				"targets":[0,1,8,10],
 				"orderable":false
 				}
 			]
