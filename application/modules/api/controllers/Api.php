@@ -215,8 +215,9 @@ class Api extends REST_Controller {
 			$update_data = array();
 			if($json_input['type'] == 'forget password' || $json_input['type'] == 'customer_register'){
 				$update_data['iOtpCode'] = $otp;
+				$update_data['tOtpVerify'] = 0;
 				$update = $this->api_model->update_fields($json_input['customer_id'],$update_data);
-				$details = $this->api_model->get_customer_details($customer['iCustomerId']);
+				$details = $this->api_model->get_customer_details($json_input['customer_id']);
 
 				//otp mail sending
 				$msg = 'Your Otp code is '.$otp.' - VNR app';
@@ -553,6 +554,7 @@ class Api extends REST_Controller {
 			if($customer){
 				$otp = $this->api_model->generateNumericOTP('4');
 				$update_data['iOtpCode'] = $otp;
+				$update_data['tOtpVerify'] = 0;
 				$this->api_model->update_fields($customer['iCustomerId'],$update_data);
 
 				//Otp mail sending

@@ -164,9 +164,10 @@ class User extends MY_Controller {
          $data = $this->User_model->update_password($user_id, array('vPassword' => md5($new_password)));
          redirect($this->config->item('base_url'));
 
-      }else{
-         echo 2;
       }
+      // else{
+      //    echo 2;
+      // }
    }
 }
 ?>
