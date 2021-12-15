@@ -1406,11 +1406,11 @@ class Api extends REST_Controller {
 			if($history){
 				$output = array('status'=>'success','message'=>'Locked home history list','data'=>$history);
 			}else{
-				$output = array('status'=>'success','message'=>'User not found');
+				$output = array('status'=>'error','message'=>'User not found');
 			}
 			$this->response($output);
 		}else{
-			$output = array('status'=>'success','message'=>'please enter input data');
+			$output = array('status'=>'error','message'=>'please enter input data');
 			$this->response($output);
 		}
 	}
@@ -1436,11 +1436,11 @@ class Api extends REST_Controller {
 			if($history){
 				$output = array('status'=>'success','message'=>'Locked home history list','data'=>$history);
 			}else{
-				$output = array('status'=>'success','message'=>'User not found');
+				$output = array('status'=>'error','message'=>'User not found');
 			}
 			$this->response($output);
 		}else{
-			$output = array('status'=>'success','message'=>'please enter input data');
+			$output = array('status'=>'error','message'=>'please enter input data');
 			$this->response($output);
 		}
 	}
@@ -1452,11 +1452,33 @@ class Api extends REST_Controller {
 			if($history){
 				$output = array('status'=>'success','message'=>'Locked home history list','data'=>$history);
 			}else{
-				$output = array('status'=>'success','message'=>'User not found');
+				$output = array('status'=>'Error','message'=>'User not found');
 			}
 			$this->response($output);
 		}else{
-			$output = array('status'=>'success','message'=>'please enter input data');
+			$output = array('status'=>'Error','message'=>'please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function get_locked_home_by_qrcode(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$qrcode = base64_decode($data_input['qr_code']);
+			$station = str_replace('_',' ',$qrcode);
+			$station_data = explode(' ',$station);
+			$pin = $station_data[0];
+			$id = $station_data[1];
+			$details = $this->api_model->get_custom_police_station($pin,$id);
+			if($details){
+				$output = array('status'=>'success','message'=>'police station list','data'=>$details);
+				$this->response($output);
+			}else{
+				$output = array('status'=>'Error','message'=>'No data found');
+				$this->response($output);
+			}
+		}else{
+			$output = array('status'=>'Error','message'=>'please enter input data');
 			$this->response($output);
 		}
 	}

@@ -593,6 +593,18 @@ class Api_model extends CI_Model {
     //     }
     //     return NULL;
     // }
+
+    public function get_custom_police_station($pin,$id){
+        $this->db->select('*');
+        $this->db->where('iPincode',$pin);
+        $this->db->where('iPoliceStationId',$id);
+        $this->db->from('vnr_police_station');
+        $query = $this->db->get();
+        if($query->num_rows() >0){
+            return $query->row_array();
+        }else
+        return false;
+    }
     
 
 }
