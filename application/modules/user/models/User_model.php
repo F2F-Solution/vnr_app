@@ -16,6 +16,7 @@ class User_model extends CI_model{
     public function verify($user){
       $this->db->select('*');
       $this->db->where('vEmail',$user['vEmail']);
+      $this->db->or_where('iPhoneNumber',$user['vEmail']);
       $this->db->where('vPassword',md5($user['vPassword']));
       $this->db->where('tStatus',1);
       $query = $this->db->get('vnr_user');
