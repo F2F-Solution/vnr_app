@@ -2,3 +2,6 @@
     width: 100px;
     text-align: center;
 }
+.aside-menu .menu-item .menu-link .menu-icon i {
+    color: #b4b4b4;
+}
