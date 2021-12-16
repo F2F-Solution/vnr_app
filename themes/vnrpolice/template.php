@@ -30,6 +30,7 @@ $query = $this->db->get()->row_array();
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="<?php echo $theme_path ?>/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="<?php echo $theme_path ?>/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $theme_path ?>/assets/css/custom.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->

@@ -56,7 +56,7 @@
 <!-- </div> -->
 
 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-1000px">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between" id="kt_modal_add_user_header">
                 <h2 class="fw-bolder">Add Details of Police Station</h2>
@@ -164,7 +164,7 @@
 										<label class="d-flex align-items-center fs-5 fw-bold ">
 											<span class="required"> Map </span>
 										</label>
-										<div id="map" style="width: 300px; height: 345px;"></div>
+										<div id="map" style="width: 100%; height: 345px;"></div>
 										<div id="current"></div>
 										<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4qM9zyANnys6q2EfvhFXMVKy9iSRcaRY"async></script>
 
@@ -185,7 +185,7 @@
 </div>
 
 <div class="modal fade" id="kt_modal_edit_user" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered mw-1000px">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header" id="kt_modal_add_user_header">
                 <h2 class="fw-bolder">Edit Details of Police Station</h2>
@@ -201,102 +201,110 @@
             <div class="modal-body scroll-y">
                 <form id="editform" method="post" class="form"  action="<?php  echo base_url('policestation/police_station/update')?>"  enctype="multipart/form-data">
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
-                        <div class="flex-row-fluid py-lg-5 px-lg-15">
+                        <div class="flex-row-fluid">
                         <div class="current" data-kt-stepper-element="content">
-                                    <div class="w-100">
-									<div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Station Name </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name1" />
+                                <div class="row">
+									<div class="col-md-4">
+										<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Station Name </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="name" id="station_name1" />
 											<span id="input8" class="val" style="color:#F00; font-style:oblique;"></span>
-                                            <input type="hidden" name="policestationid" id="policestation_id"  />
-                                        </div>
-									<div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Contact NO </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number1" />
+											<input type="hidden" name="policestationid" id="policestation_id"  />
+										</div>
+										<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Contact NO </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="number" id="number1" />
 											<span id="input9" class="val" style="color:#F00; font-style:oblique;"></span>
-                                    </div>
-                                    <div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Emergency contact </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number1" />
+										</div>
+										<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Emergency contact </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="emergency_number" id="emergency_number1" />
 											<span id="input10" class="val" style="color:#F00; font-style:oblique;"></span>
-                                    </div>
-                                    <div class="fv-row mb-10">
-                                            <label class="d-flex align-items-center fs-5 fw-bold ">
-                                                <span class="required">Landline number </span>
-                                            </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number1" />
+										</div>
+										<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required"> Pincode  </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode1"/>
+											<input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude1"/>
+											<input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude1"/>
+											<span id="input14" class="val" style="color:#F00; font-style:oblique;"></span>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required">Landline number </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="land_number" id="land_number1" />
 											<span id="input11" class="val" style="color:#F00; font-style:oblique;"></span>
-                                    </div>
-									<div class="fv-row mb-10">
-										<label class="d-flex align-items-center fs-5 fw-bold ">
-											<span class="required"> Primary attender </span>
-										</label>
-										<select class="form-select form-select-solid " name="attender" id="attender1" aria-label="Select example">
-											<option value="">SELECT</option>
-											<?php
-											foreach($policestation['attender'] as $row){
-										       echo  '<option value="'.$row->iPoliceOfficerId.'">'.$row->vOfficerName.'</option>';
-											}
-											?>
-										</select>	
-										<!-- <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span> -->
+										</div>
+										<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required"> Primary attender </span>
+											</label>
+											<select class="form-select form-select-solid " name="attender" id="attender1" aria-label="Select example">
+												<option value="">SELECT</option>
+												<?php
+												foreach($policestation['attender'] as $row){
+												echo  '<option value="'.$row->iPoliceOfficerId.'">'.$row->vOfficerName.'</option>';
+												}
+												?>
+											</select>	
+											<!-- <span id="input4" class="val" style="color:#F00; font-style:oblique;"></span> -->
+										</div>
+										<div class="fv-row mb-10">
+											<label class="d-flex align-items-center fs-5 fw-bold ">
+												<span class="required"> Address </span>
+											</label>
+											<input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address1"/>
+											<span id="input12" class="val" style="color:#F00; font-style:oblique;"></span>
+										</div>
+										<div class="fv-row mb-10">
+											<div class="mb-7">
+												<label class="required fw-bold fs-6 mb-5">Status</label>
+												<div class="d-flex fv-row">
+													<div class="form-check form-check-custom form-check-solid">
+														<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="status_active" />
+														<label class="form-check-label" for="kt_modal_update_role_option_0">
+															<div class="fw-bolder text-gray-800">Active</div>
+														</label>
+													</div>
+												</div>
+												<div class='separator separator-dashed my-5'></div>
+												<div class="d-flex fv-row">
+													<div class="form-check form-check-custom form-check-solid">
+														<input class="form-check-input me-3 " name="status" type="radio" value="1" id="status_inactive" />
+														<label class="form-check-label" for="kt_modal_update_role_option_1">
+															<div class="fw-bolder text-gray-800">Inactive</div>
+														</label>
+													</div>
+												</div>
+												<span id="input15" class="val" style="color:#F00; font-style:oblique;"></span>
+											</div>
+										</div>
 									</div>
-                                    <div class="fv-row mb-10">
-                                        <label class="d-flex align-items-center fs-5 fw-bold ">
-                                            <span class="required"> Address </span>
-                                        </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="address"  id="address1"/>
-                                        <span id="input12" class="val" style="color:#F00; font-style:oblique;"></span>
-								   </div>
-                                   <div class="fv-row mb-10">
-                                        <label class="d-flex align-items-center fs-5 fw-bold ">
-                                            <span class="required"> Map </span>
-                                        </label>
-                                        <div id="map1" style="width: 300px; height: 300px;"></div>
-                                        <div id="current1"></div>
-                                        <span id="input15" class="val" style="color:#F00; font-style:oblique;"></span>
-								   </div>
+									<div class="col-md-4">
+										<div class="fv-row mb-10">
+												<label class="d-flex align-items-center fs-5 fw-bold ">
+													<span class="required"> Map </span>
+												</label>
+												<div id="map1" style="width: 100%; height: 345px;"></div>
+												<div id="current1"></div>
+												<span id="input15" class="val" style="color:#F00; font-style:oblique;"></span>
+										</div>
 
-                                   <div class="fv-row mb-10">
-                                        <label class="d-flex align-items-center fs-5 fw-bold ">
-                                            <span class="required"> Pincode  </span>
-                                        </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid validation" name="pincode"  id="pincode1"/>
-                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="latitude"  id="latitude1"/>
-                                        <input type="hidden" class="form-control form-control-lg form-control-solid" name="longitude"  id="longitude1"/>
-                                        <span id="input14" class="val" style="color:#F00; font-style:oblique;"></span>
-								   </div>
-                                   <div class="fv-row mb-10">
-									<div class="mb-7">
-									<label class="required fw-bold fs-6 mb-5">Status</label>
-									<div class="d-flex fv-row">
-										<div class="form-check form-check-custom form-check-solid">
-											<input class="form-check-input me-3 validation" name="status" type="radio" value="0" id="status_active" />
-											<label class="form-check-label" for="kt_modal_update_role_option_0">
-												<div class="fw-bolder text-gray-800">Active</div>
-											</label>
-										</div>
+										
+										
 									</div>
-									<div class='separator separator-dashed my-5'></div>
-									<div class="d-flex fv-row">
-										<div class="form-check form-check-custom form-check-solid">
-											<input class="form-check-input me-3 " name="status" type="radio" value="1" id="status_inactive" />
-											<label class="form-check-label" for="kt_modal_update_role_option_1">
-												<div class="fw-bolder text-gray-800">Inactive</div>
-											</label>
-										</div>
-									</div>
-									<span id="input15" class="val" style="color:#F00; font-style:oblique;"></span>
-								</div>
-							</div>
                                 </div>
-							   </div><br>
+							   </div>
                             </div>
                           </div>
                         	<button type="submit" id="submit2" class="btn btn-lg btn-primary" >Submit</button>
