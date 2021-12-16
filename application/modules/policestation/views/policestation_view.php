@@ -321,12 +321,7 @@
                 url:"<?php echo base_url() . 'policestation/police_station/list_data'; ?>",  
                 type:"POST"
             },
-			"columnDefs":[
-				{
-				"targets":[0,1,8,10],
-				"orderable":false
-				}
-			]
+			"columnDefs":[{"targets":[0,1,8,10],"orderable":false},{"targets":[10],"className": "w-100p"},{"targets":[0,1,9,10],"className": "text-center"}]
         });
 		$(document).on('click','.removeAttr',function(event){
       event.preventDefault();
