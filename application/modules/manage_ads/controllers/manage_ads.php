@@ -53,7 +53,7 @@ class Manage_ads extends MY_Controller {
           $row[] = $sno++;   
           $row[] = $post->iAdtype;   
           $row[] = $post->vAdContent;   
-          $row[] = '<img src="'.base_url().'uploads/'.$post->vAdImage.'" class="img-thumbnail" width="100" height="50" />';
+          $row[] = '<img src="'.base_url().'uploads/'.$post->vAdImage.'" class="img-thumbnail" width="50" height="50" />';
           if($post->tAdStatus == 0){
             $row[] = "<div class=\"badge badge-light-success fw-bolder\">Active</div>";
           }

@@ -57,7 +57,7 @@
                                                 <div class="modal-body scroll-y">
                                                     <form id="editform" method="post" class="form"  action="<?php  echo base_url('user/update/'.$row->iTermsandConditionsId)?>" >
                                                         <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
-                                                            <div class="flex-row-fluid py-lg-5 px-lg-15">
+                                                            <div class="flex-row-fluid">
                                                                 <div class="current" data-kt-stepper-element="content">
                                                                             <div class="w-100">
                                                                                 <div class="fv-row mb-10">
@@ -69,7 +69,7 @@
                                                                                     <input type="hidden" name="term_id" id="term_id"  />
                                                                                 </div>
                                                                             </div>
-                                                                </div><br>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                             <button type="submit" id="submit1" class="btn btn-lg btn-primary" >Update</button>
