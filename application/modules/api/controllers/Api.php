@@ -148,6 +148,9 @@ class Api extends REST_Controller {
 			
 			$insert = $this->api_model->insert_customer_details($customer);
 			if (!empty($insert) && $insert != 0) {
+				$qr_code = base64_encode($insert);
+				$update['vQrImage'] = Generate_QRCode($qr_code,$data_input['consumer_name']);
+				$this->api_model->update_fields($insert,$update);
 				$customer_details = $this->api_model->get_customer_details_by_insert_id($insert);
 				$this->response([
 					'status' => "Success",
@@ -437,6 +440,7 @@ class Api extends REST_Controller {
 				$notification_data['iCustomerId'] = $data_input['customer_id'];
 				$notification_data['vNotificationContent'] = ucfirst($data_input['customer_name'])." is out of station from ".$home_details['dFromDate']." to ".$home_details['dToDate'];
 				$notify = $this->api_model->get_notification($notification_data);
+				
 				$this->response([
 					'status' => "Success",
 					'code'=>"200",

@@ -55,7 +55,8 @@ class Api_model extends CI_Model {
     }
 
     function get_customer_details_by_insert_id($customer_id) {
-        $this->db->select('tab_1.*');
+        $base_url = base_url().'uploads/qr_codes/';
+        $this->db->select('tab_1.*,CONCAT("'.$base_url.'",vQrImage) AS vQrImage');
         $this->db->where('tab_1.iCustomerId', $customer_id);
         $query = $this->db->get('vnr_customer'. ' AS tab_1');
         if ($query->num_rows() > 0) {
