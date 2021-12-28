@@ -26,6 +26,7 @@ class Api extends REST_Controller {
 			// $customer['vEmergencyName'] = $data_input['emergency_name'];
 			// $customer['iEmergencyNumber'] = $data_input['emergency_number'];
 			$customer['tCreatedAt'] = date('Y-m-d h:i:s');
+			$customer['vDeviceTokenId'] = $data_input['device_token']; 
 			$customer['tStatus'] = 1;
 			$otp = $this->api_model->generateNumericOTP('4');
 			$customer['iOtpCode'] = $otp;
@@ -178,6 +179,8 @@ class Api extends REST_Controller {
                         $output = array ('status' => 'Error', 'message' => 'OTP not verified');
 						$this->response($output);
                     }else{
+						$update['vDeviceTokenId'] = $data['device_token'];
+						$this->api_model->update_fields($login_result['iCustomerId'],$update);
                         $output = array ('status' => 'Success', 'message' => 'Login successfully','data'=>$login_result);
 						$this->response($output);
                     }
@@ -387,7 +390,7 @@ class Api extends REST_Controller {
 			$customer['iPincode'] = $data_input['pincode'];
 			$customer['iIdProofNumber'] = $data_input['identification_number'];
 			$customer['vIdProoftype'] = $data_input['identification_number_type'];
-			$customer['vRemarks'] = $data_input['remarks'];
+			// $customer['vRemarks'] = $data_input['remarks'];
 			$customer['vAttachment'] = $filename;
 			$customer['tStatus'] = 1;
 
@@ -441,6 +444,15 @@ class Api extends REST_Controller {
 				$notification_data['vNotificationContent'] = ucfirst($data_input['customer_name'])." is out of station from ".$home_details['dFromDate']." to ".$home_details['dToDate'];
 				$notify = $this->api_model->get_notification($notification_data);
 				
+				$pincode = $home_details[0]['iPincode'];
+				$police_under_pincode = $this->api_model->get_police_by_pincode($pincode);
+				foreach ($police_under_pincode as $token) {
+					$registrationIds[] = $token['vDeviceTokenId'];
+				}
+				$api_key = 'AAAALdPutWQ:APA91bExMJTQ-zQlZhv-HtlfU52Js1dgPQ7IlqEdErutCw_Wew7N4dED_o5lsX1kfmQ9DTh3M9-xIXs6XDHjmgAK6KFF5EAotJR0V2gOR7XwDg75Nxe-hRw3Ywp6IPRRbogqvaxv0g9v';
+				$title = 'Complaint';
+				$body = 'Locked Home Registered';
+				$this->push_notification($registrationIds,$api_key,$title,$body);
 				$this->response([
 					'status' => "Success",
 					'code'=>"200",
@@ -893,6 +905,7 @@ class Api extends REST_Controller {
 			$employee['iPincode'] = $json_input['pincode'];
 			$employee['vGender'] = $json_input['gender'];
 			$employee['vAddress'] = $json_input['address'];
+			$rmployee['vDeviceTokenId'] = $json_input['device_token'];
 			// $employee['tImage'] = $fileName;
 			$otp = $this->api_model->generateNumericOTP('4');
 			$employee['iOtpCode'] = $otp;
@@ -1089,6 +1102,9 @@ class Api extends REST_Controller {
 						$this->email->send();
 						$employee_details = $this->api_model->get_police_officer_by_insert_id($login_result['iPoliceOfficerId']);
 						if($login){
+							$update_tokem = array();
+							$update_token['vDeviceTokenId'] = $data['device_token'];
+							$login = $this->api_model->update_officer_details('iPoliceOfficerId',$login_result['iPoliceOfficerId'],$update_token);
 						$output = array ('status' => 'Success', 'message' => 'Otp sent successfully','data'=>$employee_details);
 						$this->response($output);
 						}
@@ -1486,6 +1502,62 @@ class Api extends REST_Controller {
 		}else{
 			$output = array('status'=>'Error','message'=>'please enter input data');
 			$this->response($output);
+		}
+	}
+
+	public function update_lockedhome_by_qrcode(){
+		$data_input = $this->_get_customer_post_values();
+		if(!empty($data_input)){
+			$user_id = base64_decode($data_input['qrcode']);
+			$this->api_model->update_lockedhome_status($user_id);
+		}else{
+			$output = array('status'=>'Error','message'=>'please enter input data');
+			$this->response($output);
+		}
+	}
+
+	public function push_notification($token,$api_key,$title,$body){
+		// $registrationIds[] = 'dWBwIeauQ3-5TpgvC3AQiC:APA91bHRuPBMMesltSyt65t18_j4FOy7m1i5JzTeshrRphm-FEpFbn2xl9lGsTevJ2wYcVdjfNc2PCHR1koasAb7NJX7lBQEQafcI3JpvP4WguBze4D2GHOpj067vJC_DGg__z3gggLo';
+		$registrationIds[] = $token;
+		$header = [
+			// 'Authorization: key=' . "AAAALdPutWQ:APA91bExMJTQ-zQlZhv-HtlfU52Js1dgPQ7IlqEdErutCw_Wew7N4dED_o5lsX1kfmQ9DTh3M9-xIXs6XDHjmgAK6KFF5EAotJR0V2gOR7XwDg75Nxe-hRw3Ywp6IPRRbogqvaxv0g9v",
+			'Authorization: key=' . $api__key,
+			'Content-Type: Application/json'
+		];
+
+		$msg = [
+			'title' => $title,
+			'body' => $body,
+			// 'icon' => 'https://cdn1.iconfinder.com/data/icons/data-science-1-1/512/20-512.png',
+		    // 'image' => 'https://wallpaperaccess.com/full/1338352.jpg',
+		];
+
+		$payload = [
+			'registration_ids' 	=> $registrationIds,
+			'notification'	   => $msg
+		];
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => "https://fcm.googleapis.com/fcm/send",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => json_encode( $payload ),
+		CURLOPT_HTTPHEADER => $header,
+		CURLOPT_SSL_VERIFYPEER=>false,
+		CURLOPT_SSL_VERIFYHOST=>false
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		echo "cURL Error #:" . $err;
+		} else {
+		echo $response;
 		}
 	}
 }
