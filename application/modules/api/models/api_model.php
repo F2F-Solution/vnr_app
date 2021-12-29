@@ -56,7 +56,7 @@ class Api_model extends CI_Model {
 
     function get_customer_details_by_insert_id($customer_id) {
         $base_url = base_url().'uploads/qr_codes/';
-        $this->db->select('tab_1.*,CONCAT("'.$base_url.'",vQrImage) AS vQrImage');
+        $this->db->select('tab_1.*,CONCAT("'.$base_url.'",tab_1.vQrImage) AS vQrImage',FALSE);
         $this->db->where('tab_1.iCustomerId', $customer_id);
         $query = $this->db->get('vnr_customer'. ' AS tab_1');
         if ($query->num_rows() > 0) {
@@ -75,6 +75,7 @@ class Api_model extends CI_Model {
     }
 
     public function check_login_details($data){
+        $base_url = base_url().'uploads/qr_codes/';
         $this->db->select('*');
         $this->db->where('iMobileNumber',$data['mobile_number']);
         $this->db->where('vPassword',(md5($data['password'])));
@@ -86,7 +87,7 @@ class Api_model extends CI_Model {
             if($query['tOtpVerify'] == 1){
                 $update['tLoginStatus'] = 1;
                 $this->db->update('vnr_customer',$update,array('iCustomerId'=>$query['iCustomerId']));
-                $this->db->select('*');
+                $this->db->select('*,CONCAT("'.$base_url.'",vQrImage) AS vQrImage',FALSE);
                 $this->db->where('iCustomerId',$query['iCustomerId']);
                 $this->db->from('vnr_customer');
                 $result = $this->db->get()->result_array();
@@ -150,7 +151,8 @@ class Api_model extends CI_Model {
     }
 
     public function get_customer_details($data){
-        $this->db->select('*');
+        $base_url = base_url().'uploads/qr_codes/';
+        $this->db->select('*,CONCAT("'.$base_url.'",vQrImage) AS vQrImage',FALSE);
         $this->db->where('iCustomerId',$data);
         $this->db->from('vnr_customer');
         $query = $this->db->get();
@@ -605,6 +607,25 @@ class Api_model extends CI_Model {
             return $query->row_array();
         }else
         return false;
+    }
+
+    public function update_lockedhome_status($id){
+        $this->db->where('iCustomerId',$id);
+        $this->db->order_by('tcreatedAt','desc');
+        $this->db->limit(1);
+        $this->db->from('vnr_locked_home');
+        $data = $this->db->get()->row_array();
+        $update['tStatus'] = 2;
+        $this->db->where('iLockedHomeId',$data['iLockedHomeId']);
+        $this->db->update('vnr_locked_home',$update);
+    }
+
+    public function get_police_by_pincode($pin){
+        $this->db->select('*');
+        $this->db->join('vnr_police_station as st','st.iPoliceStationId=officer.iPoliceStationId','left');
+        $this->db->from('vnr_police_officer as officer');
+        $this->db->where('st.iPincode',$pin);
+        return $this->db->get()->result_array();
     }
     
 

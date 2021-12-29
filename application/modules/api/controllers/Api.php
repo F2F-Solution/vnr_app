@@ -149,8 +149,8 @@ class Api extends REST_Controller {
 			
 			$insert = $this->api_model->insert_customer_details($customer);
 			if (!empty($insert) && $insert != 0) {
-				$qr_code = base64_encode($insert);
-				$update['vQrImage'] = Generate_QRCode($qr_code,$data_input['consumer_name']);
+				$qr_img_name = $data_input['consumer_name'].'-'.$insert;
+				$update['vQrImage'] = Generate_QRCode($insert,$qr_img_name);
 				$this->api_model->update_fields($insert,$update);
 				$customer_details = $this->api_model->get_customer_details_by_insert_id($insert);
 				$this->response([
@@ -180,8 +180,9 @@ class Api extends REST_Controller {
 						$this->response($output);
                     }else{
 						$update['vDeviceTokenId'] = $data['device_token'];
-						$this->api_model->update_fields($login_result['iCustomerId'],$update);
-                        $output = array ('status' => 'Success', 'message' => 'Login successfully','data'=>$login_result);
+						$this->api_model->update_fields($login_result[0]['iCustomerId'],$update);
+						$details = $this->api_model->get_customer_details_by_insert_id($login_result[0]['iCustomerId']);
+                        $output = array ('status' => 'Success', 'message' => 'Login successfully','data'=>$details);
 						$this->response($output);
                     }
                    
@@ -452,7 +453,7 @@ class Api extends REST_Controller {
 				$api_key = 'AAAALdPutWQ:APA91bExMJTQ-zQlZhv-HtlfU52Js1dgPQ7IlqEdErutCw_Wew7N4dED_o5lsX1kfmQ9DTh3M9-xIXs6XDHjmgAK6KFF5EAotJR0V2gOR7XwDg75Nxe-hRw3Ywp6IPRRbogqvaxv0g9v';
 				$title = 'Complaint';
 				$body = 'Locked Home Registered';
-				$this->push_notification($registrationIds,$api_key,$title,$body);
+				$this->push_notification($registrationIds,$api_key,$title,$$notification_data['vNotificationContent']);
 				$this->response([
 					'status' => "Success",
 					'code'=>"200",
@@ -905,7 +906,7 @@ class Api extends REST_Controller {
 			$employee['iPincode'] = $json_input['pincode'];
 			$employee['vGender'] = $json_input['gender'];
 			$employee['vAddress'] = $json_input['address'];
-			$rmployee['vDeviceTokenId'] = $json_input['device_token'];
+			$employee['vDeviceTokenId'] = $json_input['device_token'];
 			// $employee['tImage'] = $fileName;
 			$otp = $this->api_model->generateNumericOTP('4');
 			$employee['iOtpCode'] = $otp;
@@ -1100,11 +1101,11 @@ class Api extends REST_Controller {
 						$this->email->message($msg);  
 
 						$this->email->send();
-						$employee_details = $this->api_model->get_police_officer_by_insert_id($login_result['iPoliceOfficerId']);
 						if($login){
 							$update_tokem = array();
 							$update_token['vDeviceTokenId'] = $data['device_token'];
 							$login = $this->api_model->update_officer_details('iPoliceOfficerId',$login_result['iPoliceOfficerId'],$update_token);
+							$employee_details = $this->api_model->get_police_officer_by_insert_id($login_result['iPoliceOfficerId']);
 						$output = array ('status' => 'Success', 'message' => 'Otp sent successfully','data'=>$employee_details);
 						$this->response($output);
 						}
