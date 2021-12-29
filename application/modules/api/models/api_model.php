@@ -618,10 +618,11 @@ class Api_model extends CI_Model {
         $update['tStatus'] = 2;
         $this->db->where('iLockedHomeId',$data['iLockedHomeId']);
         $this->db->update('vnr_locked_home',$update);
+        return $data;
     }
 
     public function get_police_by_pincode($pin){
-        $this->db->select('*');
+        $this->db->select('officer.*');
         $this->db->join('vnr_police_station as st','st.iPoliceStationId=officer.iPoliceStationId','left');
         $this->db->from('vnr_police_officer as officer');
         $this->db->where('st.iPincode',$pin);

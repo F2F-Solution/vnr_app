@@ -445,15 +445,16 @@ class Api extends REST_Controller {
 				$notification_data['vNotificationContent'] = ucfirst($data_input['customer_name'])." is out of station from ".$home_details['dFromDate']." to ".$home_details['dToDate'];
 				$notify = $this->api_model->get_notification($notification_data);
 				
-				$pincode = $home_details[0]['iPincode'];
+				$pincode = $home_details['iPincode'];
 				$police_under_pincode = $this->api_model->get_police_by_pincode($pincode);
 				foreach ($police_under_pincode as $token) {
-					$registrationIds[] = $token['vDeviceTokenId'];
+					$device_token[] = $token['vDeviceTokenId'];
 				}
+				// print_r($registrationIds);exit;
 				$api_key = 'AAAALdPutWQ:APA91bExMJTQ-zQlZhv-HtlfU52Js1dgPQ7IlqEdErutCw_Wew7N4dED_o5lsX1kfmQ9DTh3M9-xIXs6XDHjmgAK6KFF5EAotJR0V2gOR7XwDg75Nxe-hRw3Ywp6IPRRbogqvaxv0g9v';
 				$title = 'Complaint';
 				$body = 'Locked Home Registered';
-				$this->push_notification($registrationIds,$api_key,$title,$$notification_data['vNotificationContent']);
+				$this->push_notification($device_token,$api_key,$title,$notification_data['vNotificationContent']);
 				$this->response([
 					'status' => "Success",
 					'code'=>"200",
@@ -1510,19 +1511,37 @@ class Api extends REST_Controller {
 		$data_input = $this->_get_customer_post_values();
 		if(!empty($data_input)){
 			$user_id = base64_decode($data_input['qrcode']);
-			$this->api_model->update_lockedhome_status($user_id);
+			$locked_home = $this->api_model->update_lockedhome_status($user_id);
+			$history = array(
+				'iCustomerId' => $user_id,
+				'iPoliceOfficerId' => $data_input['officer_id'],
+				'iLockedHomeId' => $locked_home['iLockedHomeId'],
+				'vAddress' => $locked_home['vAddress'],
+				'iPincode' => $locked_home['iPincode'],
+				'vStatus' => 2,
+			);
+			$this->api_model->get_lockedhome_history($history);
+			$user_details = $this->api_model->get_customer_details_by_insert_id($user_id);
+			$device_token = array();
+			$token = $user_details[0]['vDeviceTokenId'];
+			array_push($device_token, $token);
+			$api_key = 'AAAALdPutWQ:APA91bExMJTQ-zQlZhv-HtlfU52Js1dgPQ7IlqEdErutCw_Wew7N4dED_o5lsX1kfmQ9DTh3M9-xIXs6XDHjmgAK6KFF5EAotJR0V2gOR7XwDg75Nxe-hRw3Ywp6IPRRbogqvaxv0g9v';
+			$title = 'Complaint';
+			$body = "Dear ".ucfirst($user_details[0]['vCustomerName'])." your home is visited";
+			$this->push_notification($device_token,$api_key,$title,$body);
+			$output = array('status'=>'success','message'=>'status updated successfully');
+			$this->response($output);
 		}else{
 			$output = array('status'=>'Error','message'=>'please enter input data');
 			$this->response($output);
 		}
 	}
 
-	public function push_notification($token,$api_key,$title,$body){
-		// $registrationIds[] = 'dWBwIeauQ3-5TpgvC3AQiC:APA91bHRuPBMMesltSyt65t18_j4FOy7m1i5JzTeshrRphm-FEpFbn2xl9lGsTevJ2wYcVdjfNc2PCHR1koasAb7NJX7lBQEQafcI3JpvP4WguBze4D2GHOpj067vJC_DGg__z3gggLo';
-		$registrationIds[] = $token;
+	public function push_notification($device_token,$api_key,$title,$body){
+		// print_r($device_token);exit;
 		$header = [
 			// 'Authorization: key=' . "AAAALdPutWQ:APA91bExMJTQ-zQlZhv-HtlfU52Js1dgPQ7IlqEdErutCw_Wew7N4dED_o5lsX1kfmQ9DTh3M9-xIXs6XDHjmgAK6KFF5EAotJR0V2gOR7XwDg75Nxe-hRw3Ywp6IPRRbogqvaxv0g9v",
-			'Authorization: key=' . $api__key,
+			'Authorization: key=' . $api_key,
 			'Content-Type: Application/json'
 		];
 
@@ -1534,7 +1553,7 @@ class Api extends REST_Controller {
 		];
 
 		$payload = [
-			'registration_ids' 	=> $registrationIds,
+			'registration_ids' 	=> $device_token,
 			'notification'	   => $msg
 		];
 
